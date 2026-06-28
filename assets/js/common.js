@@ -20,15 +20,18 @@ document.addEventListener('DOMContentLoaded', function(){
     // navigation (mobile)
     var siteNav = document.querySelector('#navigation');
     var siteContact = document.querySelector('#contact');
+    var siteSidebar = document.querySelector('.sidebar-left');
     var menuButton = document.querySelector("#btn-nav");
 
     menuButton.addEventListener('click', function() {
         if (menuButton.classList.toggle('nav-open')) {
             siteNav.classList.add('nav-open');
             siteContact.classList.add('contact-open');
+            siteSidebar.classList.add('sidebar-open');
         } else {
             siteNav.classList.remove('nav-open');
             siteContact.classList.remove('contact-open');
+            siteSidebar.classList.remove('sidebar-open');
         }
     });
 
@@ -153,6 +156,7 @@ document.addEventListener('DOMContentLoaded', function(){
         searchButton.forEach((btn) => {
             btn.addEventListener('click', function() {
                 searchPage.classList.add('active');
+                searchPage.setAttribute('aria-hidden', 'false');
                 document.getElementById("search-input").focus();
             });
         });
@@ -167,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 return;
 
             searchPage.classList.remove('active');
+            searchPage.setAttribute('aria-hidden', 'true');
         });
     }
 
@@ -174,6 +179,7 @@ document.addEventListener('DOMContentLoaded', function(){
         cancelButton.addEventListener('click', function() {
             document.getElementById('btn-clear').style.display = 'none';
             document.getElementById('search-input').value = "";
+            document.getElementById('search-result').style.display = 'none';
 
             Array.from(document.querySelectorAll('.result-item')).forEach(function (item) {
                 item.remove();
@@ -214,7 +220,7 @@ function searchPost(pages){
         }
     
         if (matchedPosts.length === 0) {
-            insertItem('<span class="description">There is no search result.</span>');
+            insertItem('<span class="description">검색 결과가 없습니다.</span>');
 
             return;
         } 
@@ -287,7 +293,12 @@ function searchRelated(pages){
     if (!refBox) return;
 
     var relatedPosts = [];
-    var currPost = pages.find(obj => {return obj.url === location.pathname});
+    var currPost = pages.find(obj => {
+        var postPath = new URL(obj.url, location.origin).pathname;
+        return postPath === location.pathname;
+    });
+
+    if (!currPost) return;
 
     let currTags = currPost.tags.split(', ');
     let currCategory = currPost.path.split(' > ').pop();

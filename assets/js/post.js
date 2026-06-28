@@ -1,135 +1,229 @@
 document.addEventListener('DOMContentLoaded', function(){
-    var innerContent = document.querySelector('main');
+    const articleContent = document.querySelector('.post-content');
+    const tocBoard = document.querySelector('.toc-board');
     let currentTheme = localStorage.getItem('theme');
 
-    // tocbot
-    var headings = innerContent.querySelectorAll('h1, h2');
-    var prevHead;
+    if (articleContent && tocBoard) {
+        let headings = Array.from(articleContent.querySelectorAll('h2, h3'));
 
-    const tocBorad = document.querySelector(".toc-board");
-    
-    Array.from(headings).forEach(function(heading){
-        let tocItem = document.createElement("li");
-        tocItem.classList.add("toc-list-item");
-
-        let itemLink = document.createElement("a");
-        itemLink.classList.add("toc-link");
-        itemLink.id = "toc-id-" + heading.textContent;
-        itemLink.textContent = heading.textContent;
-
-        tocItem.append(itemLink);
-
-        itemLink.addEventListener('click', function(){
-            heading.scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-
-        if (heading.tagName == 'H1'){
-            itemLink.classList.add("node-name--H1");
-            prevHead = tocItem;
-            tocBorad.append(tocItem);
+        if (headings.length === 0) {
+            headings = Array.from(articleContent.querySelectorAll('h1, h2'));
         }
-        else {
-            itemLink.classList.add("node-name--H2");
 
-            if (prevHead == undefined) {
-                tocBorad.append(tocItem);
-                return;
-            }
+        buildHeadingIndexes(headings);
+        buildToc(headings, tocBoard);
+        observeActiveHeading(headings, tocBoard);
+    }
 
-            let subList = prevHead.querySelector('ol');
-
-            if (!subList){
-                subList = document.createElement("ol");
-                subList.classList.add("toc-list");
-                prevHead.append(subList);
-            }
-
-            subList.append(tocItem);
-        }
-    });
-
-    setInterval(function(){
-        var scrollPos = document.documentElement.scrollTop;
-
-        Array.from(tocBorad.querySelectorAll('.toc-link')).forEach(function(link){
-            link.classList.remove('is-active-link');
-        });
-
-        var currHead;
-
-        Array.from(headings).forEach(function(heading){
-            let headPos = heading.getBoundingClientRect().top + window.scrollY - 512;
-
-            if (scrollPos > headPos) currHead = heading;
-        });
-
-        if (currHead != undefined){
-            let tocLink = document.getElementById("toc-id-" + currHead.textContent);
-            tocLink.classList.add('is-active-link');
-        }
-    }, 200);
-
-    // link (for hover effect)
-    var links = innerContent.querySelectorAll('a:not(.related-item a)');
+    const links = articleContent ? articleContent.querySelectorAll('a:not(.related-item a)') : [];
 
     links.forEach((link) => {
         link.setAttribute('data-content', link.innerText);
     });
 
-    // Tag EventListener
     const searchPage = document.querySelector("#search");
 
     document.querySelectorAll('.tag-box .tag').forEach(function(tagButton){
         tagButton.addEventListener('click', function() {
             const contentID = tagButton.getAttribute('contentID');
-            const inpuxBox = document.getElementById('search-input');
-            searchPage.classList.add('active');
+            const inputBox = document.getElementById('search-input');
 
-            inpuxBox.value = contentID;
-            inpuxBox.dispatchEvent(new KeyboardEvent('keyup'));
+            if (!searchPage || !inputBox) return;
+
+            searchPage.classList.add('active');
+            searchPage.setAttribute('aria-hidden', 'false');
+            inputBox.value = contentID;
+            inputBox.dispatchEvent(new KeyboardEvent('keyup'));
+            inputBox.focus();
         });
     });
 
-    // Move to Top
-    if (document.querySelector('.thumbnail')){
-        const arrowButton = document.querySelector('.top-arrow');
+    const arrowButton = document.querySelector('.top-arrow');
 
+    if (arrowButton) {
         setInterval(function(){
             var scrollPos = document.documentElement.scrollTop;
-    
+
             if (scrollPos < 512){
                 arrowButton.classList.remove('arrow-open');
             }
             else {
                 arrowButton.classList.add('arrow-open');
             }
-        }, 1000);
+        }, 500);
 
         arrowButton.addEventListener('click', function(){
             window.scroll({top:0, behavior:'smooth'});
         });
     }
 
-    // Move to Comment
-    document.getElementById('comments-counter').addEventListener('click', function(){
-        document.getElementById("giscus").scrollIntoView({
-            behavior: 'smooth'
-        });
-    });
+    const commentsCounter = document.getElementById('comments-counter');
+    const giscusBox = document.getElementById('giscus');
 
-    // Code highlighter
-    if (currentTheme === 'dark'){
-        // Disable highlighter default color theme
-        Array.from(innerContent.querySelectorAll('pre')).forEach(function (codeblock){
+    if (commentsCounter && giscusBox) {
+        commentsCounter.addEventListener('click', function(){
+            giscusBox.scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    if (currentTheme === 'dark' && articleContent){
+        Array.from(articleContent.querySelectorAll('pre')).forEach(function (codeblock){
             codeblock.classList.add('pre-dark');
         });
     }
 });
 
+function buildHeadingIndexes(headings) {
+    if (headings.length === 0) return;
+
+    const topLevel = headings[0].tagName;
+    const usedIds = {};
+    let sectionCount = 0;
+    let subSectionCount = 0;
+
+    headings.forEach(function(heading) {
+        const isTopLevel = heading.tagName === topLevel;
+
+        if (isTopLevel) {
+            sectionCount += 1;
+            subSectionCount = 0;
+        }
+        else {
+            if (sectionCount === 0) sectionCount = 1;
+            subSectionCount += 1;
+        }
+
+        const index = isTopLevel
+            ? String(sectionCount).padStart(2, '0')
+            : String(sectionCount).padStart(2, '0') + '.' + subSectionCount;
+
+        heading.classList.add('section-heading', 'level-' + heading.tagName.toLowerCase());
+        heading.setAttribute('data-heading-index', index);
+
+        if (!heading.id) {
+            heading.id = uniqueSlug(heading.textContent, usedIds);
+        }
+    });
+}
+
+function buildToc(headings, tocBoard) {
+    tocBoard.innerHTML = '';
+    if (headings.length === 0) return;
+
+    const topLevel = headings[0].tagName;
+    let currentTopItem;
+
+    headings.forEach(function(heading) {
+        let tocItem = document.createElement("li");
+        tocItem.classList.add("toc-list-item");
+
+        let itemLink = document.createElement("a");
+        itemLink.classList.add("toc-link", "node-name--" + heading.tagName);
+        itemLink.id = "toc-id-" + heading.id;
+        itemLink.href = "#" + heading.id;
+        itemLink.textContent = heading.getAttribute('data-heading-index') + ". " + heading.textContent;
+
+        tocItem.append(itemLink);
+
+        itemLink.addEventListener('click', function(event){
+            event.preventDefault();
+            heading.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+            history.replaceState(null, '', '#' + heading.id);
+        });
+
+        if (heading.tagName === topLevel) {
+            currentTopItem = tocItem;
+            tocBoard.append(tocItem);
+        }
+        else {
+            if (!currentTopItem) {
+                tocBoard.append(tocItem);
+                return;
+            }
+
+            let subList = currentTopItem.querySelector('ol');
+
+            if (!subList) {
+                subList = document.createElement("ol");
+                subList.classList.add("toc-list");
+                currentTopItem.append(subList);
+            }
+
+            subList.append(tocItem);
+        }
+    });
+}
+
+function observeActiveHeading(headings, tocBoard) {
+    if (headings.length === 0) return;
+
+    const activate = function(activeHeading) {
+        Array.from(tocBoard.querySelectorAll('.toc-link')).forEach(function(link){
+            link.classList.remove('is-active-link');
+        });
+
+        const tocLink = document.getElementById("toc-id-" + activeHeading.id);
+        if (tocLink) tocLink.classList.add('is-active-link');
+    };
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+            const visible = entries
+                .filter(entry => entry.isIntersecting)
+                .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+            if (visible[0]) activate(visible[0].target);
+        }, {
+            rootMargin: '-18% 0px -70% 0px',
+            threshold: 0
+        });
+
+        headings.forEach(heading => observer.observe(heading));
+        activate(headings[0]);
+        return;
+    }
+
+    setInterval(function(){
+        var scrollPos = document.documentElement.scrollTop;
+        var currHead;
+
+        headings.forEach(function(heading){
+            let headPos = heading.getBoundingClientRect().top + window.scrollY - 160;
+            if (scrollPos > headPos) currHead = heading;
+        });
+
+        if (currHead) activate(currHead);
+    }, 200);
+}
+
+function uniqueSlug(text, usedIds) {
+    let slug = text
+        .trim()
+        .toLowerCase()
+        .replace(/[^\w\u3131-\uD79D\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
+
+    if (slug === '') slug = 'section';
+
+    let nextSlug = slug;
+    let count = 2;
+
+    while (usedIds[nextSlug] || document.getElementById(nextSlug)) {
+        nextSlug = slug + '-' + count;
+        count += 1;
+    }
+
+    usedIds[nextSlug] = true;
+    return nextSlug;
+}
+
 window.addEventListener('load', function(){
-    // Page Hits
     const pageHits = document.getElementById('page-hits');
 
     if (pageHits) {
@@ -147,25 +241,23 @@ window.addEventListener('load', function(){
         resp.send();
     }
 
-    // Highlighter
-    hljs.highlightAll();
+    if (window.hljs) {
+        hljs.highlightAll();
 
-    // Disable code highlights to the plaintext codeblocks
-    document.querySelectorAll('.language-text, .language-plaintext').forEach(function(codeblock){
-        codeblock.querySelectorAll('.hljs-keyword, .hljs-meta, .hljs-selector-tag').forEach(function($){
-            $.outerHTML = $.innerHTML;
+        document.querySelectorAll('.language-text, .language-plaintext').forEach(function(codeblock){
+            codeblock.querySelectorAll('.hljs-keyword, .hljs-meta, .hljs-selector-tag').forEach(function($){
+                $.outerHTML = $.innerHTML;
+            });
         });
-    });
+    }
 
-    // Initialize/Change Giscus theme
-    var giscusTheme = "light";
+    const giscusRepo = document.querySelector('meta[name="giscus_repo"]');
+    const giscusRepoId = document.querySelector('meta[name="giscus_repoId"]');
+    const giscusCategory = document.querySelector('meta[name="giscus_category"]');
+    const giscusCategoryId = document.querySelector('meta[name="giscus_categoryId"]');
 
-    const giscus_repo = document.querySelector('meta[name="giscus_repo"]').content;
-    const giscus_repoId = document.querySelector('meta[name="giscus_repoId"]').content;
-    const giscus_category = document.querySelector('meta[name="giscus_category"]').content;
-    const giscus_categoryId = document.querySelector('meta[name="giscus_categoryId"]').content;
-
-    if (giscus_repo !== undefined) {
+    if (giscusRepo && giscusRepo.content) {
+        let giscusTheme = "light";
         let currentTheme = localStorage.getItem('theme');
 
         if (currentTheme === 'dark'){
@@ -174,10 +266,10 @@ window.addEventListener('load', function(){
 
         let giscusAttributes = {
             "src": "https://giscus.app/client.js",
-            "data-repo": giscus_repo,
-            "data-repo-id": giscus_repoId,
-            "data-category": giscus_category,
-            "data-category-id": giscus_categoryId,
+            "data-repo": giscusRepo.content,
+            "data-repo-id": giscusRepoId.content,
+            "data-category": giscusCategory.content,
+            "data-category-id": giscusCategoryId.content,
             "data-mapping": "pathname",
             "data-reactions-enabled": "1",
             "data-emit-metadata": "1",
@@ -192,41 +284,41 @@ window.addEventListener('load', function(){
         document.body.appendChild(giscusScript);
     }
 
-    // code clipboard copy button
     async function copyCode(block) {
         let code = block.querySelector("code");
         let text = code.innerText;
-      
+
         await navigator.clipboard.writeText(text);
     }
 
     let blocks = document.querySelectorAll("pre");
 
     blocks.forEach((block) => {
-        // only add button if browser supports Clipboard API
         if (navigator.clipboard) {
-            let clip_btn = document.createElement("button");
-            let clip_img = document.createElement("svg");
+            let clipBtn = document.createElement("button");
+            let clipImg = document.createElement("svg");
 
-            clip_btn.setAttribute('title', "Copy Code");
-            clip_img.ariaHidden = true;
+            clipBtn.setAttribute('title', "Copy Code");
+            clipBtn.setAttribute('aria-label', "Copy Code");
+            clipImg.ariaHidden = true;
 
-            block.appendChild(clip_btn);
-            clip_btn.appendChild(clip_img);
+            block.appendChild(clipBtn);
+            clipBtn.appendChild(clipImg);
 
-            clip_btn.addEventListener("click", async () => {
-                await copyCode(block, clip_btn);
+            clipBtn.addEventListener("click", async () => {
+                await copyCode(block);
             });
         }
     });
 
-    // Giscus IMetadataMessage event handler
     function handleMessage(event) {
         if (event.origin !== 'https://giscus.app') return;
         if (!(typeof event.data === 'object' && event.data.giscus)) return;
-        
+
         const giscusData = event.data.giscus;
         const commentCount = document.getElementById('num-comments');
+
+        if (!commentCount) return;
 
         if (giscusData && giscusData.hasOwnProperty('discussion')) {
             commentCount.innerText = giscusData.discussion.totalCommentCount;
@@ -235,6 +327,6 @@ window.addEventListener('load', function(){
             commentCount.innerText = '0';
         }
     }
-        
+
     window.addEventListener('message', handleMessage);
 });

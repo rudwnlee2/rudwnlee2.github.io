@@ -1,63 +1,56 @@
 .toc {
-  position:fixed;
-  top:6rem;
-  display: none;
+  padding: 5.75rem 1.25rem 1.5rem;
 }
 
 .toc-header {
-  font-size:1.25rem;
-  font-weight:600;
-  padding:0 0 4px 12px;
-  border-bottom:burlywood 2px solid;
+  display: block;
+  margin-bottom: .75rem;
+  color: var(--heading);
+  font-size: .82rem;
+  font-weight: 850;
+}
 
-  svg { 
-    width:16px;
-    display:inline-flex;
-    transform:translateY(2px);
-  }
+.toc-board,
+.toc-list {
+  margin: 0;
+  padding: 0;
 }
 
 .toc-board {
-  max-width:#{$sidebarwd};
-  margin: 1rem 0 1rem 2rem !important;
+  display: grid;
+  gap: .125rem;
 }
 
-.toc-board, .toc-list {
-  font-size:1.125rem;
-  padding:0;
-  margin: 0 auto;
+.toc-list {
+  margin-top: .125rem;
+}
 
-  li a { display:inline-block; }
-  li:last-child { margin-bottom:0; }
+.toc-list-item {
+  list-style: none;
+}
 
-  .node-name--H1 { margin-top:8px; }
-  .node-name--H2 {
-    font-size:1rem;
-    margin-top:6px;
-    padding-left:16px;
-  }
+.toc-link {
+  display: block;
+  border-left: 2px solid transparent;
+  padding: .45rem 0 .45rem .75rem;
+  color: var(--muted);
+  font-size: .82rem;
+  line-height: 1.35;
+  cursor: pointer;
 
-  .toc-list-item {
-    word-break:normal;
-    line-height:150%;
-
-    a { 
-      animation:.5s ease-out 0s 1 slide;
-      cursor: pointer;
-    }
-
-    @keyframes slide {
-      0% { transform:scaleY(0); }
-      100% { transform:scaleY(1); }
-    }
-  }
-   
-  .is-active-link{
-    color:indianred !important;
-    font-weight:950;
+  &:hover {
+    color: var(--accent);
   }
 }
 
-@include mq(wide){
-  .toc{ display: block; }
+.node-name--H3 {
+  padding-left: 1.35rem;
+  color: var(--subtle);
+  font-size: .76rem;
+}
+
+.is-active-link {
+  border-left-color: var(--accent);
+  color: var(--accent);
+  font-weight: 800;
 }

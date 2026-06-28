@@ -1,53 +1,82 @@
 {%- assign list_pages = site.pages | sort:"date" | reverse -%}
 {%- assign post_counts = 0 -%}
+{%- assign category_label = category_title -%}
+{% if page_level == 1 %}
+    {%- assign category_label = "전체 글" -%}
+{% endif %}
 
-<h1 class="category-header">
+<header class="category-hero">
+    <p class="section-kicker">기술 블로그</p>
+    <h1 class="category-header">{{ category_label }}</h1>
+    <p class="category-summary">
+        구현하며 배운 것, 다시 찾을 기준, 더 나은 구조에 대한 기록을 문서처럼 정리합니다.
+    </p>
+
     {% if page_level == 1 %}
-        All Posts
-    {% else %}
-        {{ category_title }}
+        <div class="topic-filter">
+            <a class="topic-chip active" href="{{ site.baseurl | append: '/' }}">전체</a>
+            {% assign category_pages = site.pages | sort: 'url' %}
+            {% for category_page in category_pages %}
+                {%- assign category_tree = category_page.path | remove_first: "_pages/" | split: "/" -%}
+                {% if category_tree.last == "index.md" and category_tree.size == 2 %}
+                    {%- assign category_name = category_tree[0] -%}
+                    <a class="topic-chip" href="{{ category_page.url | remove: 'index.html' | prepend: site.baseurl }}">{{ category_name }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
     {% endif %}
-</h1>
-<div id="category-list">
+</header>
+
+<section id="category-list" class="article-list" aria-label="{{ category_label }}">
     <ul class="paginated-list" data-current-page="1" aria-live="polite">
     {%- for sub_page in list_pages -%}
         {%- assign page_url = page.url | remove: 'index.html' -%}
         {% if sub_page.url contains page_url %}
         {% unless sub_page.url contains "index.html" %}
             {%- assign post_counts = post_counts | plus:1 -%}
+            {%- assign sub_page_tree = sub_page.path | split: "/" -%}
+            {%- capture post_excerpt -%}
+                {{ sub_page.description | default: sub_page.content | markdownify | strip_html | strip_newlines | truncate: 150 }}
+            {%- endcapture -%}
             <li class="paginated-item">
-                <div id="article_content">
-                    <div class="thumbnail_zone">
-                        {% if sub_page.thumbnail != nil %}
-                            {%- assign thumbnail_url = sub_page.thumbnail -%}
-                            {%- assign check_localasset = thumbnail_url | split:'/' -%}
-                            {% if check_localasset[0] == '' %}
-                                {%- assign thumbnail_url = thumbnail_url | prepend: site.baseurl -%}
-                            {% endif %}
-                            <a href="{{ sub_page.url | prepend: site.baseurl }}" class="thumbnail_post" loading="lazy" aria-label="thumbnail_post" style="background-image:url('{{ thumbnail_url }}') !important"></a>
-                        {% else %}
-                            <a href="{{ sub_page.url | prepend: site.baseurl }}" class="thumbnail_post empty" loading="lazy" aria-label="thumbnail_post" style="background-image:url('{{ '/assets/img/thumbnail/empty.jpg' | prepend: site.baseurl }}') !important"></a>
+                <article class="post-row {% if sub_page.thumbnail %}has-thumb{% endif %}">
+                    {% if sub_page.thumbnail != nil %}
+                        {%- assign thumbnail_url = sub_page.thumbnail -%}
+                        {%- assign check_localasset = thumbnail_url | split:'/' -%}
+                        {% if check_localasset[0] == '' %}
+                            {%- assign thumbnail_url = thumbnail_url | prepend: site.baseurl -%}
                         {% endif %}
-                    </div>
-                    <div class="box_contents">
-                        <a href="{{ sub_page.url | prepend: site.baseurl }}"><h1 class="title_post">{{ sub_page.title }}</h1></a>
-                        <a href="{{ sub_page.url | prepend: site.baseurl }}" class="txt_post">
-                            {{ sub_page.content | markdownify | strip_html }}
+                        <a href="{{ sub_page.url | prepend: site.baseurl }}" class="thumbnail_post" aria-label="{{ sub_page.title | escape }}">
+                            <img src="{{ thumbnail_url }}" alt="{{ sub_page.title | escape }}" loading="lazy">
                         </a>
+                    {% endif %}
+                    <div class="box_contents">
                         <div class="info-post">
-                            {%- assign sub_page_tree = sub_page.path | split: "/" -%}
                             {% if sub_page_tree.size > 2 %}
                                 <a href="{{ '/' | append: sub_page_tree[1] | prepend: site.baseurl }}" class="category">{{ sub_page_tree[1] }}</a>
                             {% else %}
-                                <span class="category">None</span>
+                                <span class="category">기록</span>
                             {% endif %}
                             {%- assign posting_date = sub_page.date | date: "%Y-%m-%d" -%}
                             {% if posting_date != "1900-01-01" %}
-                                <span class="date">· {{ sub_page.date | date: "%Y-%m-%d" }}</span>
+                                <span class="date">{{ posting_date }}</span>
                             {% endif %}
                         </div>
+                        <a href="{{ sub_page.url | prepend: site.baseurl }}" class="post-row-title">
+                            <h2 class="title_post">{{ sub_page.title }}</h2>
+                        </a>
+                        <a href="{{ sub_page.url | prepend: site.baseurl }}" class="txt_post">
+                            {{ post_excerpt | strip }}
+                        </a>
+                        {% if sub_page.tags %}
+                            <div class="post-row-tags">
+                                {% for tag in sub_page.tags limit: 4 %}
+                                    <span>{{ tag }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     </div>
-                </div>
+                </article>
             </li>
         {% endunless %}
         {% endif %}
@@ -55,19 +84,20 @@
     </ul>
     {% if post_counts == 0 %}
         <div class="no-posts">
-            <img src="{{ '/assets/img/sorry.png'' | prepend: site.baseurl }}"></img>
-            <h1>Sorry, No posts found</h1>
+            <h2>아직 글이 없습니다.</h2>
+            <p>이 카테고리에 Markdown 파일을 추가하면 여기에 표시됩니다.</p>
         </div>
     {% endif %}
-</div>
+</section>
+
 <div class="pagination">
-    <nav class="pagination-container">
+    <nav class="pagination-container" aria-label="pagination">
         <button class="pagination-button" id="prev-button" aria-label="Previous page" title="Previous page">
             &lt;
         </button>
-    
+
         <div id="pagination-numbers"></div>
-      
+
         <button class="pagination-button" id="next-button" aria-label="Next page" title="Next page">
             &gt;
         </button>
