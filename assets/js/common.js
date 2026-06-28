@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     // search box
-    const searchButton = document.querySelectorAll("#btn-search");
+    const searchButton = document.querySelectorAll("#btn-search, .btn-search");
     const cancelButton = document.querySelector('#btn-clear');
     const searchPage = document.querySelector("#search");
 

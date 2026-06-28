@@ -7,8 +7,8 @@
 
 .sidebar-left {
   display: none;
-  border-bottom: 1px solid var(--line);
-  background: var(--sidebar-strong-bg);
+  border-top: 1px solid var(--line);
+  background: var(--sidebar-bg);
   padding: 1rem;
 
   &.sidebar-open {
@@ -16,61 +16,20 @@
   }
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: .75rem;
-  min-height: 2.75rem;
-  margin-bottom: 1.25rem;
-}
-
-.brand-mark {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 2.125rem;
-  height: 2.125rem;
-  border-radius: var(--radius);
-  background: var(--heading);
-  color: var(--panel);
-  font-weight: 800;
-}
-
-.brand-copy {
-  min-width: 0;
-
-  strong {
-    display: block;
-    overflow: hidden;
-    color: var(--heading);
-    font-size: .95rem;
-    line-height: 1.25;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  span {
-    display: block;
-    overflow: hidden;
-    color: var(--muted);
-    font-size: .75rem;
-    line-height: 1.35;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
+.side-info {
+  max-width: var(--content-width);
+  margin: 0 auto;
 }
 
 .nav-section {
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.25rem;
 }
 
 .nav-label {
   margin: 0 0 .625rem;
   color: var(--subtle);
-  font-size: .7rem;
+  font-size: .72rem;
   font-weight: 800;
-  letter-spacing: .08em;
-  text-transform: uppercase;
 }
 
 #contact {
@@ -85,67 +44,31 @@
 
 .contact-list {
   display: flex;
+  flex-wrap: wrap;
   gap: .5rem;
   margin: 0;
   padding: 0;
 
   a {
-    display: grid;
-    place-items: center;
-    min-width: 2rem;
-    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    background: var(--panel);
+    padding: 0 .7rem;
     color: var(--muted);
-    font-size: .8rem;
-    font-weight: 800;
+    font-size: .82rem;
+    font-weight: 700;
 
     &:hover {
-      border-color: var(--line-strong);
       color: var(--accent);
     }
   }
 }
 
-.sidebar-right {
-  display: none;
-}
-
-@include mq(desktop) {
+@include mq(tablet) {
   .sidebar-left {
-    position: sticky;
-    top: 0;
-    display: block;
-    height: 100vh;
-    border-right: 1px solid var(--line);
-    border-bottom: 0;
-    background: var(--sidebar-bg);
-    padding: 1.375rem 1.125rem;
-    overflow-y: auto;
-    backdrop-filter: blur(18px);
-  }
-
-  .brand {
-    margin-bottom: 1.5rem;
-  }
-
-  .side-info {
-    min-width: 0;
-  }
-
-  #contact {
-    display: block;
-    margin-top: 1.5rem;
-  }
-
-  .sidebar-right {
-    position: sticky;
-    top: 0;
-    display: block;
-    height: 100vh;
-    border-left: 1px solid var(--line);
-    background: var(--toc-bg);
-    overflow-y: auto;
-    backdrop-filter: blur(18px);
+    display: none !important;
   }
 }
