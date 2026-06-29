@@ -288,7 +288,27 @@ window.addEventListener('load', function(){
         let code = block.querySelector("code");
         let text = code.innerText;
 
-        await navigator.clipboard.writeText(text);
+        if (navigator.clipboard) {
+            try {
+                await navigator.clipboard.writeText(text);
+                return true;
+            }
+            catch (error) {
+                // Fall back below for browser contexts that block Clipboard API.
+            }
+        }
+
+        let textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'fixed';
+        textArea.style.top = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        let copied = document.execCommand('copy');
+        textArea.remove();
+        return copied;
     }
 
     function showCopySuccess(button) {
@@ -324,8 +344,9 @@ window.addEventListener('load', function(){
             clipBtn.appendChild(clipImg);
 
             clipBtn.addEventListener("click", async () => {
-                await copyCode(block);
-                showCopySuccess(clipBtn);
+                if (await copyCode(block)) {
+                    showCopySuccess(clipBtn);
+                }
             });
         }
     });

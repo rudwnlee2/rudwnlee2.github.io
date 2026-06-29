@@ -6,6 +6,7 @@ tags:
     - Backend
     - 설계
     - 리팩터링
+thumbnail: /assets/img/thumbnail/backend-notes.png
 bookmark: true
 ---
 

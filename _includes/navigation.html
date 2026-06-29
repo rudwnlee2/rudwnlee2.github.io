@@ -1,4 +1,4 @@
-<nav id="navigation">
+<nav class="navigation" {% if include.id %}id="{{ include.id }}"{% else %}id="navigation"{% endif %}>
     {% assign first_level_pages = "" | split, "" %}
     {% assign second_level_pages = "" | split, "" %}
     {% assign third_level_pages = "" | split, "" %}
@@ -41,7 +41,7 @@
         {%- assign node_title = node.path | remove: 'index.md' | split: "/" | last | remove: '.md' | replace: "_pages", "Home" -%}
         {%- assign children_list = second_level_pages | where_exp: "item", "item.url contains node_url" -%}
         {%- assign num_children = children_list | size -%}
-        <li id="nav-first" aria-label="{{ node_title }}">
+        <li class="nav-first" aria-label="{{ node_title }}">
             <div class="nav-item">
                 <a href="{{ node_url | prepend: site.baseurl }}" class="nav-list-link nav-lh">
                     <span>{{ node_title }}</span>
@@ -62,7 +62,7 @@
                 {%- assign child_title = child.path | remove: 'index.md' | split: "/" | last | remove: '.md' -%}
                 {%- assign grand_children_list = third_level_pages | where_exp: "item", "item.url contains child_url" -%}
                 {%- assign num_grand_children = grand_children_list | size -%}
-                <li id="nav-second" aria-label="{{ child_title }}">
+                <li class="nav-second" aria-label="{{ child_title }}">
                     <div class="nav-item">
                         <a href="{{ child_url | prepend: site.baseurl }}" class="nav-list-link nav-sh">
                             <span>{{ child_title }}</span>
@@ -80,7 +80,7 @@
                         <ul class="nav-list">
                         {%- for grand_child in grand_children_list -%}
                             {%- assign grand_child_title = grand_child.path | remove: 'index.md' | split: "/" | last | remove: '.md' -%}
-                            <li id="nav-third" aria-label="{{ grand_child_title }}">
+                            <li class="nav-third" aria-label="{{ grand_child_title }}">
                                 <div class="nav-item">
                                     <a href="{{ grand_child.url | prepend: site.baseurl }}" class="nav-list-link nav-sh">
                                         <span>{{ grand_child_title }}</span>

@@ -186,6 +186,19 @@
   padding: 1.75rem 1rem 3.75rem;
 }
 
+.page-shell {
+  display: grid;
+  gap: 2.5rem;
+}
+
+.page-main {
+  min-width: 0;
+}
+
+.category-rail {
+  display: none;
+}
+
 @include mq(tablet) {
   .header-inner {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
@@ -203,5 +216,21 @@
 
   .page {
     padding: 2.375rem 1.375rem 4.5rem;
+  }
+}
+
+@include mq(wide) {
+  .page-shell {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+    max-width: 88rem;
+  }
+
+  .category-rail {
+    position: sticky;
+    top: 5.75rem;
+    display: block;
+    border-right: 1px solid var(--line);
+    padding-right: 1.25rem;
   }
 }

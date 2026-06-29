@@ -32,6 +32,7 @@
   font-size: clamp(2.7rem, 7vw, 5rem);
   line-height: 1.06;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
   word-break: keep-all;
 }
 
@@ -136,6 +137,10 @@ a.info-box:hover {
   gap: 2rem;
   align-items: start;
   margin-top: 2.125rem;
+
+  > * {
+    min-width: 0;
+  }
 }
 
 .article {
@@ -158,6 +163,7 @@ a.info-box:hover {
     letter-spacing: 0;
     line-height: 1.25;
     scroll-margin-top: 5.5rem;
+    overflow-wrap: anywhere;
     word-break: keep-all;
   }
 
@@ -428,6 +434,7 @@ a.info-box:hover {
 .side {
   display: grid;
   gap: 1.125rem;
+  min-width: 0;
 }
 
 .side-section {
@@ -574,5 +581,41 @@ a.info-box:hover {
   .side {
     position: sticky;
     top: 5.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-title {
+    font-size: clamp(2.25rem, 14vw, 3.15rem);
+    line-height: 1.12;
+    word-break: break-all;
+  }
+
+  .post-summary {
+    font-size: 1.08rem;
+  }
+
+  .post-content {
+    h1,
+    h2 {
+      font-size: 1.7rem;
+    }
+
+    h3 {
+      font-size: 1.28rem;
+    }
+
+    h1,
+    h2,
+    h3,
+    p,
+    li {
+      word-break: break-all;
+    }
+
+    .section-heading {
+      grid-template-columns: 1.65rem minmax(0, 1fr);
+      gap: .65rem;
+    }
   }
 }

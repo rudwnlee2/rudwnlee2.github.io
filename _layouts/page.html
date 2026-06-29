@@ -34,15 +34,15 @@
                 <a href="{{ site.baseurl | append: '/' }}" class="brand">{{ site.title }}</a>
 
                 <nav class="primary-nav" aria-label="primary">
-                    <a href="{{ site.baseurl | append: '/' }}">전체글</a>
+                    <a href="{{ site.baseurl | append: '/' }}">전체</a>
                     {% assign nav_pages = site.pages | sort: 'url' %}
                     {% for nav_page in nav_pages %}
                         {%- assign nav_tree = nav_page.path | remove_first: "_pages/" | split: "/" -%}
-                        {% if nav_tree.last == "index.md" and nav_tree.size == 2 %}
+                        {% if nav_tree.last == "index.md" and nav_tree.size == 2 and nav_tree[0] == "Backend" %}
                             <a href="{{ nav_page.url | remove: 'index.html' | prepend: site.baseurl }}">{{ nav_tree[0] }}</a>
                         {% endif %}
                     {% endfor %}
-                    <a href="{{ '/posting guide.html' | prepend: site.baseurl }}">작성법</a>
+                    <a href="{{ '/프로젝트/' | prepend: site.baseurl }}">프로젝트</a>
                 </nav>
 
                 <div class="header-actions">
@@ -61,14 +61,21 @@
             {% include sidebar.html %}
         </header>
 
-        <main id="post" class="page">
-            {% include category.html %}
-            {% if page_type == "category" %}
-                {% include loading.html %}
-                {% include pagination.html %}
-            {% else %}
-                {% include post.html %}
-            {% endif %}
+        <main id="post" class="page page-shell">
+            <aside class="category-rail" aria-label="category navigation">
+                <p class="nav-label">카테고리</p>
+                {% include navigation.html id="category-navigation" %}
+            </aside>
+
+            <div class="page-main">
+                {% include category.html %}
+                {% if page_type == "category" %}
+                    {% include loading.html %}
+                    {% include pagination.html %}
+                {% else %}
+                    {% include post.html %}
+                {% endif %}
+            </div>
         </main>
 
         {% include search.html %}

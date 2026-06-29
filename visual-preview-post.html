@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오래 남는 코드 - MVP Preview</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --panel: #fff;
+      --panel-soft: #efefe9;
+      --line: #deded6;
+      --line-strong: #bebfb4;
+      --text: #373934;
+      --heading: #20201d;
+      --muted: #72746d;
+      --subtle: #9a9c93;
+      --accent: #4b6f9c;
+      --accent-soft: #edf2fa;
+      --code-bg: #1f2420;
+      --radius: 8px;
+      --shadow: 0 18px 54px rgba(32, 32, 29, .08);
+    }
+
+    body.dark {
+      --bg: #191a18;
+      --panel: #22231f;
+      --panel-soft: #2a2c27;
+      --line: #3a3c35;
+      --line-strong: #53564c;
+      --text: #d9dbd1;
+      --heading: #f2f0e8;
+      --muted: #a7aa9d;
+      --subtle: #85897c;
+      --accent: #94b5db;
+      --accent-soft: #263342;
+      --code-bg: #111510;
+      --shadow: 0 18px 54px rgba(0, 0, 0, .22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button { border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+    svg { width: 1rem; height: 1rem; fill: currentColor; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(16px);
+    }
+
+    .header-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 1rem;
+      max-width: 88rem;
+      min-height: 4.25rem;
+      margin: 0 auto;
+      padding: 0 1.375rem;
+    }
+
+    .brand {
+      color: var(--heading);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .primary-nav {
+      display: flex;
+      gap: 1.35rem;
+      color: var(--muted);
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    .primary-nav a:hover { color: var(--accent); }
+
+    .header-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: .5rem;
+    }
+
+    .icon-button {
+      display: grid;
+      place-items: center;
+      width: 2.375rem;
+      height: 2.375rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+    }
+
+    .icon-button:hover {
+      border-color: var(--line-strong);
+      color: var(--accent);
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 16rem minmax(0, 1fr);
+      gap: 2.5rem;
+      max-width: 88rem;
+      margin: 0 auto;
+      padding: 2.375rem 1.375rem 4.5rem;
+    }
+
+    .category-rail {
+      position: sticky;
+      top: 5.75rem;
+      align-self: start;
+      border-right: 1px solid var(--line);
+      padding-right: 1.25rem;
+    }
+
+    .nav-label,
+    .side-title {
+      margin: 0 0 .85rem;
+      color: var(--subtle);
+      font-size: .74rem;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .nav-list,
+    .nav-list ul {
+      display: grid;
+      gap: .125rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nav-list ul {
+      overflow: hidden;
+      max-height: 0;
+      padding-left: .75rem;
+      opacity: 0;
+      transition: max-height .22s ease, opacity .18s ease;
+    }
+
+    .nav-list li.active > ul {
+      max-height: 40rem;
+      opacity: 1;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      min-height: 2.25rem;
+      border-radius: var(--radius);
+    }
+
+    .nav-item.selected {
+      background: var(--accent-soft);
+    }
+
+    .nav-link {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      min-width: 0;
+      border-radius: var(--radius);
+      padding: .5rem .625rem;
+      color: var(--text);
+      font-size: .92rem;
+      line-height: 1.35;
+    }
+
+    .nav-link span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .nav-link small { color: var(--subtle); }
+    .nav-link.sub { color: var(--muted); font-size: .85rem; }
+    .nav-link:hover { background: var(--panel-soft); color: var(--accent); }
+
+    .nav-toggle {
+      display: grid;
+      flex: 0 0 auto;
+      place-items: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: .375rem;
+      color: var(--subtle);
+    }
+
+    .nav-toggle:hover { background: var(--panel-soft); color: var(--accent); }
+    li.active > .nav-item .nav-toggle svg { transform: rotate(180deg); }
+    .nav-toggle svg { transition: transform .18s ease; }
+
+    .breadcrumbs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .45rem;
+      margin-bottom: 1.75rem;
+      color: var(--muted);
+      font-size: .82rem;
+      font-weight: 650;
+    }
+
+    .breadcrumbs strong { color: var(--accent); }
+
+    .post-hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 18rem;
+      gap: 2.625rem;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding: 2.25rem 0 2.75rem;
+    }
+
+    .category-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+      margin-bottom: 1.125rem;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 700;
+    }
+
+    .category-line strong { color: var(--accent); }
+
+    .post-title {
+      max-width: 48rem;
+      margin: 0;
+      color: var(--heading);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.7rem, 7vw, 5rem);
+      line-height: 1.06;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+    }
+
+    .post-summary {
+      max-width: 46rem;
+      margin: 1.25rem 0 0;
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.15rem, 3vw, 1.45rem);
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .85rem;
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: .84rem;
+      font-weight: 650;
+    }
+
+    .hero-visual {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: .625rem;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-visual img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .content-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 45.625rem) 16.25rem;
+      gap: 3rem;
+      align-items: start;
+      margin-top: 2.125rem;
+    }
+
+    .content-layout > * {
+      min-width: 0;
+    }
+
+    article,
+    .side {
+      min-width: 0;
+    }
+
+    .post-content h2,
+    .post-content h3 {
+      display: grid;
+      grid-template-columns: 2.35rem minmax(0, 1fr);
+      gap: .85rem;
+      align-items: baseline;
+      margin: 3.25rem 0 1rem;
+      color: var(--heading);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+    }
+
+    .post-content h2 { font-size: clamp(1.85rem, 4vw, 2.35rem); }
+    .post-content h3 { margin-top: 2.25rem; font-size: clamp(1.3rem, 3vw, 1.55rem); }
+    .post-content h2::before { content: attr(data-i); color: var(--accent); font-family: system-ui; font-size: .9rem; }
+    .post-content h3::before { content: attr(data-i); color: var(--subtle); font-family: system-ui; font-size: .78rem; }
+
+    .post-content p,
+    .post-content li {
+      font-size: 1.06rem;
+      line-height: 1.9;
+      word-break: keep-all;
+    }
+
+    pre {
+      position: relative;
+      overflow-x: auto;
+      border-radius: var(--radius);
+      background: var(--code-bg);
+      padding: 1rem;
+      color: #eff6ef;
+      line-height: 1.74;
+    }
+
+    pre code { font-family: Consolas, monospace; font-size: .9rem; }
+
+    .copy {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      display: grid;
+      place-items: center;
+      width: 1.85rem;
+      height: 1.85rem;
+      border: 1px solid #4a514b;
+      border-radius: .375rem;
+      background: #2a302b;
+      color: #eff6ef;
+    }
+
+    .copy.copied { background: #344032; color: #d9f2cf; }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+      margin-top: 2.125rem;
+    }
+
+    .tag {
+      min-height: 1.85rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      padding: .35rem .65rem;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 750;
+    }
+
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    .side {
+      position: sticky;
+      top: 5.75rem;
+      display: grid;
+      gap: 1.125rem;
+    }
+
+    .side-section {
+      border-top: 1px solid var(--line);
+      padding-top: 1rem;
+    }
+
+    .side-search {
+      display: flex;
+      gap: .6rem;
+      align-items: center;
+      width: 100%;
+      min-height: 2.5rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 0 .75rem;
+      color: var(--muted);
+      text-align: left;
+    }
+
+    .side-search:hover { border-color: var(--line-strong); color: var(--accent); }
+
+    .toc,
+    .related {
+      display: grid;
+      gap: .55rem;
+      margin: 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .toc a {
+      display: block;
+      border-left: 2px solid transparent;
+      padding: .45rem 0 .45rem .75rem;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.38;
+    }
+
+    .toc a:hover,
+    .toc a.active { border-left-color: var(--accent); color: var(--accent); }
+
+    .related a {
+      display: grid;
+      grid-template-columns: 3.75rem minmax(0, 1fr);
+      gap: .75rem;
+      align-items: start;
+      color: var(--heading);
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+    }
+
+    .related img {
+      width: 3.75rem;
+      height: 3.75rem;
+      border-radius: .35rem;
+      object-fit: cover;
+    }
+
+    .search-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: start center;
+      background: rgba(0, 0, 0, .35);
+      padding: 8vh 1rem 1rem;
+    }
+
+    .search-modal.active { display: grid; }
+
+    .search-box {
+      width: min(38rem, 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+    }
+
+    .search-box input {
+      width: 100%;
+      min-height: 2.75rem;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel-soft);
+      padding: 0 .85rem;
+      color: var(--heading);
+      font: inherit;
+    }
+
+    .mobile-menu { display: none; }
+
+    @media (max-width: 1279px) {
+      .page {
+        display: block;
+        max-width: 70rem;
+      }
+
+      .category-rail { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .header-inner {
+        grid-template-columns: minmax(0, 1fr) auto;
+        min-height: 3.75rem;
+        padding: 0 1rem;
+      }
+
+      .primary-nav { display: none; }
+      .mobile-menu { display: grid; }
+
+      .page { padding: 1.75rem 1rem 3.75rem; }
+
+      .post-hero,
+      .content-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .post-hero { gap: 1.5rem; padding-top: 1.25rem; }
+      .hero-visual { width: min(100%, 22rem); }
+      .side { position: static; }
+    }
+
+    @media (max-width: 480px) {
+      .post-title {
+        font-size: clamp(2.25rem, 14vw, 3.15rem);
+        line-height: 1.12;
+        word-break: break-all;
+      }
+
+      .post-summary {
+        font-size: 1.08rem;
+      }
+
+      .post-content h2,
+      .post-content h3 {
+        grid-template-columns: 1.65rem minmax(0, 1fr);
+        gap: .65rem;
+      }
+
+      .post-content h2 {
+        font-size: 1.7rem;
+      }
+
+      .post-content h3 {
+        font-size: 1.28rem;
+      }
+
+      .post-content h2,
+      .post-content h3,
+      .post-content p,
+      .post-content li {
+        word-break: break-all;
+      }
+
+      .breadcrumbs {
+        word-break: break-all;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#">오래 남는 코드</a>
+      <nav class="primary-nav" aria-label="primary">
+        <a href="#">전체</a>
+        <a href="#">Backend</a>
+        <a href="#">프로젝트</a>
+      </nav>
+      <div class="header-actions">
+        <button class="icon-button search-open" aria-label="search">⌕</button>
+        <button class="icon-button" id="theme" aria-label="dark mode">◐</button>
+        <button class="icon-button mobile-menu" aria-label="menu">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <aside class="category-rail" aria-label="category navigation">
+      <p class="nav-label">카테고리</p>
+      <ul class="nav-list">
+        <li class="active">
+          <div class="nav-item selected">
+            <a class="nav-link" href="#"><span>Backend</span><small>2</small></a>
+            <button class="nav-toggle" aria-label="Backend toggle"><svg viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+          </div>
+          <ul>
+            <li class="active">
+              <div class="nav-item selected"><a class="nav-link sub" href="#"><span>다시 읽기 쉬운 코드</span></a></div>
+            </li>
+          </ul>
+        </li>
+        <li class="active">
+          <div class="nav-item">
+            <a class="nav-link" href="#"><span>프로젝트</span><small>1</small></a>
+            <button class="nav-toggle" aria-label="Project toggle"><svg viewBox="0 0 448 512"><path d="M201.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 274.7 86.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"/></svg></button>
+          </div>
+          <ul><li><div class="nav-item"><a class="nav-link sub" href="#"><span>정보구조 결정</span></a></div></li></ul>
+        </li>
+      </ul>
+    </aside>
+
+    <div>
+      <nav class="breadcrumbs" aria-label="breadcrumb">
+        <a href="#">Home</a><span>/</span><a href="#">Backend</a><span>/</span><strong>다시 읽기 쉬운 코드를 남기는 기준</strong>
+      </nav>
+
+      <header class="post-hero">
+        <div>
+          <div class="category-line"><strong>Backend</strong><span>Backend / readable-code</span></div>
+          <h1 class="post-title">다시 읽기 쉬운 코드를 남기는 기준</h1>
+          <p class="post-summary">나중에 다시 보는 사람을 위해 이름, 함수 경계, 기록을 어떻게 남길지 정리한 짧은 글입니다.</p>
+          <div class="meta-row"><span>2026.06.29</span><span>조회 <b>128</b></span><span>댓글 <b>3</b></span></div>
+        </div>
+        <aside class="hero-visual"><img src="assets/img/thumbnail/backend-notes.png" alt="Backend notes thumbnail"></aside>
+      </header>
+
+      <div class="content-layout">
+        <article>
+          <div class="post-content">
+            <h2 id="code-lasts" data-i="01">코드는 실행보다 오래 남는다</h2>
+            <p>기능을 끝내는 순간에는 코드가 잘 동작하는지만 보이기 쉽다. 하지만 시간이 지나 다시 그 코드를 열어보면, 진짜 비용은 실행 여부보다 이해 가능성에서 나온다.</p>
+            <h2 id="names" data-i="02">이름은 작은 문서다</h2>
+            <p>변수와 함수 이름은 가장 자주 읽히는 문서다. 그래서 이름에는 구현 방법보다 역할이 드러나는 편이 좋다.</p>
+            <pre><button class="copy" type="button" aria-label="Copy Code">□</button><code>const expiredSubscriptions = subscriptions.filter((subscription) => {
+    return subscription.expiresAt &lt; today;
+});</code></pre>
+            <h3 id="checklist" data-i="02.1">나중에 고칠 사람을 위한 체크리스트</h3>
+            <ul>
+              <li>이름은 결과와 역할을 말한다.</li>
+              <li>함수는 한 가지 판단만 담당한다.</li>
+              <li>예외 상황은 조용히 숨기지 않는다.</li>
+            </ul>
+          </div>
+          <div class="tags"><button class="tag search-open">Backend</button><button class="tag search-open">설계</button><button class="tag search-open">리팩터링</button></div>
+        </article>
+
+        <aside class="side">
+          <section class="side-section">
+            <p class="side-title">찾기</p>
+            <button class="side-search search-open">⌕ <span>글, 태그 검색</span></button>
+          </section>
+          <section class="side-section">
+            <p class="side-title">목차</p>
+            <ol class="toc">
+              <li><a class="active" href="#code-lasts">01. 코드는 실행보다 오래 남는다</a></li>
+              <li><a href="#names">02. 이름은 작은 문서다</a></li>
+              <li><a href="#checklist">02.1 나중에 고칠 사람을 위한 체크리스트</a></li>
+            </ol>
+          </section>
+          <section class="side-section">
+            <p class="side-title">이어 읽기</p>
+            <ul class="related">
+              <li><a href="#"><img src="assets/img/thumbnail/backend-notes.png" alt=""><span>기술 블로그 정보구조를 단순하게 시작하기</span></a></li>
+            </ul>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <div class="search-modal" id="search">
+    <div class="search-box">
+      <input type="search" value="" placeholder="Backend, 설계, 리팩터링">
+      <p>검색 결과: 다시 읽기 쉬운 코드를 남기는 기준</p>
+    </div>
+  </div>
+
+  <script>
+    document.querySelectorAll('.nav-toggle').forEach((button) => {
+      button.addEventListener('click', () => button.closest('li').classList.toggle('active'));
+    });
+
+    document.querySelectorAll('.search-open').forEach((button) => {
+      button.addEventListener('click', () => document.getElementById('search').classList.add('active'));
+    });
+
+    document.getElementById('search').addEventListener('click', (event) => {
+      if (event.target.id === 'search') event.currentTarget.classList.remove('active');
+    });
+
+    document.getElementById('theme').addEventListener('click', () => document.body.classList.toggle('dark'));
+
+    document.querySelector('.copy').addEventListener('click', (event) => {
+      event.currentTarget.classList.add('copied');
+      event.currentTarget.textContent = '✓';
+    });
+  </script>
+</body>
+</html>

@@ -31,7 +31,9 @@ platforms :mingw, :x64_mingw, :mswin, :jruby do
 end
 
 # Performance-booster for watching directories on Windows
-gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+install_if -> { Gem::Version.new(RUBY_VERSION) < Gem::Version.new("3.2") } do
+  gem "wdm", "~> 0.1.1", :platforms => [:mingw, :x64_mingw, :mswin]
+end
 
 # Lock `http_parser.rb` gem to `v0.6.x` on JRuby builds since newer versions of the gem
 # do not have a Java counterpart.

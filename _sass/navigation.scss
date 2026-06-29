@@ -1,4 +1,4 @@
-#navigation {
+.navigation {
   display: none;
 
   &.nav-open {
@@ -100,5 +100,25 @@
   &:hover {
     background: var(--panel-soft);
     color: var(--accent);
+  }
+}
+
+.category-rail {
+  .navigation {
+    display: block;
+  }
+
+  .nav-label {
+    margin-bottom: .85rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .nav-item.selected {
+    background: var(--accent-soft);
+  }
+
+  .nav-list-link {
+    min-height: 2.25rem;
   }
 }
