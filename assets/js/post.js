@@ -291,6 +291,23 @@ window.addEventListener('load', function(){
         await navigator.clipboard.writeText(text);
     }
 
+    function showCopySuccess(button) {
+        button.classList.add('is-copied');
+        button.setAttribute('title', "Copied");
+        button.setAttribute('aria-label', "Copied");
+
+        if (button.copyResetTimer) {
+            clearTimeout(button.copyResetTimer);
+        }
+
+        button.copyResetTimer = setTimeout(function() {
+            button.classList.remove('is-copied');
+            button.setAttribute('title', "Copy Code");
+            button.setAttribute('aria-label', "Copy Code");
+            button.copyResetTimer = null;
+        }, 1200);
+    }
+
     let blocks = document.querySelectorAll("pre");
 
     blocks.forEach((block) => {
@@ -308,6 +325,7 @@ window.addEventListener('load', function(){
 
             clipBtn.addEventListener("click", async () => {
                 await copyCode(block);
+                showCopySuccess(clipBtn);
             });
         }
     });

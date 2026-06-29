@@ -331,9 +331,15 @@ a.info-box:hover {
       background: #2a302b;
       cursor: pointer;
       opacity: .9;
+      transition: background-color .16s ease, border-color .16s ease, opacity .16s ease;
 
       &:hover {
         opacity: 1;
+      }
+
+      &.is-copied {
+        border-color: #6f806a;
+        background: #344032;
       }
 
       svg {
@@ -348,6 +354,12 @@ a.info-box:hover {
         mask-position: center;
         mask-repeat: no-repeat;
         mask-size: contain;
+      }
+
+      &.is-copied svg {
+        background-color: #d9f2cf;
+        -webkit-mask-image: url($baseurl + "/assets/img/icon/check-solid.svg");
+        mask-image: url($baseurl + "/assets/img/icon/check-solid.svg");
       }
     }
   }
