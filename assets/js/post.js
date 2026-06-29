@@ -357,14 +357,26 @@ window.addEventListener('load', function(){
 
         const giscusData = event.data.giscus;
         const commentCount = document.getElementById('num-comments');
-
-        if (!commentCount) return;
+        const commentManageLink = document.getElementById('comment-manage-link');
 
         if (giscusData && giscusData.hasOwnProperty('discussion')) {
-            commentCount.innerText = giscusData.discussion.totalCommentCount;
+            if (commentCount) {
+                commentCount.innerText = giscusData.discussion.totalCommentCount;
+            }
+
+            if (commentManageLink && giscusData.discussion.url) {
+                commentManageLink.href = giscusData.discussion.url;
+                commentManageLink.hidden = false;
+            }
         }
         else {
-            commentCount.innerText = '0';
+            if (commentCount) {
+                commentCount.innerText = '0';
+            }
+
+            if (commentManageLink) {
+                commentManageLink.hidden = true;
+            }
         }
     }
 

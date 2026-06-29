@@ -31,10 +31,7 @@
 
         <header class="site-header">
             <div class="header-inner">
-                <a href="{{ site.baseurl | append: '/' }}" class="brand">
-                    <img src="{{ site.logo_img | prepend: site.baseurl }}" alt="" class="brand-mark">
-                    <span>{{ site.title }}</span>
-                </a>
+                <a href="{{ site.baseurl | append: '/' }}" class="brand">{{ site.title }}</a>
 
                 <nav class="primary-nav" aria-label="primary">
                     <a href="{{ site.baseurl | append: '/' }}">전체</a>
