@@ -2,11 +2,6 @@
     {{ page.content | markdownify | strip_html | strip_newlines | truncate: 180 }}
 {%- endcapture -%}
 {%- assign post_description = page.description | default: fallback_description | strip -%}
-{%- assign words = page.content | strip_html | number_of_words -%}
-{%- assign reading_minutes = words | divided_by: 180 -%}
-{% if reading_minutes == 0 %}
-    {%- assign reading_minutes = 1 -%}
-{% endif %}
 {%- assign posting_date = page.date | date: "%Y.%m.%d" -%}
 
 <header class="post-hero">
@@ -38,7 +33,6 @@
             {% if posting_date != "1900.01.01" %}
                 <span class="info-box">{{ posting_date }}</span>
             {% endif %}
-            <span class="info-box">{{ reading_minutes }}분 읽기</span>
             {% if site.goatcounter_code != nil %}
                 <span class="info-box">
                     <span>조회</span>

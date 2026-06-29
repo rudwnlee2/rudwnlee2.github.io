@@ -1,6 +1,11 @@
 <div id="loading">
     <div class="loading_box">
-        <img src="{{ '/assets/img/loading.webp' | prepend: site.baseurl }}">
-        <p>Now Loading ...</p>
+        <div class="loading-mark" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <p class="loading-kicker">Loading</p>
+        <p class="loading-title">글을 펼치는 중입니다</p>
     </div>
 </div>
