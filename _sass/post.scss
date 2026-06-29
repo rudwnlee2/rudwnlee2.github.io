@@ -302,7 +302,7 @@ a.info-box:hover {
   pre {
     position: relative;
     margin: 1.75rem 0;
-    padding: 1rem 3.4rem 1rem 1rem;
+    padding: 1rem;
     overflow-x: auto;
     line-height: 1.74;
 
@@ -314,10 +314,14 @@ a.info-box:hover {
       font-size: .9rem;
     }
 
+    code.hljs {
+      padding-right: 4.25rem;
+    }
+
     button {
       position: absolute;
-      top: .75rem;
-      right: .75rem;
+      top: 1.75rem;
+      right: 1.75rem;
       display: grid;
       place-items: center;
       width: 1.85rem;
@@ -327,6 +331,10 @@ a.info-box:hover {
       background: #2a302b;
       cursor: pointer;
       opacity: .9;
+
+      &:hover {
+        opacity: 1;
+      }
 
       svg {
         width: 1rem;

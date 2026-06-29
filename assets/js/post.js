@@ -300,6 +300,7 @@ window.addEventListener('load', function(){
 
             clipBtn.setAttribute('title', "Copy Code");
             clipBtn.setAttribute('aria-label', "Copy Code");
+            clipBtn.setAttribute('type', "button");
             clipImg.ariaHidden = true;
 
             block.appendChild(clipBtn);
