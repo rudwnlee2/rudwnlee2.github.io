@@ -103,7 +103,7 @@
   align-items: center;
   gap: 1rem;
   max-width: var(--content-width);
-  min-height: 3.75rem;
+  min-height: 3.6rem;
   margin: 0 auto;
   padding: 0 1rem;
 }
@@ -111,7 +111,7 @@
 .brand {
   color: var(--heading);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.35rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0;
 }
@@ -121,7 +121,7 @@
   justify-content: center;
   gap: 1.35rem;
   color: var(--muted);
-  font-size: .9rem;
+  font-size: .86rem;
   font-weight: 700;
 
   a:hover {
@@ -183,7 +183,7 @@
 .page {
   max-width: var(--content-width);
   margin: 0 auto;
-  padding: 1.75rem 1rem 3.75rem;
+  padding: 1.5rem 1rem 3.5rem;
 }
 
 .page-shell {
@@ -202,7 +202,7 @@
 @include mq(tablet) {
   .header-inner {
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-    min-height: 4.25rem;
+    min-height: 4rem;
     padding: 0 1.375rem;
   }
 
@@ -215,22 +215,23 @@
   }
 
   .page {
-    padding: 2.375rem 1.375rem 4.5rem;
+    padding: 2.25rem 1.375rem 4.25rem;
   }
 }
 
 @include mq(wide) {
   .page-shell {
-    grid-template-columns: 16rem minmax(0, 1fr);
+    grid-template-columns: 15rem minmax(0, 1fr);
     align-items: start;
-    max-width: 88rem;
+    max-width: 74rem;
   }
 
   .category-rail {
     position: sticky;
-    top: 5.75rem;
+    top: 5.5rem;
     display: block;
-    border-right: 1px solid var(--line);
-    padding-right: 1.25rem;
+    border-top: 2px solid var(--heading);
+    padding-top: 1rem;
+    padding-right: .75rem;
   }
 }

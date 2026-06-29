@@ -8,9 +8,10 @@
 
 .nav-list {
   display: grid;
-  gap: .125rem;
+  gap: .05rem;
   margin: 0;
   padding: 0;
+  list-style: none;
 
   .nav-list {
     max-height: 0;
@@ -34,8 +35,8 @@
   position: relative;
   display: flex;
   align-items: center;
-  min-height: 2.25rem;
-  border-radius: var(--radius);
+  min-height: 2.1rem;
+  border-radius: 0;
 
   &.selected .nav-list-link {
     color: var(--accent);
@@ -49,10 +50,11 @@
   justify-content: space-between;
   min-width: 0;
   width: 100%;
-  border-radius: var(--radius);
-  padding: .5rem .625rem;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  padding: .55rem 0;
   color: var(--text);
-  font-size: .92rem;
+  font-size: .88rem;
   line-height: 1.35;
 
   span {
@@ -70,14 +72,14 @@
   }
 
   &:hover {
-    background: var(--panel-soft);
+    background: transparent;
     color: var(--accent);
   }
 }
 
 .nav-sh {
   color: var(--muted);
-  font-size: .85rem;
+  font-size: .82rem;
 }
 
 .nav-list-expander {
@@ -109,13 +111,13 @@
   }
 
   .nav-label {
-    margin-bottom: .85rem;
+    margin-bottom: .75rem;
     letter-spacing: .08em;
     text-transform: uppercase;
   }
 
   .nav-item.selected {
-    background: var(--accent-soft);
+    background: transparent;
   }
 
   .nav-list-link {

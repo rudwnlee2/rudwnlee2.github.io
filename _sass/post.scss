@@ -1,9 +1,9 @@
 .post-hero {
   display: grid;
-  gap: 2rem;
-  align-items: center;
+  gap: 1.5rem;
+  align-items: end;
   border-bottom: 1px solid var(--line);
-  padding: 2.25rem 0 2.25rem;
+  padding: 1.65rem 0 2rem;
 }
 
 .post-hero-copy {
@@ -15,9 +15,9 @@
   flex-wrap: wrap;
   gap: .6rem;
   align-items: center;
-  margin-bottom: 1.125rem;
+  margin-bottom: .8rem;
   color: var(--muted);
-  font-size: .84rem;
+  font-size: .8rem;
   font-weight: 700;
 
   strong {
@@ -26,32 +26,32 @@
 }
 
 .post-title {
-  max-width: 48rem;
+  max-width: 40rem;
   color: var(--heading);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2.7rem, 7vw, 5rem);
-  line-height: 1.06;
+  font-size: clamp(1.9rem, 3.8vw, 2.75rem);
+  line-height: 1.18;
   letter-spacing: 0;
   overflow-wrap: anywhere;
   word-break: keep-all;
 }
 
 .post-summary {
-  max-width: 46rem;
-  margin-top: 1.25rem;
+  max-width: 40rem;
+  margin-top: .9rem;
   color: var(--text);
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.15rem, 3vw, 1.45rem);
-  line-height: 1.75;
+  font-family: inherit;
+  font-size: 1.02rem;
+  line-height: 1.8;
   word-break: keep-all;
 }
 
 .meta-row {
   display: flex;
   flex-wrap: wrap;
-  gap: .85rem;
+  gap: .75rem;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .info-box {
@@ -59,7 +59,7 @@
   gap: .25rem;
   align-items: center;
   color: var(--muted);
-  font-size: .84rem;
+  font-size: .8rem;
   font-weight: 650;
 }
 
@@ -68,13 +68,13 @@ a.info-box:hover {
 }
 
 .hero-visual {
-  width: min(100%, 18rem);
+  width: min(100%, 11.5rem);
   justify-self: start;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
   padding: .625rem;
-  box-shadow: var(--shadow);
+  box-shadow: none;
 }
 
 .visual-frame {
@@ -106,7 +106,7 @@ a.info-box:hover {
   margin: 0;
   padding: .75rem .125rem .125rem;
   color: var(--muted);
-  font-size: .78rem;
+  font-size: .74rem;
   line-height: 1.55;
 
   &::before {
@@ -136,7 +136,7 @@ a.info-box:hover {
   display: grid;
   gap: 2rem;
   align-items: start;
-  margin-top: 2.125rem;
+  margin-top: 2rem;
 
   > * {
     min-width: 0;
@@ -159,7 +159,7 @@ a.info-box:hover {
   h2,
   h3 {
     color: var(--heading);
-    font-family: Georgia, "Times New Roman", serif;
+    font-family: inherit;
     letter-spacing: 0;
     line-height: 1.25;
     scroll-margin-top: 5.5rem;
@@ -169,40 +169,40 @@ a.info-box:hover {
 
   h1,
   h2 {
-    margin: 3.25rem 0 1rem;
-    font-size: clamp(1.85rem, 4vw, 2.35rem);
+    margin: 2.5rem 0 .85rem;
+    font-size: clamp(1.45rem, 2.8vw, 1.7rem);
   }
 
   h3 {
-    margin: 2.25rem 0 .75rem;
-    font-size: clamp(1.3rem, 3vw, 1.55rem);
+    margin: 1.8rem 0 .65rem;
+    font-size: clamp(1.15rem, 2.4vw, 1.3rem);
   }
 
   .section-heading {
     display: grid;
     grid-template-columns: 2.35rem minmax(0, 1fr);
-    gap: .85rem;
+    gap: .65rem;
     align-items: baseline;
 
     &::before {
       content: attr(data-heading-index);
       color: var(--accent);
       font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      font-size: .9rem;
+      font-size: .95em;
       font-weight: 850;
     }
   }
 
   .section-heading.level-h3::before {
     color: var(--subtle);
-    font-size: .78rem;
+    font-size: .9em;
   }
 
   p {
-    margin: 0 0 1.35rem;
+    margin: 0 0 1.05rem;
     color: var(--text);
-    font-size: 1.06rem;
-    line-height: 1.9;
+    font-size: 1rem;
+    line-height: 1.82;
     word-break: keep-all;
   }
 
@@ -230,9 +230,9 @@ a.info-box:hover {
   }
 
   li {
-    margin: .45rem 0;
+    margin: .35rem 0;
     padding-left: .25rem;
-    line-height: 1.8;
+    line-height: 1.75;
   }
 
   ul li::marker,
@@ -242,14 +242,14 @@ a.info-box:hover {
   }
 
   blockquote {
-    margin: 2rem 0;
+    margin: 1.6rem 0;
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
     padding: 1.25rem 0;
     color: var(--accent);
     font-family: Georgia, "Times New Roman", serif;
-    font-size: 1.35rem;
-    line-height: 1.45;
+    font-size: 1.1rem;
+    line-height: 1.6;
 
     p {
       margin: 0;
@@ -302,22 +302,22 @@ a.info-box:hover {
   }
 
   .highlighter-rouge .highlight {
-    margin: 1.75rem 0;
+    margin: 1.4rem 0;
   }
 
   pre {
     position: relative;
-    margin: 1.75rem 0;
-    padding: 1rem;
+    margin: 1.4rem 0;
+    padding: .9rem;
     overflow-x: auto;
-    line-height: 1.74;
+    line-height: 1.65;
 
     code {
       border: 0;
       background: transparent;
       padding: 0;
       color: inherit;
-      font-size: .9rem;
+      font-size: .82rem;
     }
 
     code.hljs {
@@ -326,8 +326,8 @@ a.info-box:hover {
 
     button {
       position: absolute;
-      top: 1.75rem;
-      right: 1.75rem;
+      top: .8rem;
+      right: .8rem;
       display: grid;
       place-items: center;
       width: 1.85rem;
@@ -397,7 +397,7 @@ a.info-box:hover {
   display: flex;
   flex-wrap: wrap;
   gap: .5rem;
-  margin-top: 2.125rem;
+  margin-top: 1.75rem;
 }
 
 .tag {
@@ -433,13 +433,13 @@ a.info-box:hover {
 
 .side {
   display: grid;
-  gap: 1.125rem;
+  gap: 1rem;
   min-width: 0;
 }
 
 .side-section {
   border-top: 1px solid var(--line);
-  padding-top: 1rem;
+  padding-top: .9rem;
 
   &:first-child {
     border-top: 0;
@@ -452,7 +452,7 @@ a.info-box:hover {
   display: block;
   margin: 0 0 .75rem;
   color: var(--subtle);
-  font-size: .76rem;
+  font-size: .72rem;
   font-weight: 850;
 }
 
@@ -462,7 +462,7 @@ a.info-box:hover {
   align-items: center;
   gap: .6rem;
   width: 100%;
-  min-height: 2.5rem;
+  min-height: 2.3rem;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: var(--panel);
@@ -574,35 +574,36 @@ a.info-box:hover {
   }
 
   .content-layout {
-    grid-template-columns: minmax(0, 45.625rem) 16.25rem;
-    gap: 3rem;
+    grid-template-columns: minmax(0, 40rem) 13.5rem;
+    gap: 2.6rem;
   }
 
   .side {
     position: sticky;
-    top: 5.75rem;
+    top: 5.5rem;
   }
 }
 
 @media (max-width: 480px) {
   .post-title {
-    font-size: clamp(2.25rem, 14vw, 3.15rem);
-    line-height: 1.12;
+    font-size: clamp(1.45rem, 8vw, 1.85rem);
+    line-height: 1.3;
+    max-width: 100%;
     word-break: break-all;
   }
 
   .post-summary {
-    font-size: 1.08rem;
+    font-size: .98rem;
   }
 
   .post-content {
     h1,
     h2 {
-      font-size: 1.7rem;
+      font-size: 1.2rem;
     }
 
     h3 {
-      font-size: 1.28rem;
+      font-size: 1.05rem;
     }
 
     h1,
