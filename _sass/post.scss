@@ -302,7 +302,7 @@ a.info-box:hover {
   pre {
     position: relative;
     margin: 1.75rem 0;
-    padding: 1rem;
+    padding: 1rem 3.4rem 1rem 1rem;
     overflow-x: auto;
     line-height: 1.74;
 
@@ -315,9 +315,9 @@ a.info-box:hover {
     }
 
     button {
-      position: sticky;
-      left: calc(100% - 2rem);
-      bottom: .35rem;
+      position: absolute;
+      top: .75rem;
+      right: .75rem;
       display: grid;
       place-items: center;
       width: 1.85rem;
