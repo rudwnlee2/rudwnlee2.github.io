@@ -32,6 +32,7 @@ plugins:
 
 exclude:
   - docs/
+  - tmp/
 
 collections:
   pages:
