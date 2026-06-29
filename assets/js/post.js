@@ -274,7 +274,7 @@ window.addEventListener('load', function(){
             "data-reactions-enabled": "1",
             "data-emit-metadata": "1",
             "data-theme": giscusTheme,
-            "data-lang": "en",
+            "data-lang": "ko",
             "crossorigin": "anonymous",
             "async": "",
         };
