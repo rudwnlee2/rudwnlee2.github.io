@@ -28,10 +28,6 @@ body.dark-theme {
     border-bottom-color: rgba(58, 60, 53, .82);
   }
 
-  .visual-frame::after {
-    background: linear-gradient(180deg, rgba(255, 255, 255, .04), rgba(0, 0, 0, .18));
-  }
-
   .post-content pre button {
     background: #272f26;
   }

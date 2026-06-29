@@ -21,6 +21,16 @@
             </span>
         </div>
 
+        {% if page.tags %}
+            <div class="tag-box tags hero-tags">
+                {%- for page_tag in page.tags -%}
+                    <span class="tag theme-{{ forloop.index0 | modulo: 3 }}" contentID="{{ page_tag }}">
+                        {{ page_tag }}
+                    </span>
+                {%- endfor -%}
+            </div>
+        {% endif %}
+
         {% if page.title %}
             <h1 class="post-title">{{ page.title }}</h1>
         {% endif %}
@@ -45,24 +55,6 @@
             </a>
         </div>
     </div>
-
-    {% if page.thumbnail %}
-        {%- assign thumbnail_url = page.thumbnail -%}
-        {%- assign check_localasset = thumbnail_url | split:'/' -%}
-        {% if check_localasset[0] == '' %}
-            {%- assign thumbnail_url = thumbnail_url | prepend: site.baseurl -%}
-        {% endif %}
-        <aside class="hero-visual" aria-label="글 이미지">
-            <div class="visual-frame">
-                <img src="{{ thumbnail_url }}" alt="{{ page.title | escape }}" loading="lazy">
-            </div>
-            <p class="visual-note">대표 이미지는 글보다 앞서지 않도록 작은 표지처럼 배치합니다.</p>
-        </aside>
-    {% else %}
-        <aside class="hero-visual no-image" aria-label="글 분위기">
-            <p class="visual-note">사진 없이도 글의 리듬이 먼저 보이도록 제목과 문단 간격을 넉넉하게 두었습니다.</p>
-        </aside>
-    {% endif %}
 </header>
 
 <div class="content-layout">
@@ -71,20 +63,10 @@
             {{ content }}
         </div>
 
-        {% if page.tags %}
-            <div class="tag-box tags">
-                {%- for page_tag in page.tags -%}
-                    <span class="tag theme-{{ forloop.index0 | modulo: 3 }}" contentID="{{ page_tag }}">
-                        {{ page_tag }}
-                    </span>
-                {%- endfor -%}
-            </div>
-        {% endif %}
-
         <section class="comment-section">
             <div class="support-section-header">
                 <span>댓글</span>
-                <a id="comment-manage-link" class="comment-manage-link" href="#" target="_blank" rel="noopener noreferrer" hidden>
+                <a id="comment-manage-link" class="comment-manage-link" href="https://github.com/{{ site.giscus_repo }}/discussions" target="_blank" rel="noopener noreferrer">
                     댓글 관리/삭제
                 </a>
             </div>

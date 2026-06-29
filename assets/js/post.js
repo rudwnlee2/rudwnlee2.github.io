@@ -237,7 +237,20 @@ window.addEventListener('load', function(){
         var resp = new XMLHttpRequest();
         resp.open('GET', requestURL);
         resp.onerror = function() { pageHits.innerText = "0"; };
-        resp.onload = function() { pageHits.innerText = JSON.parse(this.responseText).count; };
+        resp.onload = function() {
+            if (this.status < 200 || this.status >= 300) {
+                pageHits.innerText = "0";
+                return;
+            }
+
+            try {
+                var counter = JSON.parse(this.responseText);
+                pageHits.innerText = counter && counter.count ? counter.count : "0";
+            }
+            catch (error) {
+                pageHits.innerText = "0";
+            }
+        };
         resp.send();
     }
 
@@ -351,34 +364,28 @@ window.addEventListener('load', function(){
         }
     });
 
-    function handleMessage(event) {
-        if (event.origin !== 'https://giscus.app') return;
-        if (!(typeof event.data === 'object' && event.data.giscus)) return;
+});
 
-        const giscusData = event.data.giscus;
-        const commentCount = document.getElementById('num-comments');
-        const commentManageLink = document.getElementById('comment-manage-link');
+window.addEventListener('message', function(event) {
+    if (event.origin !== 'https://giscus.app') return;
+    if (!(typeof event.data === 'object' && event.data.giscus)) return;
 
-        if (giscusData && giscusData.hasOwnProperty('discussion')) {
-            if (commentCount) {
-                commentCount.innerText = giscusData.discussion.totalCommentCount;
-            }
+    const giscusData = event.data.giscus;
+    const commentCount = document.getElementById('num-comments');
+    const commentManageLink = document.getElementById('comment-manage-link');
 
-            if (commentManageLink && giscusData.discussion.url) {
-                commentManageLink.href = giscusData.discussion.url;
-                commentManageLink.hidden = false;
-            }
+    if (giscusData && giscusData.hasOwnProperty('discussion')) {
+        if (commentCount) {
+            commentCount.innerText = giscusData.discussion.totalCommentCount;
         }
-        else {
-            if (commentCount) {
-                commentCount.innerText = '0';
-            }
 
-            if (commentManageLink) {
-                commentManageLink.hidden = true;
-            }
+        if (commentManageLink && giscusData.discussion.url) {
+            commentManageLink.href = giscusData.discussion.url;
         }
     }
-
-    window.addEventListener('message', handleMessage);
+    else {
+        if (commentCount) {
+            commentCount.innerText = '0';
+        }
+    }
 });

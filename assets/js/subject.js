@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     // Loading page
-    window.addEventListener("load", () => {
+    const hideLoading = () => {
         var load_div = document.querySelector('#loading');
 
         if(load_div != null){
@@ -10,7 +10,10 @@ document.addEventListener('DOMContentLoaded', function(){
                 load_div.style.visibility = 'hidden';
             }, 800);
         }
-    });
+    };
+
+    hideLoading();
+    window.addEventListener("load", hideLoading);
 
     // pagination
     const paginationNumbers = document.querySelector("#pagination-numbers");

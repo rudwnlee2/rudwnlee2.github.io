@@ -104,23 +104,3 @@
     color: var(--accent);
   }
 }
-
-.category-rail {
-  .navigation {
-    display: block;
-  }
-
-  .nav-label {
-    margin-bottom: .75rem;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-  }
-
-  .nav-item.selected {
-    background: transparent;
-  }
-
-  .nav-list-link {
-    min-height: 2.25rem;
-  }
-}

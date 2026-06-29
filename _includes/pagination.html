@@ -12,19 +12,15 @@
         구현하며 배운 것, 나중에 다시 찾을 기준, 조금 더 나은 이름과 구조에 대한 생각을 차분하게 쌓아둡니다.
     </p>
 
-    {% if page_level == 1 %}
-        <div class="topic-filter">
-            <a class="topic-chip active" href="{{ site.baseurl | append: '/' }}">전체</a>
-            {% assign category_pages = site.pages | sort: 'url' %}
-            {% for category_page in category_pages %}
-                {%- assign category_tree = category_page.path | remove_first: "_pages/" | split: "/" -%}
-                {% if category_tree.last == "index.md" and category_tree.size == 2 %}
-                    {%- assign category_name = category_tree[0] -%}
-                    <a class="topic-chip" href="{{ category_page.url | remove: 'index.html' | prepend: site.baseurl }}">{{ category_name }}</a>
-                {% endif %}
-            {% endfor %}
-        </div>
-    {% endif %}
+    <nav class="topic-filter" aria-label="category shortcuts">
+        <a class="topic-chip {% if page_level == 1 %}active{% endif %}" href="{{ site.baseurl | append: '/' }}">전체</a>
+        <a class="topic-chip {% if page.path contains 'Backend/' %}active{% endif %}" href="{{ '/Backend/' | prepend: site.baseurl }}">Backend</a>
+        <a class="topic-chip {% if page.path contains 'Backend/Spring/' %}active{% endif %}" href="{{ '/Backend/Spring/' | prepend: site.baseurl }}">Spring</a>
+        <a class="topic-chip {% if page.path contains 'Backend/Java/' %}active{% endif %}" href="{{ '/Backend/Java/' | prepend: site.baseurl }}">Java</a>
+        <a class="topic-chip {% if page.path contains 'Backend/코드 품질/' %}active{% endif %}" href="{{ '/Backend/코드 품질/' | prepend: site.baseurl }}">코드 품질</a>
+        <a class="topic-chip {% if page.path contains '프로젝트/' %}active{% endif %}" href="{{ '/프로젝트/' | prepend: site.baseurl }}">프로젝트</a>
+        <a class="topic-chip {% if page.path contains '프로젝트/블로그/' %}active{% endif %}" href="{{ '/프로젝트/블로그/' | prepend: site.baseurl }}">블로그</a>
+    </nav>
 </header>
 
 <section id="category-list" class="article-list" aria-label="{{ category_label }}">

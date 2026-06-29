@@ -62,11 +62,6 @@
         </header>
 
         <main id="post" class="page page-shell">
-            <aside class="category-rail" aria-label="category navigation">
-                <p class="nav-label">카테고리</p>
-                {% include navigation.html id="category-navigation" %}
-            </aside>
-
             <div class="page-main">
                 {% include category.html %}
                 {% if page_type == "category" %}
