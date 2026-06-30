@@ -225,14 +225,6 @@ function uniqueSlug(text, usedIds) {
 
 function getGoatcounterPath() {
     let path = location.pathname || '/';
-
-    try {
-        path = decodeURI(path);
-    }
-    catch (error) {
-        // Keep the browser-provided path if it is not valid UTF-8.
-    }
-
     path = path.replace(/\/index\.html$/, '/');
     return path || '/';
 }
