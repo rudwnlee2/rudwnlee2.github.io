@@ -1,13 +1,11 @@
 .post-hero {
   position: relative;
-  display: flex;
-  align-items: flex-end;
+  display: block;
   width: 100%;
-  min-height: 21.25rem;
-  overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(15, 23, 42, .76), rgba(15, 23, 42, .4) 48%, rgba(15, 23, 42, .14)),
-    url("#{$baseurl}/assets/img/reference/developer-hero.png") center / cover;
+  min-height: 0;
+  overflow: visible;
+  border-bottom: 1px solid var(--line);
+  background: var(--panel);
 }
 
 .page-post .category-tree {
@@ -18,11 +16,12 @@
   position: relative;
   z-index: 1;
   display: grid;
-  gap: .85rem;
+  gap: .95rem;
   min-width: 0;
-  width: min(100%, 58rem);
-  padding: 0 clamp(1.5rem, 4vw, 4rem) 3.15rem;
-  color: #fff;
+  width: min(calc(100% - 2rem), 76rem);
+  margin: 0 auto;
+  padding: clamp(2.25rem, 5vw, 3.5rem) 0 2.35rem;
+  color: var(--text);
 }
 
 .post-hero-meta {
@@ -30,7 +29,7 @@
   flex-wrap: wrap;
   gap: .7rem;
   align-items: center;
-  color: rgba(255, 255, 255, .78);
+  color: var(--subtle);
   font-size: .82rem;
   font-weight: 800;
 }
@@ -40,17 +39,17 @@
   align-items: center;
   min-height: 2rem;
   border-radius: .65rem;
-  background: rgba(234, 88, 12, .92);
+  background: rgba(234, 88, 12, .1);
   padding: 0 .72rem;
-  color: #fff;
+  color: var(--warm);
 }
 
 .post-title {
-  max-width: 50rem;
-  color: #fff;
+  max-width: 56rem;
+  color: var(--heading);
   font-family: var(--font-sans);
-  font-size: clamp(2.05rem, 3.8vw, 2.72rem);
-  line-height: 1.18;
+  font-size: clamp(2.05rem, 3.5vw, 3rem);
+  line-height: 1.22;
   letter-spacing: 0;
   overflow-wrap: anywhere;
   word-break: keep-all;
@@ -71,28 +70,30 @@
 .post-hero .info-box,
 .post-hero .tag {
   min-height: 2.35rem;
-  border-color: rgba(255, 255, 255, .15);
-  background: rgba(17, 24, 39, .58);
+  border-color: var(--line);
+  background: var(--panel);
   padding: 0 1rem;
-  color: rgba(255, 255, 255, .84);
+  color: var(--muted);
   font-size: .88rem;
   font-weight: 850;
-  backdrop-filter: blur(10px);
 }
 
 .post-hero a.info-box:hover,
 .post-hero .tag:hover {
-  border-color: rgba(255, 255, 255, .34);
-  color: #fff;
+  border-color: var(--accent-line);
+  color: var(--accent);
 }
 
 .post-summary,
 .post-lead {
   max-width: none;
-  color: var(--muted);
+  border-left: 3px solid var(--accent);
+  padding: .05rem 0 .05rem 1rem;
+  color: var(--text);
   font-family: inherit;
   font-size: 1.03rem;
-  line-height: 1.9;
+  font-weight: 680;
+  line-height: 1.78;
   word-break: keep-all;
 }
 
@@ -128,7 +129,7 @@ a.info-box:hover {
   max-width: 100%;
   gap: 2rem;
   align-items: start;
-  margin: 3rem auto 0;
+  margin: 2.5rem auto 0;
 
   > * {
     min-width: 0;
@@ -765,18 +766,20 @@ a.info-box:hover {
   }
 
   .post-hero {
-    min-height: 22.5rem;
+    min-height: 0;
   }
 
   .post-hero-copy {
-    padding: 0 1.25rem 2.25rem;
+    width: 100%;
+    padding: 2rem 1.25rem 1.85rem;
   }
 
   .post-title {
     font-size: clamp(1.45rem, 8vw, 1.85rem);
     line-height: 1.3;
     max-width: 100%;
-    word-break: break-all;
+    overflow-wrap: anywhere;
+    word-break: keep-all;
   }
 
   .post-summary {
@@ -798,7 +801,8 @@ a.info-box:hover {
     h3,
     p,
     li {
-      word-break: break-all;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
     }
 
     .section-heading {

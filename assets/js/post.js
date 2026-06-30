@@ -223,35 +223,68 @@ function uniqueSlug(text, usedIds) {
     return nextSlug;
 }
 
+function getGoatcounterPath() {
+    let path = location.pathname || '/';
+
+    try {
+        path = decodeURI(path);
+    }
+    catch (error) {
+        // Keep the browser-provided path if it is not valid UTF-8.
+    }
+
+    path = path.replace(/\/index\.html$/, '/');
+    return path || '/';
+}
+
+function recordPageHit(path) {
+    if (!window.goatcounter || typeof window.goatcounter.count !== 'function') return;
+    window.goatcounter.count({ path: path });
+}
+
+function loadPageHitCount(pageHits, goatcounterCode, path) {
+    if (!goatcounterCode) {
+        pageHits.innerText = "0";
+        return;
+    }
+
+    const requestURL = 'https://'
+        + goatcounterCode
+        + '.goatcounter.com/counter/'
+        + encodeURIComponent(path)
+        + '.json';
+
+    var resp = new XMLHttpRequest();
+    resp.open('GET', requestURL);
+    resp.onerror = function() { pageHits.innerText = "0"; };
+    resp.onload = function() {
+        if (this.status < 200 || this.status >= 300) {
+            pageHits.innerText = "0";
+            return;
+        }
+
+        try {
+            var counter = JSON.parse(this.responseText);
+            pageHits.innerText = counter && counter.count ? counter.count : "0";
+        }
+        catch (error) {
+            pageHits.innerText = "0";
+        }
+    };
+    resp.send();
+}
+
 window.addEventListener('load', function(){
     const pageHits = document.getElementById('page-hits');
 
     if (pageHits) {
         const goatcounterCode = pageHits.getAttribute('usercode');
-        const requestURL = 'https://' 
-            + goatcounterCode 
-            + '.goatcounter.com/counter/' 
-            + encodeURIComponent(location.pathname) 
-            + '.json';
+        const goatcounterPath = getGoatcounterPath();
 
-        var resp = new XMLHttpRequest();
-        resp.open('GET', requestURL);
-        resp.onerror = function() { pageHits.innerText = "0"; };
-        resp.onload = function() {
-            if (this.status < 200 || this.status >= 300) {
-                pageHits.innerText = "0";
-                return;
-            }
-
-            try {
-                var counter = JSON.parse(this.responseText);
-                pageHits.innerText = counter && counter.count ? counter.count : "0";
-            }
-            catch (error) {
-                pageHits.innerText = "0";
-            }
-        };
-        resp.send();
+        recordPageHit(goatcounterPath);
+        setTimeout(function() {
+            loadPageHitCount(pageHits, goatcounterCode, goatcounterPath);
+        }, 900);
     }
 
     if (window.hljs) {
