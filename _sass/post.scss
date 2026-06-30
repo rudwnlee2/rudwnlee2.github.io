@@ -397,10 +397,10 @@ a.info-box:hover {
       &::before {
         content: attr(data-code-label);
         grid-column: 1 / -1;
-        min-height: 2.2rem;
+        min-height: 1.35rem;
         border-bottom: 1px solid var(--line);
         background: var(--panel-soft);
-        padding: .48rem 3.75rem .44rem 1rem;
+        padding: .32rem 3.35rem .3rem .95rem;
         color: var(--muted);
         font-family: var(--font-sans);
         font-size: .78rem;
@@ -437,10 +437,10 @@ a.info-box:hover {
       }
 
       button {
-        top: .36rem;
-        right: .7rem;
-        width: 1.7rem;
-        height: 1.7rem;
+        top: .26rem;
+        right: .62rem;
+        width: 1.48rem;
+        height: 1.48rem;
         border-color: var(--line);
         border-radius: .5rem;
         background: var(--panel);
