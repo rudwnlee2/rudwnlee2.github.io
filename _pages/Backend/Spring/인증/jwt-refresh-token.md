@@ -2,6 +2,7 @@
 title: "JWT Refresh Token 재발급 흐름 정리"
 date: "2026-06-29"
 description: "Access Token 만료 이후 Refresh Token으로 인증 상태를 이어가는 흐름과 예외 기준을 정리합니다."
+keyword: "JWT"
 tags:
     - Backend
     - Spring

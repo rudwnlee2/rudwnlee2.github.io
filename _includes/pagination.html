@@ -4,29 +4,46 @@
 {% if page_level == 1 %}
     {%- assign category_label = "전체 글" -%}
 {% endif %}
+{%- assign page_url = page.url | remove: 'index.html' -%}
+{%- assign category_post_total = 0 -%}
+{%- for count_page in list_pages -%}
+    {% if count_page.url contains page_url %}
+    {% unless count_page.url contains "index.html" %}
+        {%- assign category_post_total = category_post_total | plus: 1 -%}
+    {% endunless %}
+    {% endif %}
+{%- endfor -%}
 
 <header class="category-hero">
-    <p class="section-kicker">기술과 기록 사이</p>
-    <h1 class="category-header">{{ category_label }}</h1>
-    <p class="category-summary">
-        구현하며 배운 것, 나중에 다시 찾을 기준, 조금 더 나은 이름과 구조에 대한 생각을 차분하게 쌓아둡니다.
-    </p>
-
-    <nav class="topic-filter" aria-label="category shortcuts">
-        <a class="topic-chip {% if page_level == 1 %}active{% endif %}" href="{{ site.baseurl | append: '/' }}">전체</a>
-        <a class="topic-chip {% if page.path contains 'Backend/' %}active{% endif %}" href="{{ '/Backend/' | prepend: site.baseurl }}">Backend</a>
-        <a class="topic-chip {% if page.path contains 'Backend/Spring/' %}active{% endif %}" href="{{ '/Backend/Spring/' | prepend: site.baseurl }}">Spring</a>
-        <a class="topic-chip {% if page.path contains 'Backend/Java/' %}active{% endif %}" href="{{ '/Backend/Java/' | prepend: site.baseurl }}">Java</a>
-        <a class="topic-chip {% if page.path contains 'Backend/코드 품질/' %}active{% endif %}" href="{{ '/Backend/코드 품질/' | prepend: site.baseurl }}">코드 품질</a>
-        <a class="topic-chip {% if page.path contains '프로젝트/' %}active{% endif %}" href="{{ '/프로젝트/' | prepend: site.baseurl }}">프로젝트</a>
-        <a class="topic-chip {% if page.path contains '프로젝트/블로그/' %}active{% endif %}" href="{{ '/프로젝트/블로그/' | prepend: site.baseurl }}">블로그</a>
-    </nav>
+    <div class="feed-hero">
+        <div class="feed-hero-copy">
+            <p>DEV BLOG</p>
+            <h1>기록하는 만큼 성장합니다</h1>
+            <span>백엔드를 공부하며 마주친 개념과 고민을 차곡차곡 정리합니다. 천천히, 그러나 깊게.</span>
+        </div>
+    </div>
 </header>
+
+<div class="category-title-row">
+    <div>
+        <h1 class="category-header">
+            <span>{{ category_label }}</span>
+            <em>{{ category_post_total }}개의 글</em>
+        </h1>
+    </div>
+    <div class="view-switch" aria-label="보기 방식">
+        <button class="active" type="button" aria-label="카드 보기" data-view="grid">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </button>
+        <button type="button" aria-label="리스트 보기" data-view="list">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+    </div>
+</div>
 
 <section id="category-list" class="article-list" aria-label="{{ category_label }}">
     <ul class="paginated-list" data-current-page="1" aria-live="polite">
     {%- for sub_page in list_pages -%}
-        {%- assign page_url = page.url | remove: 'index.html' -%}
         {% if sub_page.url contains page_url %}
         {% unless sub_page.url contains "index.html" %}
             {%- assign post_counts = post_counts | plus:1 -%}
@@ -35,17 +52,11 @@
                 {{ sub_page.description | default: sub_page.content | markdownify | strip_html | strip_newlines | truncate: 150 }}
             {%- endcapture -%}
             <li class="paginated-item">
-                <article class="post-row {% if sub_page.thumbnail %}has-thumb{% endif %}">
-                    {% if sub_page.thumbnail != nil %}
-                        {%- assign thumbnail_url = sub_page.thumbnail -%}
-                        {%- assign check_localasset = thumbnail_url | split:'/' -%}
-                        {% if check_localasset[0] == '' %}
-                            {%- assign thumbnail_url = thumbnail_url | prepend: site.baseurl -%}
-                        {% endif %}
-                        <a href="{{ sub_page.url | prepend: site.baseurl }}" class="thumbnail_post" aria-label="{{ sub_page.title | escape }}">
-                            <img src="{{ thumbnail_url }}" alt="{{ sub_page.title | escape }}" loading="lazy">
-                        </a>
-                    {% endif %}
+                <article class="post-card post-row">
+                    <a href="{{ sub_page.url | prepend: site.baseurl }}" class="post-card-media" aria-label="{{ sub_page.title | escape }}">
+                        <span>{{ sub_page.keyword | default: sub_page.title | truncate: 22, "" }}</span>
+                        <em>&lt;/&gt;</em>
+                    </a>
                     <div class="box_contents">
                         <div class="info-post">
                             {% if sub_page_tree.size > 2 %}
@@ -64,13 +75,13 @@
                         <a href="{{ sub_page.url | prepend: site.baseurl }}" class="txt_post">
                             {{ post_excerpt | strip }}
                         </a>
-                        {% if sub_page.tags %}
-                            <div class="post-row-tags">
-                                {% for tag in sub_page.tags limit: 4 %}
-                                    <span>{{ tag }}</span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
+                        <div class="post-card-footer">
+                            <span class="author-badge">경</span>
+                            <span>경주</span>
+                            {% if posting_date != "1900-01-01" %}
+                                <span>{{ posting_date }}</span>
+                            {% endif %}
+                        </div>
                     </div>
                 </article>
             </li>

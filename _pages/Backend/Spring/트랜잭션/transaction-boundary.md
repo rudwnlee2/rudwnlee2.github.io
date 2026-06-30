@@ -2,6 +2,7 @@
 title: "트랜잭션 경계는 서비스 유스케이스에 둔다"
 date: "2026-06-29"
 description: "트랜잭션을 Repository가 아니라 서비스 유스케이스 단위에서 잡아야 하는 이유를 정리합니다."
+keyword: "Transactional"
 tags:
     - Backend
     - Spring

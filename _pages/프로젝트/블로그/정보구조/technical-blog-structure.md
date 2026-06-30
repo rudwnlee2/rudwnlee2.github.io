@@ -2,6 +2,7 @@
 title: "기술 블로그 정보구조를 단순하게 시작하기"
 date: "2026-06-29"
 description: "전체, Backend, 프로젝트라는 상단 구조와 좌측 확장 카테고리를 함께 검토한 기록입니다."
+keyword: "Blog IA"
 tags:
     - 프로젝트
     - 블로그

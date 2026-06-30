@@ -24,10 +24,25 @@ document.addEventListener('DOMContentLoaded', function(){
         const nextButton = document.querySelector("#next-button");
         const prevButton = document.querySelector("#prev-button");
         const pageKey = "pageKey=" + document.URL;
+        const viewButtons = document.querySelectorAll(".view-switch [data-view]");
+        const viewKey = "feedView=" + document.URL;
 
-        const paginationLimit = 5;
+        const paginationLimit = 3;
         const pageCount = Math.ceil(listItems.length / paginationLimit);
         let currentPage = 1;
+
+        const setFeedView = (view) => {
+            const normalizedView = view === "list" ? "list" : "grid";
+            paginatedList.classList.toggle("list-view", normalizedView === "list");
+
+            viewButtons.forEach((button) => {
+                const isActive = button.dataset.view === normalizedView;
+                button.classList.toggle("active", isActive);
+                button.setAttribute("aria-pressed", isActive ? "true" : "false");
+            });
+
+            localStorage.setItem(viewKey, normalizedView);
+        };
 
         const disableButton = (button) => {
             button.classList.add("disabled");
@@ -112,6 +127,13 @@ document.addEventListener('DOMContentLoaded', function(){
 
             getPaginationNumbers();
             setCurrentPage(currentPage);
+            setFeedView(localStorage.getItem(viewKey) || "grid");
+
+            viewButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    setFeedView(button.dataset.view);
+                });
+            });
 
             prevButton.addEventListener("click", () => {
                 setCurrentPage(currentPage - 1);

@@ -2,6 +2,7 @@
 title: "다시 읽기 쉬운 코드를 남기는 기준"
 date: "2026-06-29"
 description: "나중에 다시 보는 사람을 위해 이름, 함수 경계, 기록을 어떻게 남길지 정리한 짧은 글입니다."
+keyword: "Readable Code"
 tags:
     - Backend
     - 설계

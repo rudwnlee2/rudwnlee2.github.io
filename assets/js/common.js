@@ -19,25 +19,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // navigation (mobile)
     var siteNav = document.querySelector('#navigation');
-    var siteContact = document.querySelector('#contact');
     var siteSidebar = document.querySelector('.sidebar-left');
     var menuButton = document.querySelector("#btn-nav");
 
-    menuButton.addEventListener('click', function() {
-        if (menuButton.classList.toggle('nav-open')) {
-            siteNav.classList.add('nav-open');
-            siteContact.classList.add('contact-open');
-            siteSidebar.classList.add('sidebar-open');
-        } else {
-            siteNav.classList.remove('nav-open');
-            siteContact.classList.remove('contact-open');
-            siteSidebar.classList.remove('sidebar-open');
-        }
-    });
+    if (menuButton && siteSidebar) {
+        menuButton.addEventListener('click', function() {
+            if (menuButton.classList.toggle('nav-open')) {
+                menuButton.setAttribute('aria-pressed', 'true');
+                siteNav?.classList.add('nav-open');
+                siteSidebar.classList.add('sidebar-open');
+            } else {
+                menuButton.setAttribute('aria-pressed', 'false');
+                siteNav?.classList.remove('nav-open');
+                siteSidebar.classList.remove('sidebar-open');
+            }
+        });
+    }
 
     // kept nav opened
     var firstNavs = document.querySelectorAll('.nav-first');
-    var page_path = window.location.pathname.replace(/%20/g, " ");
+    var page_path = decodeURI(window.location.pathname).replace(/%20/g, " ");
     page_path = page_path.replace(baseurl, "");
     var page_tree = page_path.split('/');
 
@@ -85,6 +86,16 @@ document.addEventListener('DOMContentLoaded', function(){
         else {
             nav_item.classList.remove('selected');
         }
+    });
+
+    document.querySelectorAll('.category-toggle').forEach(function(toggle) {
+        toggle.addEventListener('click', function() {
+            var branch = toggle.closest('.category-branch');
+            if (!branch) return;
+
+            var isOpen = branch.classList.toggle('is-open');
+            toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
     });
 
     // Change Datk/Light Theme
@@ -149,15 +160,41 @@ document.addEventListener('DOMContentLoaded', function(){
 
     // search box
     const searchButton = document.querySelectorAll("#btn-search, .btn-search");
+    const sidebarSearchInputs = document.querySelectorAll(".sidebar-search-input");
     const cancelButton = document.querySelector('#btn-clear');
     const searchPage = document.querySelector("#search");
+    const searchInput = document.getElementById("search-input");
+
+    function openSearch(value) {
+        if (!searchPage || !searchInput) return;
+
+        searchPage.classList.add('active');
+        searchPage.setAttribute('aria-hidden', 'false');
+
+        if (typeof value === 'string') {
+            searchInput.value = value;
+            searchInput.dispatchEvent(new KeyboardEvent('keyup'));
+        }
+
+        searchInput.focus();
+    }
 
     if (searchButton) {
         searchButton.forEach((btn) => {
             btn.addEventListener('click', function() {
-                searchPage.classList.add('active');
-                searchPage.setAttribute('aria-hidden', 'false');
-                document.getElementById("search-input").focus();
+                openSearch();
+            });
+        });
+    }
+
+    if (sidebarSearchInputs) {
+        sidebarSearchInputs.forEach((input) => {
+            input.addEventListener('focus', function() {
+                openSearch(input.value);
+            });
+
+            input.addEventListener('input', function() {
+                openSearch(input.value);
             });
         });
     }
@@ -326,6 +363,7 @@ function searchRelated(pages){
             'title': page.title,
             'date': page.date,
             'category': category,
+            'keyword': page.keyword,
             'url': page.url,
             'thumbnail': page.image,
             'score': correlationScore
@@ -343,7 +381,19 @@ function searchRelated(pages){
         return;
     }
 
-    for (var i = 0; i < Math.min(relatedPosts.length, 6); i++){
+    function escapeHTML(value) {
+        return String(value || '').replace(/[&<>"']/g, function(char) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            }[char];
+        });
+    }
+
+    for (var i = 0; i < Math.min(relatedPosts.length, 3); i++){
         let post = relatedPosts[i];
         let date = '-';
         let category = 'No category';
@@ -355,14 +405,17 @@ function searchRelated(pages){
 
         if (post.category !== '') category = post.category;
 
+        let keyword = post.keyword || category || post.title;
+        let tone = 'tone-' + (i % 4);
         let contents = document.createElement("li");
         contents.classList.add("related-item");
         contents.innerHTML = '<a href="' + post.url +
-            '"><img src="' + post.thumbnail + 
-            '"/><p class="category">' + category +  
-            '</p><p class="title">' + post.title + 
-            '</p><p class="date">' + date +
-            '</p></a>';
+            '"><span class="related-media ' + tone + 
+            '"><span>' + escapeHTML(keyword) + 
+            '</span><em>&lt;/&gt;</em></span><div class="related-copy"><p class="category">' + escapeHTML(category) +  
+            '</p><p class="title">' + escapeHTML(post.title) + 
+            '</p><p class="date">' + escapeHTML(date) +
+            '</p></div></a>';
 
         refResults.append(contents);
     }

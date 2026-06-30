@@ -1,26 +1,119 @@
-<aside class="sidebar sidebar-left" aria-label="mobile navigation">
+{%- assign total_posts = 0 -%}
+{%- assign backend_posts = 0 -%}
+{%- assign spring_posts = 0 -%}
+{%- assign java_posts = 0 -%}
+{%- assign quality_posts = 0 -%}
+{%- assign project_posts = 0 -%}
+{%- assign blog_posts = 0 -%}
+{%- assign collection_posts = 0 -%}
+{%- assign auth_posts = 0 -%}
+{%- assign transaction_posts = 0 -%}
+{%- assign refactor_posts = 0 -%}
+{%- assign info_arch_posts = 0 -%}
+{%- for item in site.pages -%}
+    {%- assign item_name = item.path | split: "/" | last -%}
+    {%- if item_name != "index.md" -%}
+        {%- assign total_posts = total_posts | plus: 1 -%}
+        {%- if item.path contains "Backend/" -%}
+            {%- assign backend_posts = backend_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/Spring/" -%}
+            {%- assign spring_posts = spring_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/Java/" -%}
+            {%- assign java_posts = java_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "코드 품질" -%}
+            {%- assign quality_posts = quality_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "프로젝트/" -%}
+            {%- assign project_posts = project_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "블로그/" -%}
+            {%- assign blog_posts = blog_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/Java/컬렉션/" -%}
+            {%- assign collection_posts = collection_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/Spring/인증/" -%}
+            {%- assign auth_posts = auth_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/Spring/트랜잭션/" -%}
+            {%- assign transaction_posts = transaction_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "Backend/코드 품질/리팩터링/" -%}
+            {%- assign refactor_posts = refactor_posts | plus: 1 -%}
+        {%- endif -%}
+        {%- if item.path contains "프로젝트/블로그/정보구조/" -%}
+            {%- assign info_arch_posts = info_arch_posts | plus: 1 -%}
+        {%- endif -%}
+    {%- endif -%}
+{%- endfor -%}
+{%- assign current_path = page.path -%}
+
+<aside class="sidebar sidebar-left" aria-label="category navigation">
     <div class="side-info">
-        <section class="nav-section">
-            <p class="nav-label">글 분류</p>
-            {% include navigation.html %}
+        <section class="sidebar-profile" aria-label="profile">
+            <span class="profile-avatar">경</span>
+            <strong>경주</strong>
+            <em>Backend Developer</em>
+            <p>꾸준함이 재능을 이긴다고 믿으며 매일 한 줄씩 기록합니다.</p>
+            <div class="profile-links" aria-label="profile links">
+                <a href="https://github.com/rudwnlee2" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .5A11.5 11.5 0 0 0 8.36 22.9c.58.1.79-.25.79-.56v-2.02c-3.22.7-3.9-1.38-3.9-1.38-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.73 1.26 3.4.96.1-.75.4-1.26.73-1.55-2.57-.29-5.27-1.29-5.27-5.73 0-1.27.45-2.3 1.2-3.11-.12-.3-.52-1.49.11-3.07 0 0 .98-.31 3.2 1.19a11.1 11.1 0 0 1 5.82 0c2.22-1.5 3.19-1.19 3.19-1.19.64 1.58.24 2.77.12 3.07.75.81 1.2 1.84 1.2 3.1 0 4.46-2.7 5.44-5.28 5.73.42.37.79 1.08.79 2.18v3.23c0 .31.2.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>
+                </a>
+                <a href="mailto:gyeongju@example.com" aria-label="Mail">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.1L4.6 7H4v10h16V7h-.6L12 12.1ZM6.9 7l5.1 3.5L17.1 7H6.9Z"/></svg>
+                </a>
+                <a href="{{ '/feed.xml' | prepend: site.baseurl }}" aria-label="RSS">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 18.5a2 2 0 1 1 0 4 2 2 0 0 1 0-4ZM2.5 9.8a11.7 11.7 0 0 1 11.7 11.7h-3A8.7 8.7 0 0 0 2.5 12.8v-3Zm0-6.3a18 18 0 0 1 18 18h-3a15 15 0 0 0-15-15v-3Z"/></svg>
+                </a>
+            </div>
         </section>
 
-        <div id="contact">
-            <p class="nav-label">링크</p>
-            <ul class="contact-list">
-                {% if site.github_username %}
-                    <li><a aria-label="GitHub" href="https://github.com/{{ site.github_username }}">GitHub</a></li>
-                {% endif %}
-                {% if site.email %}
-                    <li><a aria-label="Email" href="mailto:{{ site.email }}">Email</a></li>
-                {% endif %}
-                {% if site.linkedin_username %}
-                    <li><a aria-label="LinkedIn" href="https://www.linkedin.com/in/{{ site.linkedin_username }}">LinkedIn</a></li>
-                {% endif %}
-                {% if site.twitter_username %}
-                    <li><a aria-label="Twitter" href="https://twitter.com/{{ site.twitter_username }}">X</a></li>
-                {% endif %}
-            </ul>
-        </div>
+        <label class="sidebar-search" for="sidebar-search-input">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+            <input id="sidebar-search-input" class="sidebar-search-input" type="search" placeholder="검색어를 입력하세요" autocomplete="off">
+        </label>
+
+        <section class="sidebar-card category-card">
+            <p class="panel-eyebrow">카테고리</p>
+            <nav class="category-accordion" aria-label="category shortcuts">
+                <a class="flat-category-item{% if current_path == '_pages/index.md' %} active{% endif %}" href="{{ site.baseurl | append: '/' }}"><span class="dot muted"></span><strong>전체 글</strong><em>{{ total_posts }}</em></a>
+
+                <div class="category-branch{% if current_path contains 'Backend/' %} is-open{% endif %}">
+                    <button class="flat-category-item category-toggle" type="button" aria-expanded="{% if current_path contains 'Backend/' %}true{% else %}false{% endif %}">
+                        <span class="dot blue"></span><strong>Backend</strong><em>{{ backend_posts }}</em><span class="category-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="category-children">
+                        <a class="flat-category-item leaf{% if current_path contains 'Backend/Java/' %} active{% endif %}" href="{{ '/Backend/Java/' | prepend: site.baseurl }}"><span class="dot orange"></span><strong>Java</strong><em>{{ java_posts }}</em></a>
+                        <a class="flat-category-item leaf{% if current_path contains 'Backend/Spring/' %} active{% endif %}" href="{{ '/Backend/Spring/' | prepend: site.baseurl }}"><span class="dot green"></span><strong>Spring</strong><em>{{ spring_posts }}</em></a>
+                        <a class="flat-category-item leaf{% if current_path contains 'Backend/코드 품질/' %} active{% endif %}" href="{{ '/Backend/코드 품질/' | prepend: site.baseurl }}"><span class="dot purple"></span><strong>코드 품질</strong><em>{{ quality_posts }}</em></a>
+                    </div>
+                </div>
+
+                <div class="category-branch{% if current_path contains '프로젝트/' %} is-open{% endif %}">
+                    <button class="flat-category-item category-toggle" type="button" aria-expanded="{% if current_path contains '프로젝트/' %}true{% else %}false{% endif %}">
+                        <span class="dot teal"></span><strong>프로젝트</strong><em>{{ project_posts }}</em><span class="category-chevron" aria-hidden="true"></span>
+                    </button>
+                    <div class="category-children">
+                        <a class="flat-category-item leaf{% if current_path contains '프로젝트/블로그/' %} active{% endif %}" href="{{ '/프로젝트/블로그/' | prepend: site.baseurl }}"><span class="dot pink"></span><strong>블로그</strong><em>{{ blog_posts }}</em></a>
+                    </div>
+                </div>
+            </nav>
+        </section>
+
+        <section class="sidebar-card tag-card">
+            <p class="panel-eyebrow">태그</p>
+            <div class="sidebar-tags">
+                <button type="button" class="tag btn-search">Java</button>
+                <button type="button" class="tag btn-search">Spring</button>
+                <button type="button" class="tag btn-search">JPA</button>
+                <button type="button" class="tag btn-search">인증</button>
+                <button type="button" class="tag btn-search">Stream</button>
+                <button type="button" class="tag btn-search">Transaction</button>
+                <button type="button" class="tag btn-search">리팩터링</button>
+            </div>
+        </section>
     </div>
 </aside>

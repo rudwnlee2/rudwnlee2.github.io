@@ -2,6 +2,7 @@
 title: "Stream 파이프라인은 읽는 순서대로 둔다"
 date: "2026-06-29"
 description: "Java Stream을 사용할 때 필터, 변환, 수집 단계를 읽기 쉬운 순서로 배치하는 기준입니다."
+keyword: "Stream"
 tags:
     - Backend
     - Java

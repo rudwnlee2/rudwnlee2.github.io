@@ -3,65 +3,67 @@
 {%- endcapture -%}
 {%- assign post_description = page.description | default: fallback_description | strip -%}
 {%- assign posting_date = page.date | date: "%Y.%m.%d" -%}
+{%- assign page_category_label = "기록" -%}
+{% if page_level > 2 %}
+    {%- assign page_category_label = page_tree[1] | append: " › " | append: page_tree[2] -%}
+{% elsif page_level > 1 %}
+    {%- assign page_category_label = page_tree[0] -%}
+{% endif %}
 
 <header class="post-hero">
     <div class="post-hero-copy">
-        <div class="category-line">
-            {% if page_level > 1 %}
-                <strong>{{ page_tree[0] }}</strong>
-            {% else %}
-                <strong>기록</strong>
+        <div class="post-hero-meta">
+            <span class="post-hero-category">{{ page_category_label | remove: ".md" }}</span>
+            {% if posting_date != "1900.01.01" %}
+                <span>{{ posting_date }}</span>
             {% endif %}
-            <span>
-                {% for node in page_tree %}
-                    {% unless forloop.last %}
-                        {{ node | remove: '.md' }}{% unless forloop.rindex == 2 %} / {% endunless %}
-                    {% endunless %}
-                {% endfor %}
-            </span>
         </div>
-
-        {% if page.tags %}
-            <div class="tag-box tags hero-tags">
-                {%- for page_tag in page.tags -%}
-                    <span class="tag theme-{{ forloop.index0 | modulo: 3 }}" contentID="{{ page_tag }}">
-                        {{ page_tag }}
-                    </span>
-                {%- endfor -%}
-            </div>
-        {% endif %}
 
         {% if page.title %}
             <h1 class="post-title">{{ page.title }}</h1>
         {% endif %}
 
-        {% if post_description != "" %}
-            <p class="post-summary">{{ post_description }}</p>
-        {% endif %}
+        <div class="post-hero-details">
+            {% if page.tags %}
+                <div class="tag-box tags hero-tags">
+                    {%- for page_tag in page.tags -%}
+                        <span class="tag theme-{{ forloop.index0 | modulo: 3 }}" contentID="{{ page_tag }}">
+                            {{ page_tag }}
+                        </span>
+                    {%- endfor -%}
+                </div>
+            {% endif %}
 
-        <div class="post-info meta-row">
-            {% if posting_date != "1900.01.01" %}
-                <span class="info-box">{{ posting_date }}</span>
-            {% endif %}
-            {% if site.goatcounter_code != nil %}
-                <span class="info-box">
-                    <span>조회</span>
-                    <span id="page-hits" usercode="{{ site.goatcounter_code }}">-</span>
-                </span>
-            {% endif %}
-            <a class="info-box" id="comments-counter">
-                <span>댓글</span>
-                <span id="num-comments">-</span>
-            </a>
+            <div class="post-info meta-row">
+                {% if site.goatcounter_code != nil %}
+                    <span class="info-box">
+                        <span>조회</span>
+                        <span id="page-hits" usercode="{{ site.goatcounter_code }}">-</span>
+                    </span>
+                {% endif %}
+                <a class="info-box" id="comments-counter">
+                    <span>댓글</span>
+                    <span id="num-comments">-</span>
+                </a>
+            </div>
         </div>
     </div>
 </header>
 
 <div class="content-layout">
     <article class="article">
+        {% if post_description != "" %}
+            <p class="post-summary post-lead">{{ post_description }}</p>
+        {% endif %}
+
         <div class="post-content">
             {{ content }}
         </div>
+
+        <section id="related-box" class="side-section related">
+            <p class="side-title">이어 읽기</p>
+            <ul id="related-posts"></ul>
+        </section>
 
         <section class="comment-section">
             <div class="support-section-header">
@@ -75,22 +77,9 @@
     </article>
 
     <aside class="side">
-        <section class="side-section">
-            <p class="side-title">찾기</p>
-            <button class="side-search btn-search" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
-                <span>글, 태그 검색</span>
-            </button>
-        </section>
-
         <section class="side-section toc" aria-label="목차">
             <span class="side-title toc-header">목차</span>
             <ol class="toc-board"></ol>
-        </section>
-
-        <section id="related-box" class="side-section related">
-            <p class="side-title">이어 읽기</p>
-            <ul id="related-posts"></ul>
         </section>
     </aside>
 </div>

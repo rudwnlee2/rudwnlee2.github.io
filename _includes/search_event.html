@@ -40,6 +40,7 @@
             'path'     : "{{ p_link }}",
             'type'     : "{{ p_type }}",
             'tags'     : "{{ page.tags | join: ', ' }}",
+            'keyword'  : "{{ page.keyword | default: page.title | escape }}",
             'url'      : "{{ page.url | prepend: site.baseurl }}",
             'image'    : "{{ thumbnail_url }}",
             'date'     : "{{ page.date | date: '%Y-%m-%d' }}"
