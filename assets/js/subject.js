@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function(){
         const viewButtons = document.querySelectorAll(".view-switch [data-view]");
         const viewKey = "feedView=" + document.URL;
 
-        const paginationLimit = 3;
+        const paginationLimit = 12;
         const pageCount = Math.ceil(listItems.length / paginationLimit);
         let currentPage = 1;
 

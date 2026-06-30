@@ -312,6 +312,11 @@ a.info-box:hover {
     margin: 1.4rem 0;
   }
 
+  .highlighter-rouge .highlight.code-editor-shell {
+    border: 0;
+    background: transparent;
+  }
+
   pre {
     position: relative;
     margin: 1.4rem 0;
@@ -373,6 +378,88 @@ a.info-box:hover {
         background-color: #d9f2cf;
         -webkit-mask-image: url($baseurl + "/assets/img/icon/check-solid.svg");
         mask-image: url($baseurl + "/assets/img/icon/check-solid.svg");
+      }
+    }
+
+    &.code-editor {
+      display: grid;
+      grid-template-columns: 3.25rem minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      overflow: hidden;
+      border-color: var(--line-strong);
+      border-radius: .95rem;
+      background: var(--panel);
+      padding: 0;
+      color: var(--heading);
+      line-height: 1.72;
+
+      &::before {
+        content: attr(data-code-label);
+        grid-column: 1 / -1;
+        min-height: 2.9rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: .85rem 4.25rem .8rem 1.1rem;
+        color: var(--muted);
+        font-family: var(--font-sans);
+        font-size: .78rem;
+        font-weight: 850;
+      }
+
+      .code-line-numbers {
+        display: grid;
+        align-content: start;
+        gap: 0;
+        border-right: 1px solid var(--line);
+        background: var(--panel-soft);
+        padding: 1rem .75rem 1rem .4rem;
+        color: var(--subtle);
+        font-family: var(--font-mono);
+        font-size: .82rem;
+        line-height: 1.72;
+        text-align: right;
+        user-select: none;
+      }
+
+      code,
+      code.hljs {
+        display: block;
+        min-width: 0;
+        overflow-x: auto;
+        background: var(--panel) !important;
+        padding: 1rem 4.25rem 1rem 1rem;
+        color: #383a42 !important;
+        font-size: .82rem;
+        line-height: 1.72;
+      }
+
+      button {
+        top: .58rem;
+        right: .7rem;
+        width: 2rem;
+        height: 2rem;
+        border-color: var(--line);
+        border-radius: .5rem;
+        background: var(--panel);
+        opacity: 1;
+
+        &:hover {
+          border-color: var(--accent-line);
+          background: var(--accent-soft);
+        }
+
+        &.is-copied {
+          border-color: var(--accent-line);
+          background: var(--accent-soft);
+        }
+
+        svg {
+          background-color: var(--muted);
+        }
+
+        &.is-copied svg {
+          background-color: var(--accent);
+        }
       }
     }
   }

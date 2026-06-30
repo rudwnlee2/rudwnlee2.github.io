@@ -266,6 +266,73 @@ function loadPageHitCount(pageHits, goatcounterCode, path) {
     resp.send();
 }
 
+function getCodeLanguage(block, code) {
+    const sources = [
+        code.className || '',
+        block.className || '',
+        block.parentElement ? block.parentElement.className || '' : '',
+        block.closest('.highlighter-rouge') ? block.closest('.highlighter-rouge').className || '' : '',
+    ];
+
+    for (const source of sources) {
+        const match = source.match(/language-([a-z0-9_-]+)/i);
+        if (match) return match[1].toLowerCase();
+    }
+
+    return 'code';
+}
+
+function formatCodeLanguage(language) {
+    const labels = {
+        java: 'Java',
+        javascript: 'JavaScript',
+        js: 'JavaScript',
+        typescript: 'TypeScript',
+        ts: 'TypeScript',
+        json: 'JSON',
+        html: 'HTML',
+        css: 'CSS',
+        scss: 'SCSS',
+        sql: 'SQL',
+        yaml: 'YAML',
+        yml: 'YAML',
+        bash: 'Shell',
+        shell: 'Shell',
+        plaintext: 'Text',
+        text: 'Text',
+    };
+
+    return labels[language] || language.charAt(0).toUpperCase() + language.slice(1);
+}
+
+function enhanceCodeBlock(block) {
+    if (block.classList.contains('code-editor')) return;
+
+    const code = block.querySelector('code');
+    if (!code) return;
+
+    const rawCode = (code.innerText || code.textContent || '').replace(/\n$/, '');
+    const lineCount = Math.max(rawCode.split('\n').length, 1);
+    const lineNumbers = document.createElement('span');
+
+    lineNumbers.className = 'code-line-numbers';
+    lineNumbers.setAttribute('aria-hidden', 'true');
+
+    for (let i = 1; i <= lineCount; i += 1) {
+        const lineNumber = document.createElement('span');
+        lineNumber.textContent = i;
+        lineNumbers.appendChild(lineNumber);
+    }
+
+    block.classList.add('code-editor');
+    block.dataset.rawCode = rawCode;
+    block.dataset.codeLabel = formatCodeLanguage(getCodeLanguage(block, code));
+    if (block.parentElement && block.parentElement.classList.contains('highlight')) {
+        block.parentElement.classList.add('code-editor-shell');
+    }
+    block.insertBefore(lineNumbers, code);
+}
+
 window.addEventListener('load', function(){
     const pageHits = document.getElementById('page-hits');
 
@@ -324,7 +391,7 @@ window.addEventListener('load', function(){
 
     async function copyCode(block) {
         let code = block.querySelector("code");
-        let text = code.innerText;
+        let text = block.dataset.rawCode || code.innerText;
 
         if (navigator.clipboard) {
             try {
@@ -369,6 +436,8 @@ window.addEventListener('load', function(){
     let blocks = document.querySelectorAll("pre");
 
     blocks.forEach((block) => {
+        enhanceCodeBlock(block);
+
         if (navigator.clipboard) {
             let clipBtn = document.createElement("button");
             let clipImg = document.createElement("svg");
