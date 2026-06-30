@@ -387,19 +387,20 @@ a.info-box:hover {
       grid-template-rows: auto minmax(0, 1fr);
       overflow: hidden;
       border-color: var(--line-strong);
-      border-radius: .95rem;
+      border-radius: .85rem;
       background: var(--panel);
       padding: 0;
       color: var(--heading);
       line-height: 1.72;
+      isolation: isolate;
 
       &::before {
         content: attr(data-code-label);
         grid-column: 1 / -1;
-        min-height: 2.9rem;
+        min-height: 2.2rem;
         border-bottom: 1px solid var(--line);
         background: var(--panel-soft);
-        padding: .85rem 4.25rem .8rem 1.1rem;
+        padding: .48rem 3.75rem .44rem 1rem;
         color: var(--muted);
         font-family: var(--font-sans);
         font-size: .78rem;
@@ -412,7 +413,7 @@ a.info-box:hover {
         gap: 0;
         border-right: 1px solid var(--line);
         background: var(--panel-soft);
-        padding: 1rem .75rem 1rem .4rem;
+        padding: .9rem .75rem .9rem .4rem;
         color: var(--subtle);
         font-family: var(--font-mono);
         font-size: .82rem;
@@ -427,17 +428,19 @@ a.info-box:hover {
         min-width: 0;
         overflow-x: auto;
         background: var(--panel) !important;
-        padding: 1rem 4.25rem 1rem 1rem;
+        padding: .9rem 3.75rem .9rem 1rem;
         color: #383a42 !important;
         font-size: .82rem;
         line-height: 1.72;
+        border-radius: 0;
+        box-shadow: none;
       }
 
       button {
-        top: .58rem;
+        top: .36rem;
         right: .7rem;
-        width: 2rem;
-        height: 2rem;
+        width: 1.7rem;
+        height: 1.7rem;
         border-color: var(--line);
         border-radius: .5rem;
         background: var(--panel);
@@ -459,6 +462,45 @@ a.info-box:hover {
 
         &.is-copied svg {
           background-color: var(--accent);
+        }
+      }
+
+      &.pre-dark {
+        border-color: #394252;
+        background: #1f2430;
+        color: #d7dde8;
+
+        &::before {
+          border-bottom-color: #303746;
+          background: #222833;
+          color: #c1c8d4;
+        }
+
+        .code-line-numbers {
+          border-right-color: #303746;
+          background: #191f29;
+          color: #8f98a8;
+        }
+
+        code,
+        code.hljs {
+          background: #1b2029 !important;
+          color: #d7dde8 !important;
+        }
+
+        button {
+          border-color: #384252;
+          background: #252c38;
+
+          &:hover,
+          &.is-copied {
+            border-color: #3b82f6;
+            background: #1f3350;
+          }
+        }
+
+        button svg {
+          background-color: #d7dde8;
         }
       }
     }
