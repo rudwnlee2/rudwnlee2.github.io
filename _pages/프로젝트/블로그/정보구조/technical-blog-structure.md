@@ -30,9 +30,9 @@ bookmark: true
 ```mermaid
 sequenceDiagram
     participant Reader as 독자
-    participant Header as 글 상단
+    participant Header as 상단
     participant Content as 본문
-    participant Support as 목차/관련 글
+    participant Support as 관련글
 
     Reader->>Header: 제목과 설명 확인
     Header->>Header: 날짜, 조회수, 댓글, 태그 노출

@@ -320,11 +320,12 @@ function getMermaidTheme() {
 function resetMermaidDiagram(diagram) {
     const source = diagram.dataset.mermaidSource || '';
     diagram.innerHTML = '';
+    diagram.classList.remove('is-rendered', 'is-error');
 
-    const chart = document.createElement('div');
-    chart.className = 'mermaid';
-    chart.textContent = source;
-    diagram.appendChild(chart);
+    const fallback = document.createElement('pre');
+    fallback.className = 'mermaid-fallback';
+    fallback.textContent = source;
+    diagram.appendChild(fallback);
 }
 
 function renderMermaidDiagrams() {
@@ -339,12 +340,23 @@ function renderMermaidDiagrams() {
         theme: getMermaidTheme(),
     });
 
-    window.mermaid.run({
-        nodes: diagrams.map(function(diagram) {
-            return diagram.querySelector('.mermaid');
-        }).filter(Boolean),
-    }).catch(function(error) {
-        console.error('Mermaid rendering failed', error);
+    diagrams.forEach(function(diagram, index) {
+        const source = diagram.dataset.mermaidSource || '';
+        const id = 'mermaid-diagram-' + Date.now() + '-' + index;
+
+        window.mermaid.render(id, source).then(function(result) {
+            diagram.innerHTML = result.svg;
+            diagram.classList.add('is-rendered');
+
+            if (typeof result.bindFunctions === 'function') {
+                result.bindFunctions(diagram);
+            }
+        }).catch(function(error) {
+            diagram.classList.add('is-error');
+            resetMermaidDiagram(diagram);
+            diagram.classList.add('is-error');
+            console.error('Mermaid rendering failed', error);
+        });
     });
 }
 

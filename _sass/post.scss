@@ -325,17 +325,30 @@ a.info-box:hover {
     background: var(--panel);
     padding: 1rem;
 
-    .mermaid {
-      display: flex;
-      min-width: max-content;
-      justify-content: center;
-    }
-
     svg {
       display: block;
+      min-width: 42rem;
       max-width: none;
       height: auto;
       margin: 0 auto;
+    }
+
+    .mermaid-fallback {
+      margin: 0;
+      overflow-x: auto;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      padding: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      line-height: 1.65;
+      white-space: pre;
+    }
+
+    &.is-error {
+      border-color: var(--danger);
     }
   }
 
