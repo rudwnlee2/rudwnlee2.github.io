@@ -142,6 +142,12 @@ document.addEventListener('DOMContentLoaded', function(){
                 changeGiscusTheme('noborder_gray');
                 isDarkMode = true;
             }
+
+            window.dispatchEvent(new CustomEvent('blog:theme-change', {
+                detail: {
+                    theme: isDarkMode ? 'dark' : 'default'
+                }
+            }));
         });
     });
 

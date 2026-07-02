@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', function(){
 
     if (currentTheme === 'dark' && articleContent){
         Array.from(articleContent.querySelectorAll('pre')).forEach(function (codeblock){
+            if (isMermaidBlock(codeblock)) return;
             codeblock.classList.add('pre-dark');
         });
     }
@@ -268,7 +269,7 @@ function loadPageHitCount(pageHits, goatcounterCode, path) {
 
 function getCodeLanguage(block, code) {
     const sources = [
-        code.className || '',
+        code ? code.className || '' : '',
         block.className || '',
         block.parentElement ? block.parentElement.className || '' : '',
         block.closest('.highlighter-rouge') ? block.closest('.highlighter-rouge').className || '' : '',
@@ -305,8 +306,70 @@ function formatCodeLanguage(language) {
     return labels[language] || language.charAt(0).toUpperCase() + language.slice(1);
 }
 
+function isMermaidBlock(block) {
+    const code = block.querySelector('code');
+    if (!code) return false;
+
+    return getCodeLanguage(block, code) === 'mermaid';
+}
+
+function getMermaidTheme() {
+    return document.body.classList.contains('dark-theme') ? 'dark' : 'default';
+}
+
+function resetMermaidDiagram(diagram) {
+    const source = diagram.dataset.mermaidSource || '';
+    diagram.innerHTML = '';
+
+    const chart = document.createElement('div');
+    chart.className = 'mermaid';
+    chart.textContent = source;
+    diagram.appendChild(chart);
+}
+
+function renderMermaidDiagrams() {
+    const diagrams = Array.from(document.querySelectorAll('.mermaid-diagram'));
+    if (diagrams.length === 0 || !window.mermaid) return;
+
+    diagrams.forEach(resetMermaidDiagram);
+
+    window.mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'loose',
+        theme: getMermaidTheme(),
+    });
+
+    window.mermaid.run({
+        nodes: diagrams.map(function(diagram) {
+            return diagram.querySelector('.mermaid');
+        }).filter(Boolean),
+    }).catch(function(error) {
+        console.error('Mermaid rendering failed', error);
+    });
+}
+
+function renderMermaidBlocks() {
+    const mermaidBlocks = Array.from(document.querySelectorAll('pre')).filter(isMermaidBlock);
+
+    mermaidBlocks.forEach(function(block) {
+        const code = block.querySelector('code');
+        const source = (code.textContent || '').trim();
+        const wrapper = block.closest('.highlighter-rouge') || block;
+        const diagram = document.createElement('div');
+
+        diagram.className = 'mermaid-diagram';
+        diagram.dataset.mermaidSource = source;
+        resetMermaidDiagram(diagram);
+
+        wrapper.replaceWith(diagram);
+    });
+
+    renderMermaidDiagrams();
+}
+
 function enhanceCodeBlock(block) {
     if (block.classList.contains('code-editor')) return;
+    if (isMermaidBlock(block)) return;
 
     const code = block.querySelector('code');
     if (!code) return;
@@ -335,6 +398,8 @@ function enhanceCodeBlock(block) {
 
 window.addEventListener('load', function(){
     const pageHits = document.getElementById('page-hits');
+
+    renderMermaidBlocks();
 
     if (pageHits) {
         const goatcounterCode = pageHits.getAttribute('usercode');
@@ -436,6 +501,8 @@ window.addEventListener('load', function(){
     let blocks = document.querySelectorAll("pre");
 
     blocks.forEach((block) => {
+        if (isMermaidBlock(block)) return;
+
         enhanceCodeBlock(block);
 
         if (navigator.clipboard) {
@@ -459,6 +526,8 @@ window.addEventListener('load', function(){
     });
 
 });
+
+window.addEventListener('blog:theme-change', renderMermaidDiagrams);
 
 window.addEventListener('message', function(event) {
     if (event.origin !== 'https://giscus.app') return;

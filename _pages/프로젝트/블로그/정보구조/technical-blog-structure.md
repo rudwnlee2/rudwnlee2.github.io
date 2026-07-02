@@ -27,6 +27,20 @@ bookmark: true
 
 글 상세 화면은 제목, 설명, 날짜, 조회수, 댓글 수, 태그, 목차, 관련 글이 한 흐름 안에서 보여야 한다. 특히 코드블럭 복사 버튼과 검색, 다크모드는 기술 블로그에서 반복 사용되는 기능이므로 작은 화면에서도 유지되어야 한다.
 
+```mermaid
+sequenceDiagram
+    participant Reader as 독자
+    participant Header as 글 상단
+    participant Content as 본문
+    participant Support as 목차/관련 글
+
+    Reader->>Header: 제목과 설명 확인
+    Header->>Header: 날짜, 조회수, 댓글, 태그 노출
+    Reader->>Content: 본문과 코드블럭 읽기
+    Content->>Support: 목차로 위치 확인
+    Support-->>Reader: 관련 글로 다음 읽기 제안
+```
+
 ```js
 const navigationPrinciple = {
     topLevel: ["전체", "Backend", "프로젝트"],

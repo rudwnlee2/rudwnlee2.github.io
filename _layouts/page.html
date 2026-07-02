@@ -98,6 +98,7 @@
         {% if page_type == "category" %}
             <script src="{{ '/assets/js/subject.js' | prepend: site.baseurl }}"></script>
         {% else %}
+            <script defer src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
             <script src="{{ '/assets/js/post.js' | prepend: site.baseurl }}"></script>
             <link rel="preload" href="{{ '/assets/css/highlight.min.css' | prepend: site.baseurl }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
             <noscript><link rel="stylesheet" href="{{ '/assets/css/highlight.min.css' | prepend: site.baseurl }}"></noscript>
