@@ -1,8 +1,8 @@
-﻿---
+---
 title: "Kafka의 Topic, Partition, Producer, Consumer 이해하기"
 date: "2026-07-02"
 description: "Kafka의 기본 구조를 Topic, Partition, Producer, Consumer, Offset 중심으로 정리합니다."
-keyword: "KKafka 기본 구조"
+keyword: "Kafka 기본 구조"
 tags:
     - Backend
     - Kafka
@@ -128,7 +128,7 @@ flowchart LR
 
                 P0L["Partition #0 (Leader)<br/>offset : 0 1 2 3 4 5 6 7<br/>value : A B C D E F G H"]
 
-                P1F["Partition #1 (Follower))<br/>offset : 0 1 2 3 4 5 6<br/>value : Z Y K D X B N"]
+                P1F["Partition #1 (Follower)<br/>offset : 0 1 2 3 4 5 6<br/>value : Z Y K D X B N"]
             end
         end
 
