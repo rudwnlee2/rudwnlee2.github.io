@@ -352,6 +352,12 @@ a.info-box:hover {
     }
   }
 
+  [align="center"] > svg {
+    max-width: 100%;
+    height: auto;
+    margin: 1.4rem auto;
+  }
+
   pre {
     position: relative;
     margin: 1.4rem 0;

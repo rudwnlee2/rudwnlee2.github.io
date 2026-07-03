@@ -269,10 +269,10 @@ function loadPageHitCount(pageHits, goatcounterCode, path) {
 
 function getCodeLanguage(block, code) {
     const sources = [
-        code ? code.className || '' : '',
-        block.className || '',
-        block.parentElement ? block.parentElement.className || '' : '',
         block.closest('.highlighter-rouge') ? block.closest('.highlighter-rouge').className || '' : '',
+        block.parentElement ? block.parentElement.className || '' : '',
+        block.className || '',
+        code ? code.className || '' : '',
     ];
 
     for (const source of sources) {
