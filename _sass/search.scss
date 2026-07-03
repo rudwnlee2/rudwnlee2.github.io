@@ -30,7 +30,11 @@
   .search-icon {
     position: absolute;
     left: 1rem;
+    width: 1.05rem;
+    height: 1.05rem;
     color: var(--muted);
+    fill: currentColor;
+    pointer-events: none;
   }
 
   input {
@@ -61,6 +65,13 @@
     &:hover {
       background: var(--panel-soft);
       color: var(--accent);
+    }
+
+    svg {
+      display: block;
+      width: .85rem;
+      height: .85rem;
+      fill: currentColor;
     }
   }
 }

@@ -1,15 +1,8 @@
 {%- assign total_posts = 0 -%}
 {%- assign backend_posts = 0 -%}
-{%- assign spring_posts = 0 -%}
-{%- assign java_posts = 0 -%}
-{%- assign quality_posts = 0 -%}
+{%- assign kafka_posts = 0 -%}
 {%- assign project_posts = 0 -%}
-{%- assign blog_posts = 0 -%}
-{%- assign collection_posts = 0 -%}
-{%- assign auth_posts = 0 -%}
-{%- assign transaction_posts = 0 -%}
-{%- assign refactor_posts = 0 -%}
-{%- assign info_arch_posts = 0 -%}
+{%- assign sapari_posts = 0 -%}
 {%- for item in site.pages -%}
     {%- assign item_name = item.path | split: "/" | last -%}
     {%- if item_name != "index.md" -%}
@@ -17,35 +10,14 @@
         {%- if item.path contains "Backend/" -%}
             {%- assign backend_posts = backend_posts | plus: 1 -%}
         {%- endif -%}
-        {%- if item.path contains "Backend/Spring/" -%}
-            {%- assign spring_posts = spring_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "Backend/Java/" -%}
-            {%- assign java_posts = java_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "코드 품질" -%}
-            {%- assign quality_posts = quality_posts | plus: 1 -%}
+        {%- if item.path contains "Backend/Kafka/" -%}
+            {%- assign kafka_posts = kafka_posts | plus: 1 -%}
         {%- endif -%}
         {%- if item.path contains "프로젝트/" -%}
             {%- assign project_posts = project_posts | plus: 1 -%}
         {%- endif -%}
-        {%- if item.path contains "블로그/" -%}
-            {%- assign blog_posts = blog_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "Backend/Java/컬렉션/" -%}
-            {%- assign collection_posts = collection_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "Backend/Spring/인증/" -%}
-            {%- assign auth_posts = auth_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "Backend/Spring/트랜잭션/" -%}
-            {%- assign transaction_posts = transaction_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "Backend/코드 품질/리팩터링/" -%}
-            {%- assign refactor_posts = refactor_posts | plus: 1 -%}
-        {%- endif -%}
-        {%- if item.path contains "프로젝트/블로그/정보구조/" -%}
-            {%- assign info_arch_posts = info_arch_posts | plus: 1 -%}
+        {%- if item.path contains "프로젝트/Sapari/" -%}
+            {%- assign sapari_posts = sapari_posts | plus: 1 -%}
         {%- endif -%}
     {%- endif -%}
 {%- endfor -%}
@@ -86,9 +58,7 @@
                         <span class="dot blue"></span><strong>Backend</strong><em>{{ backend_posts }}</em><span class="category-chevron" aria-hidden="true"></span>
                     </button>
                     <div class="category-children">
-                        <a class="flat-category-item leaf{% if current_path contains 'Backend/Java/' %} active{% endif %}" href="{{ '/Backend/Java/' | prepend: site.baseurl }}"><span class="dot orange"></span><strong>Java</strong><em>{{ java_posts }}</em></a>
-                        <a class="flat-category-item leaf{% if current_path contains 'Backend/Spring/' %} active{% endif %}" href="{{ '/Backend/Spring/' | prepend: site.baseurl }}"><span class="dot green"></span><strong>Spring</strong><em>{{ spring_posts }}</em></a>
-                        <a class="flat-category-item leaf{% if current_path contains 'Backend/코드 품질/' %} active{% endif %}" href="{{ '/Backend/코드 품질/' | prepend: site.baseurl }}"><span class="dot purple"></span><strong>코드 품질</strong><em>{{ quality_posts }}</em></a>
+                        <a class="flat-category-item leaf{% if current_path contains 'Backend/Kafka/' %} active{% endif %}" href="{{ '/Backend/Kafka/' | prepend: site.baseurl }}"><span class="dot orange"></span><strong>Kafka</strong><em>{{ kafka_posts }}</em></a>
                     </div>
                 </div>
 
@@ -97,7 +67,7 @@
                         <span class="dot teal"></span><strong>프로젝트</strong><em>{{ project_posts }}</em><span class="category-chevron" aria-hidden="true"></span>
                     </button>
                     <div class="category-children">
-                        <a class="flat-category-item leaf{% if current_path contains '프로젝트/블로그/' %} active{% endif %}" href="{{ '/프로젝트/블로그/' | prepend: site.baseurl }}"><span class="dot pink"></span><strong>블로그</strong><em>{{ blog_posts }}</em></a>
+                        <a class="flat-category-item leaf{% if current_path contains '프로젝트/Sapari/' %} active{% endif %}" href="{{ '/프로젝트/Sapari/' | prepend: site.baseurl }}"><span class="dot pink"></span><strong>Sapari</strong><em>{{ sapari_posts }}</em></a>
                     </div>
                 </div>
             </nav>
@@ -106,13 +76,13 @@
         <section class="sidebar-card tag-card">
             <p class="panel-eyebrow">태그</p>
             <div class="sidebar-tags">
-                <button type="button" class="tag btn-search">Java</button>
-                <button type="button" class="tag btn-search">Spring</button>
-                <button type="button" class="tag btn-search">JPA</button>
-                <button type="button" class="tag btn-search">인증</button>
-                <button type="button" class="tag btn-search">Stream</button>
-                <button type="button" class="tag btn-search">Transaction</button>
-                <button type="button" class="tag btn-search">리팩터링</button>
+                <button type="button" class="tag btn-search">Kafka</button>
+                <button type="button" class="tag btn-search">Message Queue</button>
+                <button type="button" class="tag btn-search">Topic</button>
+                <button type="button" class="tag btn-search">Partition</button>
+                <button type="button" class="tag btn-search">Producer</button>
+                <button type="button" class="tag btn-search">Consumer</button>
+                <button type="button" class="tag btn-search">Offset</button>
             </div>
         </section>
     </div>
