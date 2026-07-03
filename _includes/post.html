@@ -5,7 +5,7 @@
 {%- assign posting_date = page.date | date: "%Y.%m.%d" -%}
 {%- assign page_category_label = "기록" -%}
 {% if page_level > 2 %}
-    {%- assign page_category_label = page_tree[1] | append: " › " | append: page_tree[2] -%}
+    {%- assign page_category_label = page_tree[0] | append: " › " | append: page_tree[1] -%}
 {% elsif page_level > 1 %}
     {%- assign page_category_label = page_tree[0] -%}
 {% endif %}
