@@ -12,10 +12,6 @@ linkedin_username: linkedin
 facebook_username: facebook
 
 # External API
-giscus_repo: "rudwnlee2/rudwnlee2.github.io"
-giscus_repoId: "R_kgDOTHpLTw"
-giscus_category: "Q&A"
-giscus_categoryId: "DIC_kwDOTHpLT84DAH9M"
 goatcounter_code: rudwnlee2
 google_analytics:
 
