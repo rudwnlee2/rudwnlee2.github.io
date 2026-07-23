@@ -309,9 +309,7 @@ Consumer Group의 상태를 조회하면 Group이 읽고 있는 Topic과 Partiti
 
 ### Consumer가 없는 Group의 보관과 삭제
 
-Consumer Group 안에 Consumer가 없어져도 Group이 즉시 삭제되지는 않는다. Group이 비어 있는 동안에도 기존에 저장한 Offset 정보는 Broker의 `offsets.retention.minutes` 설정에 따라 일정 기간 보관된다.
-
-보관 기간이 지나면 해당 Consumer Group의 Offset이 만료되어 삭제될 수 있다. 따라서 Consumer가 없어진 순간 바로 삭제되는 것이 아니라, 설정된 기간 동안 보관한 뒤 정리된다.
+Consumer Group 안에 Consumer가 없어져도 Group이 즉시 삭제되지는 않는다. Group이 비어 있는 동안에도 기존에 저장한 Offset 정보는 Broker의 `offsets.retention.minutes` 설정에 따라 일정 기간 보관된다. 설정 기간 이후에 삭제된다.
 
 Consumer Group을 보관 기간과 관계없이 바로 삭제하려면 별도의 Group 삭제 명령을 실행해야 한다. 이때 Group 안에 실행 중인 Consumer가 있으면 삭제할 수 없으므로, 모든 Consumer를 먼저 종료하여 Group을 비운 후 삭제해야 한다.
 
@@ -356,7 +354,7 @@ flowchart LR
 
 새로운 Consumer가 Consumer Group에 참여하거나 기존 Consumer가 빠지면 Consumer 수가 달라진다. 이때 기존 Partition 할당을 조정하고, 현재 Consumer 수에 맞춰 Partition을 다시 나눠준다.
 
-따라서 Consumer가 1개에서 2개로 늘어날 때와 2개에서 4개로 늘어날 때 모두 Rebalancing이 발생한다. Rebalancing이 진행되는 동안 메시지 처리가 일시적으로 영향을 받을 수 있으므로 너무 자주 발생하면 처리 지연의 원인이 될 수 있다.
+따라서 Consumer가 1개에서 2개로 늘어날 때와 2개에서 4개로 늘어날 때 모두 Rebalancing이 발생한다. 
 
 Consumer가 1개에서 2개로 늘어나면 기존 Consumer가 처리하던 Partition 일부가 새 Consumer에게 다시 할당된다.
 
@@ -515,7 +513,7 @@ Kafka Config는 설정이 적용되는 위치에 따라 크게 두 가지로 구
 Kafka 서버 내부에서 Broker와 Topic의 동작을 설정한다.
 
 - **Static Config**: `server.properties`에 작성하는 설정이다. 값을 변경한 뒤 적용하려면 Broker를 재시작해야 한다.
-- **Dynamic Config**: Broker를 재시작하지 않고 동적으로 변경할 수 있는 설정이다. `kafka-configs.sh` 명령어를 통해 변경한다.
+- **Dynamic Config**: Broker를 재시작하지 않고 동적으로 변경할 수 있는 설정이다. `kafka-configs` 명령어를 통해 변경한다.
 
 Topic별 설정도 `kafka-configs.sh`를 사용해 동적으로 변경할 수 있다.
 
@@ -530,25 +528,9 @@ Kafka 서버가 아니라 Kafka Client에서 설정한다.
 
 ## Kafka Broker에 저장된 메시지 확인
 
-Broker 내부에 저장된 메시지는 `kafka-dump-log.sh`를 사용해 확인할 수 있다.
+Broker 내부에 저장된 메시지는 `kafka-dump-log`를 사용해 확인할 수 있다.
 
-Kafka의 로그 저장 경로는 `log.dirs` 설정으로 정해진다. 해당 경로 아래에는 Topic과 Partition별 디렉터리가 만들어지고, 그 안에 실제 메시지가 로그 세그먼트 파일로 저장된다.
-
-```text
-kafka-logs/
-└─ order-created-0/
-   ├─ 00000000000000000000.log
-   ├─ 00000000000000000000.index
-   └─ 00000000000000000000.timeindex
-```
-
-확인하려는 Partition 디렉터리로 이동한 뒤 `.log` 파일을 지정하면 저장된 메시지를 확인할 수 있다.
-
-```bash
-kafka-dump-log.sh \
-  --files kafka-logs/order-created-0/00000000000000000000.log \
-  --print-data-log
-```
+kafka-logs에 모든 로그가 저장되고 해당 파티션에서 `kafka-dump-log` 를 사용해서 해당 파티션의 메시지들을 호가인할 수 있다.
 
 출력에서 `key`는 메시지의 Key, `payload`는 메시지의 Value를 의미한다.
 
@@ -564,5 +546,6 @@ Consumer Group: 여러 Consumer가 Partition을 나눠 읽는 하나의 팀
 Rebalancing: Consumer 수의 변화에 맞춰 Partition을 다시 할당하는 과정
 Broker, Topic Config: Kafka 서버 내부에서 설정
 Producer, Consumer Config: Kafka Client에서 설정
-kafka-dump-log.sh: Broker의 로그 세그먼트에 저장된 메시지를 확인하는 도구
+kafka-dump-log: 메시지를 확인하는 명령어
 ```
+
