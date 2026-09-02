@@ -3,12 +3,18 @@
 set -eu
 
 navigation="_layouts/page.html"
+mobile_navigation="_includes/navigation.html"
 portfolio="_pages/portfolio/index.html"
 coupon="_pages/portfolio/coupon-yaho.html"
 vote="_pages/portfolio/gallae-mallae.html"
 
 if ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\">소개</a>" "$navigation"; then
   echo "FAIL: the site introduction menu does not link to /portfolio/"
+  exit 1
+fi
+
+if ! grep -Fq -- 'aria-label="소개"' "$mobile_navigation" || ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\"" "$mobile_navigation"; then
+  echo "FAIL: the mobile navigation does not link to /portfolio/"
   exit 1
 fi
 
