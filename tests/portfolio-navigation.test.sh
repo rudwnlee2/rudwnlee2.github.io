@@ -3,7 +3,7 @@
 set -eu
 
 navigation="_layouts/page.html"
-mobile_navigation="_includes/navigation.html"
+mobile_navigation="_includes/sidebar.html"
 portfolio="_pages/portfolio/index.html"
 coupon="_pages/portfolio/coupon-yaho.html"
 vote="_pages/portfolio/gallae-mallae.html"
@@ -13,7 +13,7 @@ if ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\">소개</a
   exit 1
 fi
 
-if ! grep -Fq -- 'aria-label="소개"' "$mobile_navigation" || ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\"" "$mobile_navigation"; then
+if ! grep -Fq -- 'class="flat-category-item portfolio-link"' "$mobile_navigation" || ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\"" "$mobile_navigation"; then
   echo "FAIL: the mobile navigation does not link to /portfolio/"
   exit 1
 fi

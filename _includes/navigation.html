@@ -33,13 +33,6 @@
                 </a>
             </div>
         </li>
-        <li class="nav-first" aria-label="소개">
-            <div class="nav-item">
-                <a href="{{ '/portfolio/' | prepend: site.baseurl }}" class="nav-list-link nav-lh">
-                    <span>소개</span>
-                </a>
-            </div>
-        </li>
     {%- for node in first_level_pages -%}
         {%- assign node_url = node.url | remove: 'index.html' -%}
         {%- assign node_path = node.path | remove: 'index.md' -%}

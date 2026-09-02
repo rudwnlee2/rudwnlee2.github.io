@@ -52,6 +52,7 @@
             <p class="panel-eyebrow">카테고리</p>
             <nav class="category-accordion" aria-label="category shortcuts">
                 <a class="flat-category-item{% if current_path == '_pages/index.md' %} active{% endif %}" href="{{ site.baseurl | append: '/' }}"><span class="dot muted"></span><strong>전체 글</strong><em>{{ total_posts }}</em></a>
+                <a class="flat-category-item portfolio-link" href="{{ '/portfolio/' | prepend: site.baseurl }}"><span class="dot blue"></span><strong>소개</strong></a>
 
                 <div class="category-branch{% if current_path contains 'Backend/' %} is-open{% endif %}">
                     <button class="flat-category-item category-toggle" type="button" aria-expanded="{% if current_path contains 'Backend/' %}true{% else %}false{% endif %}">
