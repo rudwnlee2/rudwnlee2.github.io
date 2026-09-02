@@ -2,7 +2,7 @@
 
 set -eu
 
-preview="portfolio-preview.html"
+preview="_pages/portfolio/index.html"
 if [[ ! -f "$preview" ]]; then
   echo "FAIL: $preview is missing"
   exit 1
