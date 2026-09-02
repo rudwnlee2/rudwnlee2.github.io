@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="갈래말래 프로젝트 상세 케이스 스터디">
+  <title>갈래말래 | 프로젝트 상세</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f9fc; --panel: #fff; --panel-soft: #f1f5f9;
+      --heading: #111827; --text: #334155; --muted: #64748b; --line: #dce3ec;
+      --accent: #2563eb; --accent-hover: #1d4ed8; --accent-soft: #eff6ff;
+      --violet: #7c3aed; --violet-soft: #f5f3ff;
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0b1120; --panel: #111827; --panel-soft: #172033;
+      --heading: #f8fafc; --text: #cbd5e1; --muted: #94a3b8; --line: #263247;
+      --accent: #60a5fa; --accent-hover: #93c5fd; --accent-soft: #172554;
+      --violet: #c4b5fd; --violet-soft: #2e1065;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    .shell { width: min(100% - 40px, 1040px); margin: 0 auto; }
+    .site-header { position: sticky; z-index: 10; top: 0; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(14px); }
+    .header-inner { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; }
+    .back-link { color: var(--accent); font-size: .86rem; font-weight: 850; }
+    .theme-toggle { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: .7rem; background: var(--panel); color: var(--heading); cursor: pointer; }
+    .project-hero { padding: 64px 0 38px; }
+    .eyebrow { margin: 0 0 .5rem; color: var(--violet); font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3 { color: var(--heading); line-height: 1.3; letter-spacing: -.03em; }
+    h1 { max-width: 780px; margin: 0; font-size: clamp(2.25rem, 6vw, 4.2rem); }
+    .lead { max-width: 780px; margin: 1rem 0 0; color: var(--muted); font-size: 1.05rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.4rem; }
+    .chip { border: 1px solid var(--line); border-radius: 999px; background: var(--panel); padding: .34rem .65rem; color: var(--muted); font-size: .76rem; font-weight: 800; }
+    .chip.primary { border-color: color-mix(in srgb, var(--violet) 35%, var(--line)); background: var(--violet-soft); color: var(--violet); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem; }
+    .button { display: inline-flex; align-items: center; border-radius: .7rem; background: var(--accent); padding: .65rem .9rem; color: #fff; font-size: .82rem; font-weight: 850; }
+    .button.secondary { border: 1px solid var(--line); background: var(--panel); color: var(--accent); }
+    main { padding-bottom: 72px; }
+    .section { padding: 26px 0; scroll-margin-top: 80px; }
+    .section-title { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+    .section-title h2 { position: sticky; top: 88px; margin: 0; font-size: 1.05rem; }
+    .content { min-width: 0; }
+    .content > :first-child { margin-top: 0; }
+    .content > :last-child { margin-bottom: 0; }
+    .card { border: 1px solid var(--line); border-radius: 1rem; background: var(--panel); padding: 1.35rem; }
+    .scope-grid, .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    .scope-item h3, .evidence-item h3 { margin: 0 0 .35rem; font-size: .93rem; }
+    .scope-item p, .evidence-item p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .problem { border-left: 4px solid var(--violet); background: var(--violet-soft); }
+    .decision { border-left: 4px solid var(--accent); background: var(--accent-soft); }
+    .content h3 { margin: 1.2rem 0 .35rem; font-size: 1rem; }
+    .content p { color: var(--muted); }
+    .flow { overflow-x: auto; border: 1px solid var(--line); border-radius: .9rem; background: var(--panel-soft); padding: 1rem; }
+    .flow-track { display: flex; width: max-content; align-items: center; gap: .6rem; }
+    .node { border: 1px solid var(--line); border-radius: .65rem; background: var(--panel); padding: .65rem .85rem; color: var(--heading); font-family: ui-monospace, monospace; font-size: .82rem; font-weight: 800; }
+    .arrow { color: var(--accent); font-weight: 900; }
+    .branch { margin: .6rem 0 0 20rem; color: var(--violet); font-family: ui-monospace, monospace; font-size: .82rem; font-weight: 850; white-space: nowrap; }
+    .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .tag { border: 1px solid var(--line); border-radius: .55rem; background: var(--panel); padding: .38rem .58rem; color: var(--muted); font-size: .76rem; font-weight: 800; }
+    footer { border-top: 1px solid var(--line); padding: 1.6rem 0; color: var(--muted); font-size: .76rem; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1040px); }
+      .project-hero { padding: 44px 0 24px; }
+      .section-title { grid-template-columns: 1fr; gap: .7rem; }
+      .section-title h2 { position: static; }
+      .scope-grid, .evidence-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+  <script>
+    (() => {
+      const saved = localStorage.getItem('portfolio-theme');
+      const dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) document.documentElement.dataset.theme = 'dark';
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="back-link" href="portfolio-preview.html#projects">← 포트폴리오로 돌아가기</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="다크 모드로 전환">◐</button>
+    </div>
+  </header>
+  <main>
+    <section class="project-hero">
+      <div class="shell">
+        <p class="eyebrow">Backend case study · 2026.07.16 — 07.27</p>
+        <h1>갈래말래</h1>
+        <p class="lead">그룹원의 조건을 반영해 메뉴 후보를 추천하고, 실시간 투표를 통해 최종 결정을 돕는 그룹 의사결정 서비스입니다.</p>
+        <div class="meta"><span class="chip">5인 팀</span><span class="chip primary">팀장</span><span class="chip primary">투표 도메인 담당</span></div>
+        <div class="hero-actions"><a class="button" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a><a class="button secondary" href="#implementation">처리 흐름 보기</a></div>
+      </div>
+    </section>
+
+    <section class="section"><div class="shell section-title"><h2>프로젝트 목적</h2><div class="content card"><p>여러 사람이 함께 메뉴를 고를 때 반복되는 의견 수집과 결정을 줄이기 위해, 조건 기반 추천과 실시간 투표를 하나의 흐름으로 연결했습니다.</p></div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>담당 범위</h2><div class="content scope-grid">
+      <article class="card scope-item"><h3>팀 리딩</h3><p>기능 범위와 일정, 도메인 간 책임을 조율하고 투표 흐름을 중심으로 개발을 진행했습니다.</p></article>
+      <article class="card scope-item"><h3>투표 상태 모델</h3><p>투표 생성, 진행, 마감과 선택 변경 시 발생할 수 있는 상태 전이를 정의했습니다.</p></article>
+      <article class="card scope-item"><h3>동시성 처리</h3><p>Redis Hash와 Lua Script를 이용해 기존 선택 차감과 새 선택 가산을 묶었습니다.</p></article>
+      <article class="card scope-item"><h3>실시간 알림</h3><p>STOMP 구독 경계를 설정하고 투표 변경 내용을 참여자에게 전달했습니다.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>핵심 문제</h2><div class="content card problem"><p>여러 사용자가 동시에 투표하거나 선택을 변경하고, 같은 시점에 투표가 마감될 수 있습니다. 어떤 순서로 요청이 도착하더라도 사용자 선택과 후보별 집계가 일치해야 했습니다.</p></div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>기술적 선택</h2><div class="content card decision">
+      <h3>Redis Lua로 복합 변경을 원자화</h3><p>애플리케이션에서 조회와 변경을 나누지 않고, 기존 선택 차감·새 선택 가산·마감 여부 검증을 하나의 Redis Lua 실행으로 처리했습니다.</p>
+      <h3>REST와 STOMP의 역할 분리</h3><p>투표 상태 조회와 변경은 REST를 기준으로 삼고, STOMP는 변경 사실을 빠르게 알리는 역할에 집중시켰습니다. 알림 누락이 상태 자체의 손실로 이어지지 않도록 한 선택입니다.</p>
+    </div></div></section>
+
+    <section class="section" id="implementation"><div class="shell section-title"><h2>구현</h2><div class="content">
+      <div class="flow" aria-label="갈래말래 핵심 처리 흐름"><div class="flow-track"><span class="node">Client</span><span class="arrow">→</span><span class="node">REST API</span><span class="arrow">→</span><span class="node">Redis Lua</span><span class="arrow">→</span><span class="node">MySQL</span></div><div class="branch">└→ STOMP 알림</div></div>
+      <div class="card" style="margin-top:.75rem"><p>Redis Hash에 사용자별 선택과 후보별 집계를 관리하고, Lua Script 안에서 현재 상태 확인과 집계 변경을 연속으로 수행합니다. 처리 후 발생한 변경은 STOMP로 알리며, 클라이언트는 필요할 때 REST에서 기준 상태를 다시 조회합니다.</p></div>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>검증</h2><div class="content evidence-grid">
+      <article class="card evidence-item"><h3>상태 전이</h3><p>진행 중 변경과 마감 이후 요청이 정의한 규칙대로 처리되는지 확인했습니다.</p></article>
+      <article class="card evidence-item"><h3>선택 변경 정합성</h3><p>기존 후보 차감과 새 후보 가산 결과가 사용자 선택과 일치하는지 검증했습니다.</p></article>
+      <article class="card evidence-item"><h3>API 응답</h3><p>투표 결과와 오류 상황이 클라이언트가 구분할 수 있는 계약으로 반환되는지 확인했습니다.</p></article>
+      <article class="card evidence-item"><h3>구독 권한</h3><p>허용된 참여자만 투표 채널을 구독하고 변경 알림을 받을 수 있는지 검증했습니다.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>결과 및 회고</h2><div class="content card"><p>선택 변경을 여러 명령으로 분리하지 않고 하나의 원자 연산으로 묶어, 사용자 선택과 후보별 집계가 함께 변경되는 경계를 명확히 했습니다. 또한 실시간 전송을 기준 데이터와 분리해 연결 상태가 불안정해도 REST를 통해 현재 상태를 복구할 수 있도록 했습니다. 이후에는 실제 동시 요청 규모를 기준으로 부하 테스트와 재연결 시나리오를 더 확장할 수 있습니다.</p></div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>사용 기술</h2><div class="content tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Lua Script</span><span class="tag">WebSocket</span><span class="tag">STOMP</span></div></div></section>
+  </main>
+  <footer><div class="shell">갈래말래 · Backend Project Case Study</div></footer>
+  <script>
+    const toggle = document.querySelector('#theme-toggle');
+    const updateLabel = () => toggle.setAttribute('aria-label', document.documentElement.dataset.theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환');
+    updateLabel();
+    toggle.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      if (dark) delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = 'dark';
+      localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark'); updateLabel();
+    });
+  </script>
+</body>
+</html>

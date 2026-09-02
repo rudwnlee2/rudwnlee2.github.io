@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="쿠폰 야호 프로젝트 상세 케이스 스터디">
+  <title>쿠폰 야호 | 프로젝트 상세</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f7f9fc; --panel: #fff; --panel-soft: #f1f5f9;
+      --heading: #111827; --text: #334155; --muted: #64748b; --line: #dce3ec;
+      --accent: #2563eb; --accent-hover: #1d4ed8; --accent-soft: #eff6ff;
+      --warm: #ea580c; --warm-soft: #fff7ed;
+    }
+    [data-theme="dark"] {
+      color-scheme: dark;
+      --bg: #0b1120; --panel: #111827; --panel-soft: #172033;
+      --heading: #f8fafc; --text: #cbd5e1; --muted: #94a3b8; --line: #263247;
+      --accent: #60a5fa; --accent-hover: #93c5fd; --accent-soft: #172554;
+      --warm: #fb923c; --warm-soft: #431b0b;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, Pretendard, "Noto Sans KR", system-ui, sans-serif; line-height: 1.7; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    .shell { width: min(100% - 40px, 1040px); margin: 0 auto; }
+    .site-header { position: sticky; z-index: 10; top: 0; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: blur(14px); }
+    .header-inner { display: flex; min-height: 64px; align-items: center; justify-content: space-between; gap: 1rem; }
+    .back-link { color: var(--accent); font-size: .86rem; font-weight: 850; }
+    .theme-toggle { display: grid; width: 38px; height: 38px; place-items: center; border: 1px solid var(--line); border-radius: .7rem; background: var(--panel); color: var(--heading); cursor: pointer; }
+    .project-hero { padding: 64px 0 38px; }
+    .eyebrow { margin: 0 0 .5rem; color: var(--warm); font-size: .72rem; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3 { color: var(--heading); line-height: 1.3; letter-spacing: -.03em; }
+    h1 { max-width: 780px; margin: 0; font-size: clamp(2.25rem, 6vw, 4.2rem); }
+    .lead { max-width: 780px; margin: 1rem 0 0; color: var(--muted); font-size: 1.05rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.4rem; }
+    .chip { border: 1px solid var(--line); border-radius: 999px; background: var(--panel); padding: .34rem .65rem; color: var(--muted); font-size: .76rem; font-weight: 800; }
+    .chip.primary { border-color: color-mix(in srgb, var(--warm) 35%, var(--line)); background: var(--warm-soft); color: var(--warm); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.4rem; }
+    .button { display: inline-flex; align-items: center; border-radius: .7rem; background: var(--accent); padding: .65rem .9rem; color: #fff; font-size: .82rem; font-weight: 850; }
+    .button.secondary { border: 1px solid var(--line); background: var(--panel); color: var(--accent); }
+    main { padding-bottom: 72px; }
+    .section { padding: 26px 0; scroll-margin-top: 80px; }
+    .section-title { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+    .section-title h2 { position: sticky; top: 88px; margin: 0; font-size: 1.05rem; }
+    .content { min-width: 0; }
+    .content > :first-child { margin-top: 0; }
+    .content > :last-child { margin-bottom: 0; }
+    .card { border: 1px solid var(--line); border-radius: 1rem; background: var(--panel); padding: 1.35rem; }
+    .scope-grid, .evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; }
+    .scope-item h3, .evidence-item h3 { margin: 0 0 .35rem; font-size: .93rem; }
+    .scope-item p, .evidence-item p { margin: 0; color: var(--muted); font-size: .86rem; }
+    .problem { border-left: 4px solid var(--warm); background: var(--warm-soft); }
+    .decision { border-left: 4px solid var(--accent); background: var(--accent-soft); }
+    .content h3 { margin: 1.2rem 0 .35rem; font-size: 1rem; }
+    .content p { color: var(--muted); }
+    .flow { overflow-x: auto; border: 1px solid var(--line); border-radius: .9rem; background: var(--panel-soft); padding: 1rem; }
+    .flow-track { display: flex; width: max-content; align-items: center; gap: .6rem; }
+    .node { border: 1px solid var(--line); border-radius: .65rem; background: var(--panel); padding: .65rem .85rem; color: var(--heading); font-family: ui-monospace, monospace; font-size: .82rem; font-weight: 800; }
+    .arrow { color: var(--accent); font-weight: 900; }
+    .architecture { overflow: hidden; border: 1px solid var(--line); border-radius: 1rem; background: var(--panel); }
+    .architecture img { width: 100%; height: auto; }
+    .architecture figcaption { border-top: 1px solid var(--line); padding: .7rem 1rem; color: var(--muted); font-size: .76rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
+    .tag { border: 1px solid var(--line); border-radius: .55rem; background: var(--panel); padding: .38rem .58rem; color: var(--muted); font-size: .76rem; font-weight: 800; }
+    footer { border-top: 1px solid var(--line); padding: 1.6rem 0; color: var(--muted); font-size: .76rem; }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 1040px); }
+      .project-hero { padding: 44px 0 24px; }
+      .section-title { grid-template-columns: 1fr; gap: .7rem; }
+      .section-title h2 { position: static; }
+      .scope-grid, .evidence-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+  <script>
+    (() => {
+      const saved = localStorage.getItem('portfolio-theme');
+      const dark = saved ? saved === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (dark) document.documentElement.dataset.theme = 'dark';
+    })();
+  </script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="shell header-inner">
+      <a class="back-link" href="portfolio-preview.html#projects">← 포트폴리오로 돌아가기</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="다크 모드로 전환">◐</button>
+    </div>
+  </header>
+  <main>
+    <section class="project-hero">
+      <div class="shell">
+        <p class="eyebrow">Backend case study · 2026.08</p>
+        <h1>쿠폰 야호</h1>
+        <p class="lead">한정 수량 쿠폰을 정확하게 발급하고, 순간 트래픽의 처리 과정과 운영 상태를 관찰할 수 있도록 만든 선착순 쿠폰 플랫폼입니다.</p>
+        <div class="meta"><span class="chip">5인 팀</span><span class="chip primary">관리자·관제</span><span class="chip primary">운영현황 담당</span></div>
+        <div class="hero-actions"><a class="button" href="https://github.com/coupon-yaho/cy-be" target="_blank" rel="noreferrer">GitHub ↗</a><a class="button secondary" href="#architecture">아키텍처 보기</a></div>
+      </div>
+    </section>
+
+    <section class="section"><div class="shell section-title"><h2>프로젝트 목적</h2><div class="content card"><p>요청이 한순간에 몰리는 상황에서도 정해진 수량만 발급하고, 사용자 대기부터 발급 결과까지의 흐름을 운영자가 확인할 수 있는 시스템을 목표로 했습니다.</p></div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>담당 범위</h2><div class="content scope-grid">
+      <article class="card scope-item"><h3>관리자 운영현황</h3><p>발급 흐름, 대기열, 재고 위험, 고객 결과를 하나의 운영 응답으로 조립했습니다.</p></article>
+      <article class="card scope-item"><h3>상태 계약</h3><p>수집 중이거나 사용할 수 없는 데이터를 정상값과 구분하는 상태 모델을 정의했습니다.</p></article>
+      <article class="card scope-item"><h3>계산 책임 분리</h3><p>재고 위험도와 권장 조치를 독립 계산기로 분리해 규칙을 명시적으로 관리했습니다.</p></article>
+      <article class="card scope-item"><h3>계약 테스트</h3><p>Core·API·Prometheus 경계에서 상태와 응답 의미가 유지되는지 검증했습니다.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>핵심 문제</h2><div class="content card problem"><p>DB, Prometheus, 대기열 데이터는 서로 다른 시점에 준비됩니다. 일부 데이터가 아직 없거나 수집에 실패했을 때 기본값을 채우면, 운영자는 불완전한 정보를 정상 상태로 오해할 수 있었습니다.</p></div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>기술적 선택</h2><div class="content card decision">
+      <h3>값과 데이터 상태를 함께 전달</h3><p>값만 반환하는 대신 <strong>VALID·PENDING·UNAVAILABLE</strong> 상태를 함께 전달하고, 전체 응답에는 <strong>PARTIAL</strong>을 표현하도록 설계했습니다.</p>
+      <h3>조립과 판단 책임을 분리</h3><p>서비스는 여러 데이터 소스를 조립하고, 위험도와 권장 조치 같은 정책 판단은 독립 계산기가 담당하도록 나눴습니다. 새로운 지표가 추가돼도 계산 규칙을 개별적으로 검증할 수 있습니다.</p>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>구현</h2><div class="content">
+      <div class="flow" aria-label="쿠폰 야호 핵심 처리 흐름"><div class="flow-track"><span class="node">Client</span><span class="arrow">→</span><span class="node">Queue</span><span class="arrow">→</span><span class="node">Coupon API</span><span class="arrow">→</span><span class="node">Redis · MySQL</span><span class="arrow">→</span><span class="node">Kafka</span></div></div>
+      <div class="card" style="margin-top:.75rem"><p>AdminOverviewService가 저장소와 관측 데이터에서 발급·대기·재고 정보를 수집하고, 각 계산기의 결과를 운영현황 응답으로 조립합니다. 데이터가 준비되지 않은 경우에는 값을 추측하지 않고 상태와 권장 조치로 드러냅니다.</p></div>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>검증</h2><div class="content evidence-grid">
+      <article class="card evidence-item"><h3>Core 계약</h3><p>경계값과 데이터 조합에 따라 계산 결과와 상태가 올바르게 전이되는지 확인했습니다.</p></article>
+      <article class="card evidence-item"><h3>API 계약</h3><p>운영현황 응답 구조와 상태 의미가 직렬화 이후에도 유지되는지 검증했습니다.</p></article>
+      <article class="card evidence-item"><h3>Prometheus 경계</h3><p>지표의 정상 수집, 대기, 사용 불가 상황을 분리해 처리하는지 확인했습니다.</p></article>
+      <article class="card evidence-item"><h3>실패 가시성</h3><p>일부 데이터 실패가 전체 성공으로 감춰지지 않고 PARTIAL로 노출되는지 검증했습니다.</p></article>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>결과 및 회고</h2><div class="content card"><p>운영자는 단일 숫자만 보는 대신 해당 데이터가 신뢰 가능한지 함께 판단할 수 있게 됐습니다. 수집 실패를 예외 처리의 세부사항으로 숨기지 않고 API 계약에 포함한 것이 핵심입니다. 이후에는 실제 부하 구간별 기준값을 축적해 위험도 계산의 근거를 더 정교하게 만드는 것이 과제로 남아 있습니다.</p></div></div></section>
+
+    <section class="section" id="architecture"><div class="shell section-title"><h2>아키텍처</h2><div class="content">
+      <figure class="architecture"><a href="assets/diagrams/coupon-yaho-architecture.png" target="_blank"><img src="assets/diagrams/coupon-yaho-architecture.png" alt="쿠폰 야호 시스템 아키텍처"></a><figcaption>이미지를 누르면 원본 크기로 확인할 수 있습니다.</figcaption></figure>
+    </div></div></section>
+
+    <section class="section"><div class="shell section-title"><h2>사용 기술</h2><div class="content tags"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Kafka</span><span class="tag">Prometheus</span><span class="tag">Micrometer</span><span class="tag">Docker</span></div></div></section>
+  </main>
+  <footer><div class="shell">쿠폰 야호 · Backend Project Case Study</div></footer>
+  <script>
+    const toggle = document.querySelector('#theme-toggle');
+    const updateLabel = () => toggle.setAttribute('aria-label', document.documentElement.dataset.theme === 'dark' ? '라이트 모드로 전환' : '다크 모드로 전환');
+    updateLabel();
+    toggle.addEventListener('click', () => {
+      const dark = document.documentElement.dataset.theme === 'dark';
+      if (dark) delete document.documentElement.dataset.theme; else document.documentElement.dataset.theme = 'dark';
+      localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark'); updateLabel();
+    });
+  </script>
+</body>
+</html>
