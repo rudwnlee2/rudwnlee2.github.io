@@ -34,6 +34,7 @@ required_patterns=(
   'id="skills"'
   'class="skill-categories compact"'
   'class="tech-grid"'
+  'background: #fff; padding: 5px;'
   'data-skill-category="backend"'
   'data-skill-category="data"'
   'data-skill-category="messaging"'
@@ -69,10 +70,36 @@ for pattern in "${required_patterns[@]}"; do
 done
 
 tech_icon_count="$(grep -Fc -- 'class="tech-icon"' "$preview" || true)"
-if (( tech_icon_count < 10 )); then
-  echo "FAIL: expected at least 10 technology icon slots, found $tech_icon_count"
+if (( tech_icon_count != 8 )); then
+  echo "FAIL: expected exactly 8 technology icon slots, found $tech_icon_count"
   exit 1
 fi
+
+tech_image_count="$(grep -Fc -- 'class="tech-icon-image"' "$preview" || true)"
+if (( tech_image_count != 8 )); then
+  echo "FAIL: every technology must use a real image logo, found $tech_image_count"
+  exit 1
+fi
+
+skills_markup="$(sed -n '/<section class="section alt" id="skills">/,/<\/section>/p' "$preview")"
+for removed_skill in 'Linux' 'Prometheus'; do
+  if grep -Fq -- ">$removed_skill<" <<< "$skills_markup"; then
+    echo "FAIL: removed skill remains in the technology stack: $removed_skill"
+    exit 1
+  fi
+done
+
+for icon in java spring hibernate mysql redis apachekafka docker githubactions; do
+  icon_path="assets/img/tech/$icon.svg"
+  if [[ ! -f "$icon_path" ]]; then
+    echo "FAIL: real technology icon is missing: $icon_path"
+    exit 1
+  fi
+  if ! grep -Fq -- "src=\"/$icon_path\"" "$preview"; then
+    echo "FAIL: portfolio does not use technology icon: $icon_path"
+    exit 1
+  fi
+done
 
 project_flow_count="$(grep -Fc -- 'class="project-mini-flow"' "$preview" || true)"
 if (( project_flow_count != 2 )); then

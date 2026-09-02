@@ -233,13 +233,8 @@
     .tech-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .45rem; }
     .tech-item { display: grid; grid-template-columns: 32px minmax(0, 1fr); align-items: center; gap: .5rem; min-height: 48px; border: 0; border-radius: .4rem; background: transparent; padding: .35rem .2rem; transition: color .18s ease, transform .18s ease; }
     .tech-item:hover { color: var(--accent); transform: translateY(-2px); }
-    .tech-icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: .55rem; background: color-mix(in srgb, currentColor 12%, transparent); color: var(--accent); font-size: .66rem; font-weight: 900; letter-spacing: -.03em; }
-    .tech-icon[data-tone="red"] { color: #e11d48; }
-    .tech-icon[data-tone="green"] { color: #16a34a; }
-    .tech-icon[data-tone="orange"] { color: #ea580c; }
-    .tech-icon[data-tone="cyan"] { color: #0891b2; }
-    .tech-icon[data-tone="navy"] { color: #2563eb; }
-    .tech-icon[data-tone="violet"] { color: #7c3aed; }
+    .tech-icon { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid var(--line); border-radius: .55rem; background: #fff; padding: 5px; }
+    .tech-icon-image { display: block; width: 100%; height: 100%; object-fit: contain; }
     .tech-label { min-width: 0; }
     .tech-label strong { display: block; overflow: hidden; color: var(--heading); font-size: .76rem; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
     .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
@@ -437,31 +432,29 @@
           <div class="skill-category" data-skill-category="backend">
             <div class="skill-category-title"><h3>Backend</h3></div>
             <div class="tech-grid">
-              <div class="tech-item"><span class="tech-icon" data-tone="red">J</span><div class="tech-label"><strong>Java</strong></div></div>
-              <div class="tech-item"><span class="tech-icon" data-tone="green">S</span><div class="tech-label"><strong>Spring Boot</strong></div></div>
-              <div class="tech-item"><span class="tech-icon" data-tone="violet">JPA</span><div class="tech-label"><strong>JPA</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/java.svg" alt=""></span><div class="tech-label"><strong>Java</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/spring.svg" alt=""></span><div class="tech-label"><strong>Spring Boot</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/hibernate.svg" alt=""></span><div class="tech-label"><strong>JPA / Hibernate</strong></div></div>
             </div>
           </div>
           <div class="skill-category" data-skill-category="data">
             <div class="skill-category-title"><h3>Data</h3></div>
             <div class="tech-grid">
-              <div class="tech-item"><span class="tech-icon" data-tone="navy">MY</span><div class="tech-label"><strong>MySQL</strong></div></div>
-              <div class="tech-item"><span class="tech-icon" data-tone="red">R</span><div class="tech-label"><strong>Redis</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/mysql.svg" alt=""></span><div class="tech-label"><strong>MySQL</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/redis.svg" alt=""></span><div class="tech-label"><strong>Redis</strong></div></div>
             </div>
           </div>
           <div class="skill-category" data-skill-category="messaging">
             <div class="skill-category-title"><h3>Messaging</h3></div>
             <div class="tech-grid">
-              <div class="tech-item"><span class="tech-icon" data-tone="orange">K</span><div class="tech-label"><strong>Apache Kafka</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/apachekafka.svg" alt=""></span><div class="tech-label"><strong>Apache Kafka</strong></div></div>
             </div>
           </div>
           <div class="skill-category" data-skill-category="infra">
             <div class="skill-category-title"><h3>Infra</h3></div>
             <div class="tech-grid">
-              <div class="tech-item"><span class="tech-icon" data-tone="cyan">D</span><div class="tech-label"><strong>Docker</strong></div></div>
-              <div class="tech-item"><span class="tech-icon" data-tone="navy">GH</span><div class="tech-label"><strong>GitHub Actions</strong></div></div>
-              <div class="tech-item"><span class="tech-icon">L</span><div class="tech-label"><strong>Linux</strong></div></div>
-              <div class="tech-item"><span class="tech-icon" data-tone="orange">P</span><div class="tech-label"><strong>Prometheus</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/docker.svg" alt=""></span><div class="tech-label"><strong>Docker</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/githubactions.svg" alt=""></span><div class="tech-label"><strong>GitHub Actions</strong></div></div>
             </div>
           </div>
         </div>
