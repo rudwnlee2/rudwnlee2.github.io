@@ -2,7 +2,7 @@
 
 set -eu
 
-preview="_pages/portfolio/index.html"
+preview="portfolio/index.html"
 if [[ ! -f "$preview" ]]; then
   echo "FAIL: $preview is missing"
   exit 1
@@ -111,7 +111,7 @@ if (( coupon_project_line >= gallae_project_line )); then
   exit 1
 fi
 
-for forbidden_pattern in 'BackendDeveloper' 'class="code-card"' 'class="hero-actions"' 'class="quick-facts' 'class="fact-number"' 'class="hero-capabilities"' 'class="project-visual' 'class="visual-mark"' 'class="sample-badge"' 'class="project-details"' 'class="project-flow"' 'class="flow-node accent"' 'class="system-architecture"' 'class="architecture-bar"' 'class="architecture-link"' 'class="architecture-frame"' 'class="architecture-addon"' 'class="architecture-image"' 'class="architecture-pending"' 'coupon-yaho-architecture.png' '<iframe' 'data-placeholder-project="true"' '임시 예시 프로젝트' '<small>Language</small>' '<span>01 · Core</span>' 'id="contact"' 'mailto:' '>연락처<'; do
+for forbidden_pattern in 'BackendDeveloper' 'class="code-card"' 'class="hero-actions"' 'class="quick-facts' 'class="fact-number"' 'class="hero-capabilities"' 'class="project-visual' 'class="visual-mark"' 'class="sample-badge"' 'class="project-details"' 'class="project-flow"' 'class="flow-node accent"' 'class="system-architecture"' 'class="architecture-bar"' 'class="architecture-link"' 'class="architecture-frame"' 'class="architecture-addon"' 'class="architecture-image"' 'class="architecture-pending"' 'coupon-yaho-architecture.png' '<iframe' 'data-placeholder-project="true"' '임시 예시 프로젝트' '<small>Language</small>' '<span>01 · Core</span>' 'id="contact"' 'mailto:' '>연락처<' 'href="#about">소개</a>'; do
   if grep -Fq -- "$forbidden_pattern" "$preview"; then
     echo "FAIL: obsolete code-card content remains: $forbidden_pattern"
     exit 1

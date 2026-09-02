@@ -2,9 +2,9 @@
 
 set -eu
 
-preview="_pages/portfolio/index.html"
-coupon_detail="_pages/portfolio/coupon-yaho.html"
-vote_detail="_pages/portfolio/gallae-mallae.html"
+preview="portfolio/index.html"
+coupon_detail="portfolio/coupon-yaho/index.html"
+vote_detail="portfolio/gallae-mallae/index.html"
 
 for file in "$preview" "$coupon_detail" "$vote_detail"; do
   if [[ ! -f "$file" ]]; then
@@ -13,11 +13,11 @@ for file in "$preview" "$coupon_detail" "$vote_detail"; do
   fi
 done
 
-if ! grep -Fq -- "href=\"{{ '/portfolio/coupon-yaho/' | relative_url }}\"" "$preview"; then
+if ! grep -Fq -- 'href="/portfolio/coupon-yaho/"' "$preview"; then
   echo "FAIL: portfolio does not link to the coupon detail URL"
   exit 1
 fi
-if ! grep -Fq -- "href=\"{{ '/portfolio/gallae-mallae/' | relative_url }}\"" "$preview"; then
+if ! grep -Fq -- 'href="/portfolio/gallae-mallae/"' "$preview"; then
   echo "FAIL: portfolio does not link to the vote detail URL"
   exit 1
 fi
@@ -34,7 +34,7 @@ for label in '프로젝트 목적' '담당 범위' '핵심 문제' '기술적 �
 done
 
 for detail in "$coupon_detail" "$vote_detail"; do
-  if ! grep -Fq -- "href=\"{{ '/portfolio/#projects' | relative_url }}\"" "$detail"; then
+  if ! grep -Fq -- 'href="/portfolio/#projects"' "$detail"; then
     echo "FAIL: $detail does not provide a back link"
     exit 1
   fi
@@ -48,7 +48,7 @@ for detail in "$coupon_detail" "$vote_detail"; do
   fi
 done
 
-if ! grep -Fq -- "{{ '/assets/diagrams/coupon-yaho-architecture.png' | relative_url }}" "$coupon_detail"; then
+if ! grep -Fq -- '/assets/diagrams/coupon-yaho-architecture.png' "$coupon_detail"; then
   echo "FAIL: coupon detail does not include the supplied architecture image"
   exit 1
 fi

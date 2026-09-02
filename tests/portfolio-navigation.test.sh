@@ -4,9 +4,9 @@ set -eu
 
 navigation="_layouts/page.html"
 mobile_navigation="_includes/sidebar.html"
-portfolio="_pages/portfolio/index.html"
-coupon="_pages/portfolio/coupon-yaho.html"
-vote="_pages/portfolio/gallae-mallae.html"
+portfolio="portfolio/index.html"
+coupon="portfolio/coupon-yaho/index.html"
+vote="portfolio/gallae-mallae/index.html"
 
 if ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\">소개</a>" "$navigation"; then
   echo "FAIL: the site introduction menu does not link to /portfolio/"
@@ -18,28 +18,22 @@ if ! grep -Fq -- 'class="flat-category-item portfolio-link"' "$mobile_navigation
   exit 1
 fi
 
-declare -A expected_permalinks=(
-  ["$portfolio"]="permalink: /portfolio/"
-  ["$coupon"]="permalink: /portfolio/coupon-yaho/"
-  ["$vote"]="permalink: /portfolio/gallae-mallae/"
-)
-
-for file in "${!expected_permalinks[@]}"; do
+for file in "$portfolio" "$coupon" "$vote"; do
   if [[ ! -f "$file" ]]; then
     echo "FAIL: $file is missing"
     exit 1
   fi
-  if ! grep -Fq -- "${expected_permalinks[$file]}" "$file"; then
-    echo "FAIL: $file does not define ${expected_permalinks[$file]}"
+  if [[ "$(head -n 1 "$file")" != '<!doctype html>' ]]; then
+    echo "FAIL: $file must be a standalone static document without front matter"
     exit 1
   fi
 done
 
-for obsolete in portfolio-preview.html portfolio-project-coupon-yaho.html portfolio-project-gallae-mallae.html; do
+for obsolete in _pages/portfolio/index.html _pages/portfolio/coupon-yaho.html _pages/portfolio/gallae-mallae.html portfolio-preview.html portfolio-project-coupon-yaho.html portfolio-project-gallae-mallae.html; do
   if [[ -e "$obsolete" ]]; then
     echo "FAIL: obsolete root page remains: $obsolete"
     exit 1
   fi
 done
 
-echo "PASS: the introduction menu and portfolio pages use stable public URLs"
+echo "PASS: the introduction menu links to standalone portfolio pages at stable public URLs"
