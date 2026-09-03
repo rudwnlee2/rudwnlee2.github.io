@@ -53,9 +53,16 @@ if ! grep -Fq -- '/assets/diagrams/coupon-yaho-architecture.png' "$coupon_detail
   exit 1
 fi
 
-if ! grep -Fq -- 'Redis Lua' "$vote_detail" || ! grep -Fq -- 'STOMP' "$vote_detail"; then
+if ! grep -Fq -- 'Redis Lua' "$vote_detail" || ! grep -Fq -- '마감 스냅샷' "$vote_detail"; then
   echo "FAIL: vote detail does not explain the core vote flow"
   exit 1
 fi
+
+for websocket_term in 'WebSocket' 'STOMP' '웹소켓' '실시간 알림' '변경 알림' '구독 권한'; do
+  if grep -Fq -- "$websocket_term" "$vote_detail"; then
+    echo "FAIL: vote detail still contains WebSocket topic: $websocket_term"
+    exit 1
+  fi
+done
 
 echo "PASS: portfolio project cards link to complete standalone detail pages"
