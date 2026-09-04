@@ -68,8 +68,8 @@ required_patterns=(
   'data-skill-category="etc"'
   'id="projects"'
   '갈래말래'
-  '<span class="project-summary-line">그룹원의 조건에 맞는 메뉴 후보를 추천하고,</span>'
-  '<span class="project-summary-line">투표 결과로 최종 메뉴를 정하는 서비스</span>'
+  '<p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p>'
+  '<p class="project-summary">Redis와 MySQL의 쿠폰 발급 상태를 비교하고, 종료 이벤트와 관제 지표를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p>'
   '쿠폰 야호'
   'https://github.com/rudwnlee2/gallae-mallae-backend'
   'https://github.com/coupon-yaho/cy-be'
@@ -86,8 +86,11 @@ required_patterns=(
   '.case-summary { display: grid; padding: .2rem 1rem 1rem; }'
   '.case-summary-row { display: grid; grid-template-columns: 88px minmax(0, 1fr);'
   '.case-summary-label { color: var(--heading); font-size: .8rem;'
-  '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading);'
-  '.project-summary-line { display: block; }'
+  '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: .9rem; line-height: 1.65; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }'
+  '.hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-summary-content p, .credential-item h4, .credential-item p {'
+  'text-wrap: pretty;'
+  'word-break: keep-all;'
+  'overflow-wrap: break-word;'
   '.project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .72rem;'
   '.project-highlight p { margin: 0; color: var(--heading);'
   '.project-highlight > strong { display: block;'
@@ -286,6 +289,11 @@ fi
 
 if grep -Fq -- 'project-detail-link' "$preview" || grep -Fq -- '>상세 보기<' "$preview"; then
   echo "FAIL: standalone detail links must not appear on the portfolio page"
+  exit 1
+fi
+
+if grep -Fq -- 'project-summary-line' "$preview"; then
+  echo "FAIL: forced project summary line breaks must not remain"
   exit 1
 fi
 
