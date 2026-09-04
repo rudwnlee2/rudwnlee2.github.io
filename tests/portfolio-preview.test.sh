@@ -32,8 +32,8 @@ required_patterns=(
   '>Blog ↗<'
   '>GitHub ↗<'
   'class="hero-facts"'
-  '데이터가 정확히 이어지는 흐름을 고민하는 백엔드 개발자입니다.'
-  '동시 요청과 실패 상황에서도 상태를 확인하고 다시 처리할 수 있는 구조를 중요하게 생각합니다.'
+  '동시 요청과 장애 상황에서도 데이터 정합성을 지키는 백엔드 개발자입니다.'
+  '동시성 제어, 실패 감지, 재처리가 가능한 구조를 프로젝트에서 구현하고 검증했습니다.'
   '<strong>Concurrency Control</strong>'
   'Redis Lua로 여러 요청을 한 번에 처리'
   '<strong>Data Consistency</strong>'
@@ -49,11 +49,11 @@ required_patterns=(
   '쿠폰 야호에서는 Redis와 MySQL의 발급 상태를 비교하고, DB 커밋 이후 종료 이벤트를 여러 서버에 전파했습니다.'
   '기능을 완성하는 것뿐 아니라 실패 지점을 확인할 수 있는 지표와 누락을 보정하는 방법까지 함께 고민했습니다.'
   '선택한 기술의 보장 범위와 한계를 테스트로 확인하며, 운영 중에도 문제를 찾고 대응할 수 있는 백엔드를 만들고자 합니다.'
-  '<strong>동시에 바뀌는 값 맞추기</strong>'
+  '<strong>동시 상태 정합성</strong>'
   'Redis Lua로 투표 변경과 집계를 한 번에 처리'
-  '<strong>저장소의 차이 확인하기</strong>'
+  '<strong>저장소 간 데이터 비교</strong>'
   'Redis·MySQL 발급 상태를 네 가지 기준으로 비교'
-  '<strong>실패 후 이어지는 흐름 만들기</strong>'
+  '<strong>실패 복구와 누락 보정</strong>'
   '저장 실패 시 재시도하고, 놓친 종료 정보는 DB 조회로 보정'
   '--emphasis-text: #111827;'
   '--emphasis-text: #f8fafc;'
@@ -78,19 +78,22 @@ required_patterns=(
   'class="project-header"'
   'class="project-icon"'
   'class="project-cases"'
-  '.project-cases { display: grid; gap: 1.15rem; margin-top: 1.25rem; }'
+  '.project-cases { display: grid; gap: 1rem; margin-top: 1.25rem; }'
+  '.project-card { overflow: hidden; border-radius: .85rem; padding: 1.5rem; }'
   '.project-case { overflow: hidden; border: 1px solid var(--line-strong); border-radius: .9rem; background: var(--panel); padding: 0; }'
   'background: var(--panel-soft); padding: .85rem 1rem;'
   'background: var(--accent); color: #fff;'
   '.case-summary { display: grid; padding: .2rem 1rem 1rem; }'
   '.case-summary-row { display: grid; grid-template-columns: 88px minmax(0, 1fr);'
-  '.case-summary-label { color: var(--heading); font-size: .76rem;'
+  '.case-summary-label { color: var(--heading); font-size: .8rem;'
   '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading);'
   '.project-summary-line { display: block; }'
-  '.project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading);'
+  '.project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .72rem;'
   '.project-highlight p { margin: 0; color: var(--heading);'
   '.project-highlight > strong { display: block;'
-  '.case-summary-content p { margin: 0; color: var(--heading);'
+  '.case-summary-content p { margin: 0; color: var(--heading); font-size: .86rem;'
+  'class="case-comparison-list"'
+  '.case-comparison-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));'
   '.architecture-summary { color: var(--heading);'
   '.flow-boundary-label { color: var(--heading);'
   '.flow-node small { color: var(--heading);'
@@ -112,7 +115,9 @@ required_patterns=(
   'participant Redis as Redis 마감 집계'
   'alt DB 저장 성공'
   'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
-  '.sequence-diagram svg { display: block; width: 100% !important; max-width: 100%;'
+  '.sequence-diagram > svg { display: block; width: 100% !important; min-width: 680px; max-width: none;'
+  '.hero-intro { order: -1; }'
+  '.profile-photo-slot { width: min(170px, 50vw); }'
   'mirrorActors: false'
   'participant Batch as Batch 서버'
   'participant Event as afterCommit'
@@ -124,21 +129,24 @@ required_patterns=(
   'data-project-case="consistency-gaps"'
   'data-project-case="lifecycle-after-commit"'
   'data-project-case="prometheus-failure-isolation"'
-  'Redis와 MySQL의 정합성 차이 추적'
-  '종료된 쿠폰의 지표를 모든 서버에서 정리하기'
-  'Prometheus 조회 실패가 전체 화면을 막지 않게 하기'
-  '전체 수량에서 Redis 잔여 수량을 뺀 값과 DB 활성 쿠폰 수'
-  'Redis 누적 발급 수와 발급 회원 수'
-  'Redis 누적 발급 수와 DB 누적 발급 이력'
-  'DB 활성 쿠폰 수와 재고 테이블의 활성 카운터'
+  'Redis와 MySQL 간 데이터 불일치 추적'
+  '종료 이벤트 기반 다중 서버 지표 정리'
+  'Prometheus 조회 실패 격리'
+  '전체 수량 − Redis 잔여 수량 ↔ DB 활성 쿠폰 수'
+  'Redis 누적 발급 수 ↔ Redis 발급 회원 수'
+  'Redis 누적 발급 수 ↔ DB 누적 발급 이력'
+  'DB 활성 쿠폰 수 ↔ DB 재고 테이블의 활성 카운터'
   'DB 커밋이 끝난 뒤에만 발행'
   '최근 종료 회차를 DB에서 다시 조회'
   'grouped query로 한 번에 조회'
-  '동시 투표 결과 맞추기'
+  '동시 투표 결과 정합성'
   'RabbitMQ 기반 재추천 비동기 처리'
   'AI 추천 결과를 기다려야 해 응답이 늦어지고'
   '기존 RabbitMQ 추천 흐름에 연결'
-  'DB 저장 실패 후 다시 시도하기'
+  'API 응답을 장시간 추천 작업과 분리'
+  'Redis 장애나 TTL 만료로 마감 집계가 유실되는 상황을 탐지할 지표가 필요'
+  'DB 저장 실패 후 재처리'
+  '<div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 기능 담당</span></div>'
   'id="credentials"'
   '<p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2>'
   'class="credentials-grid"'
@@ -282,7 +290,7 @@ if grep -Fq -- 'project-detail-link' "$preview" || grep -Fq -- '>상세 보기<'
 fi
 
 gallae_markup="$(sed -n '/<h3>갈래말래<\/h3>/,/<div class="project-footer">/p' "$preview")"
-for case_stage in 문제 '선택과 실행' '결과와 고찰'; do
+for case_stage in 문제 '선택과 실행' '검증과 한계'; do
   stage_count="$(grep -Fc -- "<strong>$case_stage</strong>" <<< "$gallae_markup" || true)"
   if (( stage_count != 3 )); then
     echo "FAIL: every Gallae-Mallae case must contain one '$case_stage' stage, found $stage_count"
@@ -309,7 +317,7 @@ if (( emphasized_case_row_count != 9 )); then
 fi
 
 coupon_markup="$(sed -n '/<h3>쿠폰 야호<\/h3>/,/<div class="project-footer">/p' "$preview")"
-for case_stage in 문제 '선택과 실행' '결과와 고찰'; do
+for case_stage in 문제 '선택과 실행' '검증과 한계'; do
   stage_count="$(grep -Fc -- "<strong>$case_stage</strong>" <<< "$coupon_markup" || true)"
   if (( stage_count != 3 )); then
     echo "FAIL: every Coupon Yaho case must contain one '$case_stage' stage, found $stage_count"
@@ -318,8 +326,14 @@ for case_stage in 문제 '선택과 실행' '결과와 고찰'; do
 done
 
 emphasized_coupon_row_count="$(grep -F -- '<div class="case-summary-content"><p>' <<< "$coupon_markup" | grep -Fc -- '<strong>' || true)"
-if (( emphasized_coupon_row_count != 9 )); then
-  echo "FAIL: every Coupon Yaho case row must emphasize at least one key term, found $emphasized_coupon_row_count"
+if (( emphasized_coupon_row_count != 8 )); then
+  echo "FAIL: every prose row in Coupon Yaho must emphasize at least one key term, found $emphasized_coupon_row_count"
+  exit 1
+fi
+
+comparison_item_count="$(grep -Fo -- '<li>' <<< "$coupon_markup" | wc -l)"
+if (( comparison_item_count != 4 )); then
+  echo "FAIL: Coupon Yaho consistency case must show four comparison pairs, found $comparison_item_count"
   exit 1
 fi
 
@@ -336,6 +350,11 @@ for removed_notification_copy in 'data-project-case="notification-retry"' '알�
 done
 
 projects_markup="$(sed -n '/<section class="section" id="projects">/,/<section class="section" id="credentials">/p' "$preview")"
+if grep -E '<h4>[^<]*하기</h4>' <<< "$projects_markup"; then
+  echo "FAIL: project case titles must use concise noun phrases instead of '~하기' endings"
+  exit 1
+fi
+
 for retrospective_ending in '했습니다.' '있었습니다.' '됐습니다.' '필요했습니다.'; do
   if grep -Fq -- "$retrospective_ending" <<< "$projects_markup"; then
     echo "FAIL: project copy still uses repetitive retrospective ending: $retrospective_ending"
