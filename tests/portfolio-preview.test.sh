@@ -118,7 +118,8 @@ required_patterns=(
   'participant Redis as Redis 마감 집계'
   'alt DB 저장 성공'
   'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
-  '.sequence-diagram > svg { display: block; width: 100% !important; min-width: 680px; max-width: none;'
+  '.sequence-diagram { max-width: 100%; margin: .65rem 0 0; overflow: hidden;'
+  '.sequence-diagram > svg { display: block; width: 100% !important; min-width: 0; max-width: 100% !important;'
   '.hero-intro { order: -1; }'
   '.profile-photo-slot { width: min(170px, 50vw); }'
   'mirrorActors: false'
@@ -272,6 +273,17 @@ fi
 mermaid_sequence_count="$(grep -Fc -- 'class="mermaid sequence-diagram"' "$preview" || true)"
 if (( mermaid_sequence_count != 3 )); then
   echo "FAIL: only lifecycle propagation, async recommendation, and persistence recovery should use Mermaid sequences, found $mermaid_sequence_count"
+  exit 1
+fi
+
+scrollable_sequence_count="$(grep -Fc -- '좌우로 스크롤하여 확인' "$preview" || true)"
+if (( scrollable_sequence_count != 0 )); then
+  echo "FAIL: Mermaid sequences must fit inside the card without scroll instructions"
+  exit 1
+fi
+
+if grep -Fq -- 'class="mermaid sequence-diagram" tabindex="0"' "$preview"; then
+  echo "FAIL: fitted Mermaid sequences must not expose a redundant scroll viewport"
   exit 1
 fi
 
