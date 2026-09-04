@@ -13,12 +13,12 @@ for file in "$preview" "$coupon_detail" "$vote_detail"; do
   fi
 done
 
-if ! grep -Fq -- 'href="/portfolio/coupon-yaho/"' "$preview"; then
-  echo "FAIL: portfolio does not link to the coupon detail URL"
+if grep -Fq -- 'href="/portfolio/coupon-yaho/"' "$preview"; then
+  echo "FAIL: portfolio still links to the coupon detail page"
   exit 1
 fi
-if ! grep -Fq -- 'href="/portfolio/gallae-mallae/"' "$preview"; then
-  echo "FAIL: portfolio does not link to the vote detail URL"
+if grep -Fq -- 'href="/portfolio/gallae-mallae/"' "$preview"; then
+  echo "FAIL: portfolio still links to the vote detail page"
   exit 1
 fi
 
@@ -65,4 +65,4 @@ for websocket_term in 'WebSocket' 'STOMP' '웹소켓' '실시간 알림' '변경
   fi
 done
 
-echo "PASS: portfolio project cards link to complete standalone detail pages"
+echo "PASS: standalone project details remain complete but are not linked from the portfolio cards"

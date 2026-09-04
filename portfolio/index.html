@@ -15,6 +15,7 @@
       --line-strong: #d9dee7;
       --text: #2f3440;
       --heading: #1f232b;
+      --emphasis-text: #111827;
       --muted: #727985;
       --subtle: #a0a7b2;
       --accent: #2563eb;
@@ -41,6 +42,7 @@
       --line-strong: #3b4250;
       --text: #d7dbe3;
       --heading: #f1f3f7;
+      --emphasis-text: #f8fafc;
       --muted: #a1a7b3;
       --subtle: #6c727e;
       --accent: #79aefb;
@@ -166,39 +168,25 @@
     .hero-links a { border-bottom: 1px solid var(--line-strong); color: var(--heading); font-size: .82rem; font-weight: 800; }
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
     .profile-photo-slot {
-      position: relative;
       overflow: hidden;
       display: grid;
       place-items: center;
-      min-height: 360px;
-      border: 1px solid var(--line);
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--line-strong);
       border-radius: .45rem;
       background: var(--panel-soft);
-      padding: .75rem;
+      padding: .45rem;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, .1);
     }
-    .profile-photo-slot::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(150deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 58%);
-    }
-    .profile-photo-placeholder {
-      position: relative;
-      z-index: 1;
-      display: grid;
-      place-items: center;
-      align-content: center;
+    .profile-photo {
+      display: block;
       width: 100%;
-      min-height: 342px;
-      border: 1px dashed var(--line-strong);
-      border-radius: .2rem;
-      background: color-mix(in srgb, var(--panel) 48%, transparent);
-      color: var(--accent);
-      text-align: center;
+      height: 100%;
+      border-radius: .22rem;
+      background: #fff;
+      object-fit: cover;
+      object-position: center top;
     }
-    .profile-photo-placeholder svg { width: 66px; height: 66px; margin-bottom: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
-    .profile-photo-placeholder strong { color: var(--heading); font-size: 1rem; }
-    .profile-photo-placeholder span { margin-top: .25rem; color: var(--muted); font-size: .78rem; }
 
     .hero-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.7rem; border-top: 1px solid var(--line); }
     .hero-fact { min-width: 0; padding: 1rem .9rem 0; border-right: 0; }
@@ -217,7 +205,7 @@
     .about-grid { display: grid; grid-template-columns: 1fr; gap: 1.4rem; }
     .card { border: 1px solid var(--line); border-radius: 1.15rem; background: var(--panel); padding: 1.5rem; }
     .about-main { padding: 0; }
-    .about-statement { margin-bottom: 1rem; color: var(--heading); font-size: clamp(1.2rem, 2.4vw, 1.65rem); font-weight: 850; letter-spacing: -.035em; }
+    .about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text); font-size: clamp(1.2rem, 2.4vw, 1.65rem); font-weight: 850; letter-spacing: -.035em; }
     .about-main h3 { margin-bottom: .8rem; color: var(--heading); font-size: 1.3rem; }
     .about-main p { margin-bottom: .75rem; color: var(--muted); }
     .principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; border-top: 1px solid var(--line); padding-top: 1.25rem; }
@@ -242,76 +230,82 @@
 
     .projects { display: grid; gap: 1.4rem; }
     .project-card { overflow: hidden; border-radius: .5rem; padding: 1.5rem; }
+    .project-card p strong { color: inherit; font-weight: 850; }
     .project-header { display: flex; align-items: flex-start; gap: .9rem; }
     .project-icon { display: grid; flex: 0 0 auto; place-items: center; width: 52px; height: 52px; border-radius: .9rem; background: var(--accent-soft); color: var(--accent); font-size: .88rem; font-weight: 950; letter-spacing: -.05em; }
     .project-icon.orange { background: var(--warm-soft); color: var(--warm); }
     .project-heading { min-width: 0; flex: 1; }
     .project-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
     .project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.35rem; }
-    .project-summary { max-width: 760px; margin-bottom: 0; color: var(--muted); font-size: .86rem; }
-    .project-repo { flex: 0 0 auto; padding: .4rem .62rem; border: 1px solid var(--line); border-radius: .65rem; color: var(--accent); font-size: .76rem; font-weight: 850; }
+    .project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: .86rem; }
+    .project-summary-line { display: block; }
+    .project-repo { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .3rem; border: 1px solid var(--line); border-radius: .65rem; background: transparent; padding: .4rem .62rem; color: var(--accent); font-size: .76rem; font-weight: 850; }
     .project-repo:hover { border-color: var(--accent-line); background: var(--accent-soft); }
     .project-roles { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
-    .project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--muted); font-size: .68rem; font-weight: 800; }
+    .project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .68rem; font-weight: 800; }
     .project-role.primary { background: var(--accent-soft); color: var(--accent); }
     .project-highlights { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.4rem; margin-top: 1.2rem; }
     .project-highlight { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; padding: .8rem 0 0; }
-    .project-highlight strong { display: block; margin-bottom: .3rem; color: var(--accent); font-size: .7rem; letter-spacing: .04em; }
-    .project-highlight p { margin: 0; color: var(--text); font-size: .78rem; line-height: 1.55; }
+    .project-highlight > strong { display: block; margin-bottom: .3rem; color: var(--accent); font-size: .7rem; letter-spacing: .04em; }
+    .project-highlight p { margin: 0; color: var(--heading); font-size: .78rem; line-height: 1.55; }
+    .project-cases { display: grid; gap: 1.15rem; margin-top: 1.25rem; }
+    .project-case { overflow: hidden; border: 1px solid var(--line-strong); border-radius: .9rem; background: var(--panel); padding: 0; }
+    .project-case-heading { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: .8rem; margin: 0; border-bottom: 1px solid var(--line); background: var(--panel-soft); padding: .85rem 1rem; }
+    .project-case-number { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: .65rem; background: var(--accent); color: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; font-weight: 900; }
+    .project-case-heading h4 { margin: 0 0 .18rem; color: var(--heading); font-size: 1.02rem; }
+    .project-case-heading p { margin: 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
+    .case-summary { display: grid; padding: .2rem 1rem 1rem; }
+    .case-summary-row { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: .9rem; border-top: 1px solid var(--line); padding: .85rem 0; }
+    .case-summary-row:first-child { border-top: 0; }
+    .case-summary-label { color: var(--heading); font-size: .76rem; font-weight: 900; line-height: 1.55; }
+    .case-summary-content { min-width: 0; }
+    .case-summary-content p { margin: 0; color: var(--heading); font-size: .8rem; line-height: 1.62; }
+    .sequence-diagram { margin: .65rem 0 0; overflow-x: auto; border: 1px solid var(--line); border-radius: .4rem; background: #fff; padding: .65rem; text-align: center; }
+    .sequence-diagram svg { display: block; width: 100% !important; max-width: 100%; height: auto; margin: 0 auto; }
     .project-architecture { margin: .95rem 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: .85rem; background: linear-gradient(145deg, var(--panel-soft), var(--panel)); }
     .project-architecture figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); padding: .7rem 1rem; }
     .architecture-kicker { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .68rem; font-weight: 900; letter-spacing: .1em; }
-    .architecture-summary { color: var(--muted); font-size: .7rem; }
-    .architecture-scroll { overflow-x: auto; padding: .35rem .7rem .55rem; scrollbar-width: thin; }
-    .architecture-diagram { width: 100%; min-width: 760px; height: auto; color: var(--heading); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
-    .architecture-boundary { fill: color-mix(in srgb, var(--panel) 72%, transparent); stroke: var(--line-strong); stroke-width: 1.4; stroke-dasharray: 5 5; }
-    .architecture-boundary.accent { fill: color-mix(in srgb, var(--accent-soft) 48%, transparent); stroke: var(--accent-line); }
-    .architecture-node-mask { fill: var(--panel); }
-    .architecture-node { fill: var(--panel); stroke: var(--line-strong); stroke-width: 1.5; }
-    .architecture-node.backend { fill: var(--accent-soft); stroke: var(--accent-line); }
-    .architecture-node.database { fill: var(--teal-soft); stroke: color-mix(in srgb, var(--teal) 52%, var(--line)); }
-    .architecture-node.message { fill: var(--warm-soft); stroke: color-mix(in srgb, var(--warm) 55%, var(--line)); }
-    .architecture-node.external { fill: var(--panel-soft); }
-    .architecture-edge { fill: none; stroke: var(--line-strong); stroke-width: 1.7; marker-end: url(#coupon-arrow); }
-    .architecture-edge.vote { marker-end: url(#vote-arrow); }
-    .architecture-edge.emphasis { stroke: var(--accent); stroke-width: 2; }
-    .architecture-edge.dashed { stroke-dasharray: 5 4; }
-    .architecture-arrow-head { fill: var(--accent); }
-    .architecture-label { fill: var(--heading); font-size: 12px; font-weight: 850; text-anchor: middle; }
-    .architecture-sublabel { fill: var(--muted); font-size: 9px; text-anchor: middle; }
-    .architecture-boundary-label { fill: var(--subtle); font-size: 9px; font-weight: 850; letter-spacing: .08em; }
-    .architecture-edge-label { fill: var(--accent); font-size: 9px; font-weight: 800; }
-    .architecture-role-band { fill: var(--accent-soft); stroke: var(--accent-line); stroke-width: 1.2; }
-    .architecture-role-title { fill: var(--accent); font-size: 10px; font-weight: 900; }
-    .architecture-role-copy { fill: var(--muted); font-size: 9px; }
+    .architecture-summary { color: var(--heading); font-size: .7rem; }
+    .responsive-flow { display: grid; gap: .8rem; padding: 1rem; }
+    .flow-boundary { display: grid; gap: .65rem; border: 1px dashed var(--accent-line); border-radius: .75rem; background: color-mix(in srgb, var(--accent-soft) 42%, transparent); padding: .75rem; }
+    .flow-boundary.neutral { border-color: var(--line-strong); background: color-mix(in srgb, var(--panel) 72%, transparent); }
+    .flow-boundary-label { color: var(--heading); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .62rem; font-weight: 900; letter-spacing: .08em; }
+    .flow-track { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr) auto minmax(0, 1fr); align-items: stretch; gap: .45rem; }
+    .flow-node { display: flex; min-width: 0; min-height: 64px; flex-direction: column; align-items: center; justify-content: center; gap: .16rem; border: 1px solid var(--line-strong); border-radius: .65rem; background: var(--panel); padding: .55rem .5rem; text-align: center; }
+    .flow-node.type-backend { border-color: var(--accent-line); background: var(--accent-soft); }
+    .flow-node.type-data { border-color: color-mix(in srgb, var(--teal) 52%, var(--line)); background: var(--teal-soft); }
+    .flow-node.type-warning { border-color: color-mix(in srgb, var(--warm) 55%, var(--line)); background: var(--warm-soft); }
+    .flow-node strong { color: var(--heading); font-size: .72rem; line-height: 1.35; }
+    .flow-node small { color: var(--heading); font-size: .6rem; line-height: 1.35; }
+    .flow-node ul { display: grid; gap: .12rem; width: 100%; margin: .22rem 0 0; padding: 0; list-style: none; color: var(--heading); font-size: .58rem; line-height: 1.35; }
+    .flow-node li + li { border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent); padding-top: .12rem; }
+    .flow-arrow { align-self: center; color: var(--accent); font-size: 1rem; font-weight: 900; line-height: 1; }
+    .flow-support-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; }
+    .flow-support-grid .flow-node { min-height: 54px; }
+    .flow-note { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .75rem; border-radius: .6rem; background: var(--accent-soft); padding: .55rem .7rem; }
+    .flow-note-title { color: var(--accent); font-size: .65rem; font-weight: 900; }
+    .flow-note-copy { color: var(--heading); font-size: .62rem; }
     .project-tech { margin-top: .75rem; }
+    .project-tech .tag { color: var(--heading); }
     .project-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .85rem; }
     .project-footer .project-tech { margin-top: 0; }
-    .project-detail-link { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .35rem; border-radius: .7rem; background: var(--accent); padding: .62rem .85rem; color: #fff; font-size: .78rem; font-weight: 850; }
-    .project-detail-link::after { content: "→"; transition: transform .18s ease; }
-    .project-detail-link:hover { background: var(--accent-hover); }
-    .project-detail-link:hover::after { transform: translateX(3px); }
-    .text-link { display: inline-flex; align-items: center; gap: .3rem; color: var(--accent); font-size: .82rem; font-weight: 850; }
-    .text-link::after { content: "→"; transition: transform .18s ease; }
-    .text-link:hover::after { transform: translateX(3px); }
 
-    .stories-grid { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--line); }
-    .story-card { display: grid; grid-template-columns: 145px minmax(0, 1fr) auto; gap: 1rem; align-items: center; min-height: 0; border-bottom: 1px solid var(--line); padding: 1.1rem 0; }
-    .story-index { margin: 0; color: var(--subtle); font-size: .68rem; font-weight: 850; letter-spacing: .08em; }
-    .story-card h3 { margin: 0; color: var(--heading); font-size: .95rem; line-height: 1.45; }
-    .story-card p { display: none; }
-    .story-card .text-link { margin: 0; }
-
-    .timeline { position: relative; display: grid; gap: 0; }
-    .timeline::before { content: ""; position: absolute; top: 12px; bottom: 12px; left: 116px; width: 1px; background: var(--line-strong); }
-    .timeline-item { position: relative; display: grid; grid-template-columns: 92px 1fr; gap: 48px; padding: 0 0 2rem; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-date { padding-top: .15rem; color: var(--muted); font-size: .8rem; font-weight: 800; text-align: right; }
-    .timeline-body::before { content: ""; position: absolute; top: 9px; left: 111px; width: 9px; height: 9px; border: 3px solid var(--bg); border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px var(--accent-line); }
-    .alt .timeline-body::before { border-color: var(--panel-soft); }
-    .timeline-body h3 { margin-bottom: .25rem; color: var(--heading); font-size: 1rem; }
-    .timeline-body p { margin-bottom: .35rem; color: var(--muted); font-size: .86rem; }
-    .placeholder { color: var(--warm); font-size: .74rem; font-weight: 800; }
+    .credentials-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(260px, .88fr); gap: 2rem; }
+    .credential-group { min-width: 0; border-top: 2px solid var(--heading); padding-top: .85rem; }
+    .credential-group-heading { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; }
+    .credential-group-number { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; font-weight: 900; }
+    .credential-group h3 { margin: 0; color: var(--heading); font-size: 1rem; }
+    .credential-list { display: grid; }
+    .credential-item { border-bottom: 1px solid var(--line); padding: 1rem 0; }
+    .credential-item:last-child { border-bottom: 0; }
+    .credential-topline { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .45rem; }
+    .credential-kind { display: inline-flex; align-items: center; border-radius: 999px; background: var(--accent-soft); padding: .2rem .48rem; color: var(--accent); font-size: .66rem; font-weight: 850; }
+    .credential-period { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .3rem; color: var(--muted); }
+    .credential-item time { flex: 0 0 auto; color: var(--muted); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; font-weight: 750; }
+    .credential-item h4 { margin: 0; color: var(--heading); font-size: .95rem; line-height: 1.45; }
+    .credential-item p { margin: .22rem 0 0; color: var(--muted); font-size: .78rem; }
+    .credential-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
+    .credential-status { display: inline-flex; align-items: center; border-radius: 999px; background: var(--teal-soft); padding: .18rem .45rem; color: var(--teal); font-size: .64rem; font-weight: 850; }
 
     footer { border-top: 1px solid var(--line); padding: 1.6rem 0; color: var(--subtle); font-size: .76rem; }
     .footer-inner { display: flex; justify-content: space-between; gap: 1rem; }
@@ -320,8 +314,6 @@
     @media (max-width: 900px) {
       .primary-nav { display: none; }
       .hero-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 42px; }
-      .profile-photo-slot { min-height: 320px; }
-      .profile-photo-placeholder { min-height: 302px; }
       .section-layout { grid-template-columns: 135px minmax(0, 1fr); gap: 38px; }
       .principles { grid-template-columns: 1fr; gap: .8rem; }
       .skill-category { grid-template-columns: 90px minmax(0, 1fr); }
@@ -332,8 +324,7 @@
       .hero { padding: 40px 0 36px; }
       .hero-grid { grid-template-columns: 1fr; gap: 30px; }
       h1 { font-size: clamp(1.85rem, 8vw, 2.45rem); }
-      .profile-photo-slot { width: min(230px, 76vw); min-height: 300px; }
-      .profile-photo-placeholder { min-height: 282px; }
+      .profile-photo-slot { width: min(230px, 76vw); }
       .hero-facts { grid-template-columns: 1fr; }
       .hero-fact { border-right: 0; border-bottom: 1px solid var(--line); padding: .85rem 0; }
       .hero-fact:last-child { border-bottom: 0; }
@@ -348,13 +339,14 @@
       .project-title-row { align-items: stretch; flex-direction: column; gap: .6rem; }
       .project-repo { align-self: flex-start; }
       .project-highlights { grid-template-columns: 1fr; }
-      .story-card { grid-template-columns: 1fr; gap: .35rem; }
-      .story-card .text-link { margin-top: .35rem; }
+      .case-summary-row { grid-template-columns: 1fr; gap: .25rem; }
+      .project-architecture figcaption { align-items: flex-start; flex-direction: column; gap: .2rem; }
+      .responsive-flow { padding: .75rem; }
+      .flow-track { grid-template-columns: 1fr; }
+      .flow-arrow { justify-self: center; transform: rotate(90deg); }
+      .flow-support-grid { grid-template-columns: 1fr; }
       .project-footer { align-items: flex-start; flex-direction: column; }
-      .timeline::before { left: 5px; }
-      .timeline-item { grid-template-columns: 1fr; gap: .25rem; padding-left: 28px; }
-      .timeline-date { text-align: left; }
-      .timeline-body::before { left: 0; }
+      .credentials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .footer-inner { display: grid; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -382,7 +374,6 @@
         <nav class="primary-nav" aria-label="주요 메뉴">
           <a href="#skills">기술</a>
           <a href="#projects">프로젝트</a>
-          <a href="#stories">문제 해결</a>
         </nav>
         <button class="icon-button" id="theme-toggle" type="button" aria-label="다크 모드로 전환" title="화면 테마 변경">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm9-7a1 1 0 1 1 0 2h-1a1 1 0 1 1 0-2h1ZM5 11a1 1 0 1 1 0 2H3a1 1 0 1 1 0-2h2Zm13.36-6.36a1 1 0 0 1 0 1.42l-.71.7a1 1 0 1 1-1.41-1.4l.7-.72a1 1 0 0 1 1.42 0ZM6.76 16.24a1 1 0 0 1 0 1.41l-.7.71a1 1 0 0 1-1.42-1.42l.71-.7a1 1 0 0 1 1.41 0ZM12 19a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1Zm-6.65-1.35-.71-.71a1 1 0 0 1 1.42-1.41l.7.7a1 1 0 1 1-1.41 1.42ZM17.65 7.76a1 1 0 0 1-.71-.3l-.7-.7a1 1 0 1 1 1.41-1.41l.71.7a1 1 0 0 1-.71 1.71Z"/></svg>
@@ -395,25 +386,17 @@
     <section class="hero hero-compact" id="top">
       <div class="shell hero-grid">
         <div class="profile-photo-slot">
-          <div class="profile-photo-placeholder" role="img" aria-label="프로필 이미지 추가 예정">
-            <svg viewBox="0 0 64 64" aria-hidden="true">
-              <circle cx="32" cy="22" r="11"></circle>
-              <path d="M13 54c2.6-11.2 9-17 19-17s16.4 5.8 19 17"></path>
-              <rect x="5" y="5" width="54" height="54" rx="15"></rect>
-            </svg>
-            <strong>프로필 이미지</strong>
-            <span>사진 추가 예정</span>
-          </div>
+          <img class="profile-photo" src="/assets/img/profile/lee-gyeongju.jpg" alt="백엔드 개발자 이경주 프로필 사진" width="591" height="787" decoding="async" fetchpriority="high">
         </div>
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
-          <p class="hero-statement">동시에 바뀌는 상태를 안전하게 다룹니다.</p>
-          <p class="hero-copy">Redis Lua로 투표 변경과 집계를 원자적으로 처리하고, Redis와 MySQL 사이의 저장 경계를 설계했습니다. 동시 요청과 저장 실패 이후에도 데이터가 어긋나지 않고 다시 처리할 수 있는 백엔드 구조를 고민합니다.</p>
+          <p class="hero-statement">데이터가 정확히 이어지는 흐름을 고민하는 백엔드 개발자입니다.</p>
+          <p class="hero-copy">동시 요청과 실패 상황에서도 상태를 확인하고 다시 처리할 수 있는 구조를 중요하게 생각합니다.</p>
           <div class="hero-links" aria-label="외부 링크"><a href="/">Blog ↗</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           <div class="hero-facts" aria-label="핵심 정보">
-            <div class="hero-fact"><strong>Concurrency Control</strong><span>Redis Lua를 활용한 원자적 상태 변경</span></div>
-            <div class="hero-fact"><strong>Data Consistency</strong><span>진행 상태와 확정 결과의 저장 경계 설계</span></div>
-            <div class="hero-fact"><strong>Failure Recovery</strong><span>실패 후 다시 처리할 수 있는 스냅샷 보존</span></div>
+            <div class="hero-fact"><strong>Concurrency Control</strong><span>Redis Lua로 여러 요청을 한 번에 처리</span></div>
+            <div class="hero-fact"><strong>Data Consistency</strong><span>진행 정보는 Redis, 마감 결과는 MySQL에 저장</span></div>
+            <div class="hero-fact"><strong>Failure Recovery</strong><span>저장 실패 시 남아 있는 마감 결과로 다시 시도</span></div>
           </div>
         </div>
       </div>
@@ -423,19 +406,17 @@
       <div class="shell section-layout">
         <div class="section-heading">
           <div><p class="eyebrow">About me</p><h2>소개</h2></div>
-          <p>정상 동작뿐 아니라 동시 요청, 중복 실행, 저장 실패 이후의 동작까지 함께 설계합니다.</p>
+          <p>동시 요청, 저장소 간 데이터 차이, 실패 이후의 흐름을 프로젝트에서 직접 다뤘습니다.</p>
         </div>
         <div class="about-grid">
           <article class="about-main">
-            <p class="about-statement">빠르게 전달하는 것보다, 정확하게 이어지는 흐름을 중요하게 생각합니다.</p>
-            <p>갈래말래의 투표 기능을 개발하며 여러 사용자가 동시에 선택을 제출하고 기존 선택을 변경하는 상황에서도 개인 선택과 후보별 집계가 일치하도록 Redis Lua 기반의 원자적 처리 구조를 구현했습니다.</p>
-            <p>변경이 빈번하고 수명이 짧은 진행 상태는 Redis에 저장하고, 종료 후 보존해야 하는 확정 결과는 MySQL에 저장했습니다. 두 저장소를 하나의 트랜잭션으로 묶을 수 없다는 한계를 고려해 DB 저장이 완료되기 전에는 마감 스냅샷을 삭제하지 않도록 설계했습니다.</p>
-            <p>정상 흐름뿐 아니라 중복 마감과 DB 저장 실패 이후의 재시도 경로까지 검증했습니다. 완료된 요청이 다시 들어오면 저장된 결과를 재사용하고 남은 정리 작업만 다시 수행하도록 구성했습니다.</p>
+            <p class="about-statement">정상 동작을 만드는 데서 멈추지 않고, 실패한 뒤에도 다시 이어질 수 있는 구조를 고민합니다.</p>
+            <p>백엔드 개발을 하며 동시에 요청이 들어올 때 데이터가 어떻게 바뀌는지, 서로 다른 저장소의 값이 어디에서 어긋날 수 있는지 살펴왔습니다. 갈래말래에서는 투표 변경과 집계를 한 번에 처리하고, 저장 실패 후 같은 결과로 다시 시도하는 흐름을 구현했습니다. 쿠폰 야호에서는 Redis와 MySQL의 발급 상태를 비교하고, DB 커밋 이후 종료 이벤트를 여러 서버에 전파했습니다. 기능을 완성하는 것뿐 아니라 실패 지점을 확인할 수 있는 지표와 누락을 보정하는 방법까지 함께 고민했습니다. 선택한 기술의 보장 범위와 한계를 테스트로 확인하며, 운영 중에도 문제를 찾고 대응할 수 있는 백엔드를 만들고자 합니다.</p>
           </article>
           <div class="principles">
-            <div class="principle"><span class="principle-number">01</span><div><strong>원자적으로 변경합니다</strong><p>검증과 이전 값 차감, 새로운 값 반영을 하나의 연산으로 묶어 동시 요청에도 집계가 어긋나지 않도록 합니다.</p></div></div>
-            <div class="principle"><span class="principle-number">02</span><div><strong>데이터의 수명에 따라 저장합니다</strong><p>자주 변경되는 진행 상태와 장기 보관할 확정 결과를 구분해 Redis와 MySQL의 책임을 나눕니다.</p></div></div>
-            <div class="principle"><span class="principle-number">03</span><div><strong>실패 이후를 설계합니다</strong><p>DB 저장 실패와 중복 마감이 발생해도 다시 처리할 수 있도록 스냅샷과 재시도 경로를 보존합니다.</p></div></div>
+            <div class="principle"><span class="principle-number">01</span><div><strong>동시에 바뀌는 값 맞추기</strong><p>Redis Lua로 투표 변경과 집계를 한 번에 처리</p></div></div>
+            <div class="principle"><span class="principle-number">02</span><div><strong>저장소의 차이 확인하기</strong><p>Redis·MySQL 발급 상태를 네 가지 기준으로 비교</p></div></div>
+            <div class="principle"><span class="principle-number">03</span><div><strong>실패 후 이어지는 흐름 만들기</strong><p>저장 실패 시 재시도하고, 놓친 종료 정보는 DB 조회로 보정</p></div></div>
           </div>
         </div>
       </div>
@@ -445,7 +426,7 @@
       <div class="shell section-layout">
         <div class="section-heading">
           <div><p class="eyebrow">Core skills</p><h2>사용 기술</h2></div>
-          <p>실제 사용 수준에 맞춰 남길 기술만 확정 단계에서 정리합니다. 현재 항목은 편집 가능한 예시입니다.</p>
+          <p>프로젝트에서 직접 사용한 기술을 역할별로 구분</p>
         </div>
         <div class="skill-categories compact">
           <div class="skill-category" data-skill-category="backend">
@@ -469,8 +450,8 @@
               <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/apachekafka.svg" alt=""></span><div class="tech-label"><strong>Apache Kafka</strong></div></div>
             </div>
           </div>
-          <div class="skill-category" data-skill-category="infra">
-            <div class="skill-category-title"><h3>Infra</h3></div>
+          <div class="skill-category" data-skill-category="etc">
+            <div class="skill-category-title"><h3>Etc</h3></div>
             <div class="tech-grid">
               <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/docker.svg" alt=""></span><div class="tech-label"><strong>Docker</strong></div></div>
               <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/githubactions.svg" alt=""></span><div class="tech-label"><strong>GitHub Actions</strong></div></div>
@@ -484,7 +465,7 @@
       <div class="shell section-layout">
         <div class="section-heading">
           <div><p class="eyebrow">Featured projects</p><h2>대표 프로젝트</h2></div>
-          <p>무엇을 만들었는지보다 어떤 문제를 맡아 어떻게 개선했는지가 빠르게 보이도록 구성했습니다.</p>
+          <p>담당 문제와 기술적 선택, 검증 결과 중심의 프로젝트 기록</p>
         </div>
         <div class="projects">
           <article class="card project-card">
@@ -492,151 +473,181 @@
               <span class="project-icon orange" aria-hidden="true">CY</span>
               <div class="project-heading">
                 <div class="project-title-row">
-                  <div><h3>쿠폰 야호</h3><p class="project-summary">한정 수량 쿠폰을 정확하게 발급하고 운영 지표로 순간 트래픽의 병목과 결과를 검증하는 선착순 쿠폰 플랫폼</p></div>
+                  <div><h3>쿠폰 야호</h3><p class="project-summary"><span class="project-summary-line">한정 수량 쿠폰의 발급 상태와 저장소 간 차이를 확인하고,</span><span class="project-summary-line">종료 시점과 관제 지표를 여러 서버에서 맞춰 관리한 선착순 쿠폰 서비스</span></p></div>
                   <a class="project-repo" href="https://github.com/coupon-yaho/cy-be" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
-                <div class="project-roles"><span class="project-role">2026.08</span><span class="project-role">5인 팀</span><span class="project-role primary">관리자·관제</span><span class="project-role primary">운영현황 담당</span></div>
+                <div class="project-roles"><span class="project-role">2026.08</span><span class="project-role">5인 팀</span><span class="project-role primary">관리자·관제</span><span class="project-role primary">운영현황·정합성 담당</span></div>
               </div>
             </div>
-            <div class="project-highlights">
-              <div class="project-highlight"><strong>핵심 문제</strong><p>가용 시점이 다른 DB·Prometheus·대기열 데이터를 모으되 불완전한 값을 정상처럼 보여주지 않아야 했습니다.</p></div>
-              <div class="project-highlight"><strong>기술적 선택</strong><p>수집 실패를 숨기지 않도록 가용성과 완전성을 별도의 상태 계약으로 표현했습니다.</p></div>
-              <div class="project-highlight"><strong>구현</strong><p>AdminOverviewService와 독립 계산기로 운영 데이터와 권장 조치를 조립했습니다.</p></div>
-              <div class="project-highlight"><strong>검증</strong><p>Core·API·Prometheus 계약 테스트로 상태와 응답 의미를 고정했습니다.</p></div>
+            <div class="project-cases">
+              <article class="project-case" data-project-case="consistency-gaps">
+                <header class="project-case-heading"><span class="project-case-number">01</span><div><h4>Redis와 MySQL의 정합성 차이 추적</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>Redis 재고는 줄었지만 DB 발급 이력이 남지 않는 등 저장소가 어긋나도 <strong>전체 발급 수만으로는 문제가 생긴 지점</strong>을 찾기 어려움</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p><strong>전체 수량에서 Redis 잔여 수량을 뺀 값과 DB 활성 쿠폰 수</strong>, <strong>Redis 누적 발급 수와 발급 회원 수</strong>, <strong>Redis 누적 발급 수와 DB 누적 발급 이력</strong>, <strong>DB 활성 쿠폰 수와 재고 테이블의 활성 카운터</strong>를 비교. 초과 발급은 별도로 계산하고, 운영 중인 LIVE와 마감 뒤 FINAL의 판정 기준을 분리</p></div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p>차이의 부호로 <strong>어느 저장소가 앞섰는지 확인</strong>하고, FINAL에서는 모든 차이가 0일 때만 통과. 계산식·누락 값·숫자 범위 초과를 테스트로 확인</p></div></section>
+                </div>
+              </article>
+
+              <article class="project-case" data-project-case="lifecycle-after-commit">
+                <header class="project-case-heading"><span class="project-case-number">02</span><div><h4>종료된 쿠폰의 지표를 모든 서버에서 정리하기</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>배치 서버에서 쿠폰 회차가 종료돼도 각 API 서버는 이를 알 수 없어 <strong>종료된 회차의 Micrometer 지표가 계속 남을 수 있음</strong>. DB 반영 전에 이벤트를 보내면 롤백돼도 지표만 먼저 사라질 위험도 존재</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>종료 이벤트를 트랜잭션에 등록하고 <strong>DB 커밋이 끝난 뒤에만 발행</strong>. Redis Pub/Sub으로 모든 API 서버에 전달해 각 서버가 해당 회차의 지표를 제거</p>
+                    <pre class="mermaid sequence-diagram">
+sequenceDiagram
+    participant Batch as Batch 서버
+    participant DB as MySQL
+    participant Event as afterCommit
+    participant Redis as Redis Pub/Sub
+    participant APIs as API 서버들
+    Batch->>DB: 쿠폰 회차 종료 반영
+    Batch->>Event: 종료 이벤트 등록
+    alt DB 커밋
+        DB-->>Event: commit 완료
+        Event->>Redis: 종료 이벤트 발행
+        Redis-->>APIs: 모든 구독 서버에 전파
+        APIs->>APIs: 종료 회차 지표 제거
+    else DB 롤백
+        DB-->>Event: rollback
+        Note over Event,Redis: 이벤트 발행 안 함
+    end
+                    </pre>
+                  </div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p>커밋 전·롤백 시 이벤트가 나가지 않는지와 여러 API 서버의 수신을 테스트. Pub/Sub은 접속이 끊긴 동안 메시지를 보관하지 않으므로, API 기동 시 <strong>최근 종료 회차를 DB에서 다시 조회</strong>해 놓친 지표 정리를 보정</p></div></section>
+                </div>
+              </article>
+
+              <article class="project-case" data-project-case="prometheus-failure-isolation">
+                <header class="project-case-heading"><span class="project-case-number">03</span><div><h4>Prometheus 조회 실패가 전체 화면을 막지 않게 하기</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>쿠폰마다 Prometheus를 따로 조회하면 요청이 계속 늘고, <strong>지표 하나의 실패나 지연</strong> 때문에 운영현황 API 전체가 늦어질 수 있음</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>여러 쿠폰의 지표를 <strong>grouped query로 한 번에 조회</strong>하고 평가 시각을 하나로 고정. 발급·고객 결과·지연시간을 나눠 조회하고, 전체 제한 시간을 넘으면 다음 쿼리를 시작하지 않도록 구성</p></div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p><strong>빈 시계열과 측정값 0, 현재 값과 오래된 값</strong>을 구분. 한 영역이 실패해도 나머지는 반환하고 실패한 영역만 UNAVAILABLE로 표시하는 시나리오를 테스트</p></div></section>
+                </div>
+              </article>
             </div>
-            <figure class="project-architecture" data-architecture="coupon">
-              <figcaption><span class="architecture-kicker">SYSTEM ARCHITECTURE</span><span class="architecture-summary">발급 흐름과 운영 관제 영역</span></figcaption>
-              <div class="architecture-scroll">
-                <svg class="architecture-diagram" viewBox="0 0 960 350" role="img" aria-label="쿠폰 야호 시스템 아키텍처">
-                  <defs><marker id="coupon-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="architecture-arrow-head" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs>
-                  <rect class="architecture-boundary" x="142" y="28" width="505" height="226" rx="14"></rect>
-                  <rect class="architecture-boundary accent" x="668" y="28" width="278" height="226" rx="14"></rect>
-                  <text class="architecture-boundary-label" x="158" y="48">REQUEST PATH</text>
-                  <text class="architecture-boundary-label" x="684" y="48">DATA &amp; MESSAGING</text>
-
-                  <path class="architecture-edge emphasis" d="M120 141 H164"></path>
-                  <path class="architecture-edge emphasis" d="M284 141 H304 V88 H330"></path>
-                  <path class="architecture-edge emphasis" d="M460 88 H482 V141 H505"></path>
-                  <path class="architecture-edge" d="M395 118 V192"></path>
-                  <path class="architecture-edge" d="M645 128 H676 V88 H700"></path>
-                  <path class="architecture-edge" d="M645 141 H700"></path>
-                  <path class="architecture-edge dashed" d="M575 173 V218 H700"></path>
-                  <path class="architecture-edge dashed" d="M820 218 H838"></path>
-                  <text class="architecture-edge-label" x="292" y="130">고트래픽</text>
-                  <text class="architecture-edge-label" x="586" y="211">event</text>
-
-                  <rect class="architecture-node-mask" x="20" y="109" width="100" height="64" rx="10"></rect><rect class="architecture-node external" x="20" y="109" width="100" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="70" y="137">Client</text><text class="architecture-sublabel" x="70" y="153">Web user</text>
-                  <rect class="architecture-node-mask" x="164" y="109" width="120" height="64" rx="10"></rect><rect class="architecture-node" x="164" y="109" width="120" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="224" y="137">Web / NGINX</text><text class="architecture-sublabel" x="224" y="153">request entry</text>
-                  <rect class="architecture-node-mask" x="330" y="56" width="130" height="64" rx="10"></rect><rect class="architecture-node backend" x="330" y="56" width="130" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="395" y="84">Queue Gateway</text><text class="architecture-sublabel" x="395" y="100">admission control</text>
-                  <rect class="architecture-node-mask" x="330" y="192" width="130" height="54" rx="10"></rect><rect class="architecture-node database" x="330" y="192" width="130" height="54" rx="10"></rect>
-                  <text class="architecture-label" x="395" y="216">Queue Redis</text><text class="architecture-sublabel" x="395" y="232">waiting state</text>
-                  <rect class="architecture-node-mask" x="505" y="109" width="140" height="64" rx="10"></rect><rect class="architecture-node backend" x="505" y="109" width="140" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="575" y="137">Coupon Service</text><text class="architecture-sublabel" x="575" y="153">issue · admin</text>
-                  <rect class="architecture-node-mask" x="700" y="56" width="120" height="64" rx="10"></rect><rect class="architecture-node database" x="700" y="56" width="120" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="760" y="84">Coupon Redis</text><text class="architecture-sublabel" x="760" y="100">stock · cache</text>
-                  <rect class="architecture-node-mask" x="700" y="128" width="120" height="56" rx="10"></rect><rect class="architecture-node database" x="700" y="128" width="120" height="56" rx="10"></rect>
-                  <text class="architecture-label" x="760" y="153">MySQL</text><text class="architecture-sublabel" x="760" y="169">issuance history</text>
-                  <rect class="architecture-node-mask" x="700" y="190" width="120" height="56" rx="10"></rect><rect class="architecture-node message" x="700" y="190" width="120" height="56" rx="10"></rect>
-                  <text class="architecture-label" x="760" y="215">Kafka</text><text class="architecture-sublabel" x="760" y="231">notification event</text>
-                  <rect class="architecture-node-mask" x="838" y="190" width="100" height="56" rx="10"></rect><rect class="architecture-node backend" x="838" y="190" width="100" height="56" rx="10"></rect>
-                  <text class="architecture-label" x="888" y="215">Consumer</text><text class="architecture-sublabel" x="888" y="231">notification</text>
-
-                  <rect class="architecture-role-band" x="142" y="278" width="804" height="48" rx="10"></rect>
-                  <text class="architecture-role-title" x="162" y="298">운영 관제 · 담당 영역</text>
-                  <text class="architecture-role-copy" x="162" y="315">Admin API · Overview Service · Prometheus 계약 · 정합성 리포트</text>
-                </svg>
-              </div>
-            </figure>
-            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Prometheus</span><span class="tag">Micrometer</span><span class="tag">MySQL</span><span class="tag">Redis</span></div><a class="project-detail-link" href="/portfolio/coupon-yaho/">상세 보기</a></div>
+            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Prometheus</span><span class="tag">Micrometer</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Apache Kafka</span></div></div>
           </article>
           <article class="card project-card">
             <div class="project-header">
               <span class="project-icon" aria-hidden="true">GM</span>
               <div class="project-heading">
                 <div class="project-title-row">
-                  <div><h3>갈래말래</h3><p class="project-summary">그룹원의 조건을 반영해 메뉴를 추천하고 실시간 투표로 최종 결정을 돕는 그룹 의사결정 서비스</p></div>
+                  <div><h3>갈래말래</h3><p class="project-summary"><span class="project-summary-line">그룹원의 조건에 맞는 메뉴 후보를 추천하고,</span><span class="project-summary-line">투표 결과로 최종 메뉴를 정하는 서비스</span></p></div>
                   <a class="project-repo" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
-                <div class="project-roles"><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 도메인 담당</span><span class="project-role">2026.07.16 — 07.27</span></div>
+                <div class="project-roles"><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 기능 담당</span><span class="project-role">2026.07.16 ~ 07.27</span></div>
               </div>
             </div>
-            <div class="project-highlights">
-              <div class="project-highlight"><strong>핵심 문제</strong><p>동시 투표·선택 변경·마감이 겹쳐도 사용자 선택과 후보별 집계가 어긋나지 않아야 했습니다.</p></div>
-              <div class="project-highlight"><strong>기술적 선택</strong><p>변경이 잦은 진행 상태는 Redis에, 확정 결과는 MySQL에 저장해 데이터의 수명에 따라 책임을 나눴습니다.</p></div>
-              <div class="project-highlight"><strong>구현</strong><p>Redis Hash와 Lua Script로 차감·가산·마감 검증을 하나의 원자 연산으로 처리했습니다.</p></div>
-              <div class="project-highlight"><strong>검증</strong><p>동시 제출·선택 변경·마감 이후 요청·DB 저장 실패 시나리오로 정합성과 복구 경계를 확인했습니다.</p></div>
+            <div class="project-cases">
+              <article class="project-case" data-project-case="atomic-vote-change">
+                <header class="project-case-heading"><span class="project-case-number">01</span><div><h4>동시 투표 결과 맞추기</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 <strong>개인 선택과 후보별 투표 수</strong>가 달라질 수 있음</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>투표 진행 정보는 <strong>Redis Hash</strong>에 저장. 상태와 마감 시간, 후보를 확인한 뒤 기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Lua Script 한 번</strong>에 처리</p></div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p>동시 제출·선택 변경·같은 후보 재선택 테스트에서 <strong>개인 선택과 투표 수가 일치</strong>. Redis 데이터가 사라지면 진행 중인 투표를 되살릴 수 없어 <strong>마감 결과는 MySQL에 저장</strong></p></div></section>
+                </div>
+              </article>
+
+              <article class="project-case" data-project-case="async-recommendation">
+                <header class="project-case-heading"><span class="project-case-number">02</span><div><h4>RabbitMQ 기반 재추천 비동기 처리</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 바로 실행하면 <strong>AI 추천 결과를 기다려야 해 응답이 늦어지고</strong>, 외부 API 오류가 사용자 요청에 직접 영향을 줌</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>API에서는 후보 수와 세션 상태를 확인하고 <strong>MENU_RECOMMENDING으로 변경</strong>한 뒤, DB 반영이 끝나면 <strong>SurveyRequested를 발행해 기존 RabbitMQ 추천 흐름에 연결</strong>. 추천 작업은 Consumer가 이어서 처리</p>
+                    <pre class="mermaid sequence-diagram">
+sequenceDiagram
+    participant Owner as 방장
+    participant Service as FinalMenuSelectionService
+    participant DB as MySQL
+    participant MQ as RabbitMQ
+    participant Worker as 추천 Consumer
+    Owner->>Service: 재추천 요청
+    Service->>DB: 세션 잠금 및 후보 수 확인
+    alt 새 재추천 요청
+        Service->>DB: MENU_RECOMMENDING 변경
+    else 추천 상태에 멈춘 세션
+        Service->>DB: 현재 상태 유지
+    end
+    DB-->>Service: commit
+    Service->>MQ: SurveyRequested 발행
+    MQ-->>Worker: 재추천 작업 전달
+                    </pre>
+                  </div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p><strong>API 응답과 시간이 오래 걸리는 추천 작업을 분리</strong>하고, 후보가 0개·1개인 경우와 추천 상태에 멈춘 세션에서 커밋 후 이벤트가 발행되는지 테스트. DB 커밋 직후 메시지 발행 전에 서버가 종료되는 경우까지 막으려면 <strong>Outbox 방식이 필요</strong></p></div></section>
+                </div>
+              </article>
+
+              <article class="project-case" data-project-case="persistence-recovery">
+                <header class="project-case-heading"><span class="project-case-number">03</span><div><h4>DB 저장 실패 후 다시 시도하기</h4></div></header>
+                <div class="case-summary">
+                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장이 실패할 때 <strong>집계까지 지우면 같은 결과로 다시 저장할 수 없음</strong></p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p><strong>마감 집계는 Redis에 남겨 두고</strong> MySQL 저장이 끝난 뒤에만 삭제. 저장이 실패하면 남아 있는 집계로 다시 시도</p>
+                    <pre class="mermaid sequence-diagram">
+sequenceDiagram
+    participant Service as VoteService
+    participant Redis as Redis 마감 집계
+    participant DB as MySQL
+    Service->>Redis: 마감 및 확정 집계 조회
+    Redis-->>Service: 마감 집계 반환
+    Service->>DB: 결과와 세션 상태 저장
+    alt DB 저장 성공
+        DB-->>Service: commit
+        Service->>Redis: 마감 집계 삭제
+    else DB 저장 실패
+        DB-->>Service: rollback
+        Note over Service,Redis: 마감 집계를 남겨 다시 시도
+        Service->>Redis: 남아 있는 마감 집계 조회
+        Redis-->>Service: 동일 확정 집계 반환
+        Service->>DB: 결과 저장 재시도
+    end
+                    </pre>
+                  </div></section>
+                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>결과와 고찰</strong></span><div class="case-summary-content"><p>DB 저장 실패 테스트에서 <strong>같은 집계로 다시 저장</strong>되고, 저장 성공 후에만 Redis 데이터가 삭제됨을 확인. <strong>Redis 장애나 만료로 집계가 먼저 사라지는지</strong> 확인할 지표가 필요</p></div></section>
+                </div>
+              </article>
             </div>
-            <figure class="project-architecture" data-architecture="vote">
-              <figcaption><span class="architecture-kicker">SYSTEM ARCHITECTURE</span><span class="architecture-summary">진행 상태와 확정 결과의 저장 경계</span></figcaption>
-              <div class="architecture-scroll">
-                <svg class="architecture-diagram" viewBox="0 0 960 330" role="img" aria-label="갈래말래 투표 시스템 아키텍처">
-                  <defs><marker id="vote-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path class="architecture-arrow-head" d="M 0 0 L 10 5 L 0 10 z"></path></marker></defs>
-                  <rect class="architecture-boundary" x="146" y="28" width="456" height="218" rx="14"></rect>
-                  <rect class="architecture-boundary accent" x="628" y="28" width="312" height="218" rx="14"></rect>
-                  <text class="architecture-boundary-label" x="162" y="48">VOTE COMMAND</text>
-                  <text class="architecture-boundary-label" x="644" y="48">CONSISTENCY BOUNDARY</text>
-
-                  <path class="architecture-edge vote emphasis" d="M120 137 H180"></path>
-                  <path class="architecture-edge vote emphasis" d="M310 137 H380"></path>
-                  <path class="architecture-edge vote emphasis" d="M510 137 H660"></path>
-                  <path class="architecture-edge vote" d="M730 120 V166"></path>
-                  <path class="architecture-edge vote emphasis" d="M800 198 H826"></path>
-                  <text class="architecture-edge-label" x="545" y="127">atomic update</text>
-                  <text class="architecture-edge-label" x="740" y="148">close</text>
-                  <text class="architecture-edge-label" x="804" y="188">commit</text>
-
-                  <rect class="architecture-node-mask" x="20" y="105" width="100" height="64" rx="10"></rect><rect class="architecture-node external" x="20" y="105" width="100" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="70" y="133">Client</text><text class="architecture-sublabel" x="70" y="149">vote request</text>
-                  <rect class="architecture-node-mask" x="180" y="105" width="130" height="64" rx="10"></rect><rect class="architecture-node backend" x="180" y="105" width="130" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="245" y="133">Vote API</text><text class="architecture-sublabel" x="245" y="149">state validation</text>
-                  <rect class="architecture-node-mask" x="380" y="105" width="130" height="64" rx="10"></rect><rect class="architecture-node backend" x="380" y="105" width="130" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="445" y="133">Redis Lua</text><text class="architecture-sublabel" x="445" y="149">subtract · add</text>
-                  <rect class="architecture-node-mask" x="660" y="64" width="140" height="56" rx="10"></rect><rect class="architecture-node database" x="660" y="64" width="140" height="56" rx="10"></rect>
-                  <text class="architecture-label" x="730" y="89">Active Vote</text><text class="architecture-sublabel" x="730" y="105">Redis mutable state</text>
-                  <rect class="architecture-node-mask" x="660" y="166" width="140" height="64" rx="10"></rect><rect class="architecture-node database" x="660" y="166" width="140" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="730" y="194">Closed Snapshot</text><text class="architecture-sublabel" x="730" y="210">retry source</text>
-                  <rect class="architecture-node-mask" x="826" y="166" width="106" height="64" rx="10"></rect><rect class="architecture-node database" x="826" y="166" width="106" height="64" rx="10"></rect>
-                  <text class="architecture-label" x="879" y="194">MySQL Result</text><text class="architecture-sublabel" x="879" y="210">confirmed state</text>
-
-                  <rect class="architecture-role-band" x="146" y="267" width="794" height="36" rx="10"></rect>
-                  <text class="architecture-role-title" x="166" y="289">Lua 원자 연산</text>
-                  <text class="architecture-role-copy" x="254" y="289">기존 선택 차감 · 새 선택 가산 · 마감 검증</text>
-                </svg>
-              </div>
-            </figure>
-            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Redis</span><span class="tag">Lua Script</span><span class="tag">MySQL</span></div><a class="project-detail-link" href="/portfolio/gallae-mallae/">상세 보기</a></div>
+            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">MySQL</span></div></div>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section alt" id="stories">
+    <section class="section" id="credentials">
       <div class="shell section-layout">
         <div class="section-heading">
-          <div><p class="eyebrow">Engineering stories</p><h2>문제 해결 기록</h2></div>
-          <p>기술 블로그의 깊이 있는 글을 포트폴리오의 근거 자료로 연결합니다.</p>
+          <div><p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2></div>
+          <p>교육·학력과 자격증 정보를 구분</p>
         </div>
-        <div class="stories-grid">
-          <article class="story-card"><span class="story-index">CASE 01 · KAFKA</span><h3>메시지 전송 보장과 Partitioner</h3><p>Producer의 전송 흐름과 보장 수준, 파티션 선택 기준을 정리한 기록입니다.</p><a class="text-link" href="#">기술 글 읽기</a></article>
-          <article class="story-card"><span class="story-index">CASE 02 · KAFKA</span><h3>동기·비동기 전송과 Callback</h3><p>전송 방식에 따른 처리 흐름과 실패 대응의 차이를 탐구한 기록입니다.</p><a class="text-link" href="#">기술 글 읽기</a></article>
-          <article class="story-card"><span class="story-index">CASE 03 · PLACEHOLDER</span><h3>가장 자신 있는 문제 해결 사례</h3><p>현상, 원인 분석, 선택한 해결책, 검증 결과 순으로 작성하면 좋습니다.</p><a class="text-link" href="#">내용 입력하기</a></article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="shell section-layout">
-        <div class="section-heading">
-          <div><p class="eyebrow">Experience</p><h2>경험과 성장</h2></div>
-          <p>경력, 교육, 자격증 중 채용 포지션과 관련 있는 내용만 시간순으로 배치합니다.</p>
-        </div>
-        <div class="timeline">
-          <article class="timeline-item"><time class="timeline-date">YYYY.MM — 현재</time><div class="timeline-body"><h3>회사 또는 주요 활동명</h3><p>담당 역할과 만든 변화를 두 문장 이내로 입력합니다.</p><span class="placeholder">내용 입력 필요</span></div></article>
-          <article class="timeline-item"><time class="timeline-date">YYYY.MM</time><div class="timeline-body"><h3>교육 과정 또는 팀 프로젝트</h3><p>학습한 내용보다 실제로 수행한 과업을 중심으로 작성합니다.</p><span class="placeholder">내용 입력 필요</span></div></article>
-          <article class="timeline-item"><time class="timeline-date">꾸준히</time><div class="timeline-body"><h3>기술 블로그 운영</h3><p>백엔드 개발과 Kafka 학습 내용을 문제 해결 과정 중심으로 기록하고 있습니다.</p></div></article>
+        <div class="credentials-grid">
+          <section class="credential-group" aria-labelledby="education-heading">
+            <div class="credential-group-heading"><span class="credential-group-number">01</span><h3 id="education-heading">교육·학력</h3></div>
+            <div class="credential-list">
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">학력</span><span class="credential-period"><time datetime="2020-02">2020.02</time><span>~</span><time datetime="2026-08">2026.08</time></span></div>
+                <h4>한신대학교</h4>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">교육</span><span class="credential-period"><time datetime="2026-04">2026.04</time><span>~</span><time datetime="2026-10">2026.10</time></span></div>
+                <div class="credential-title-row"><h4>LG U+ 유레카 백엔드 과정</h4><span class="credential-status">진행 중</span></div>
+              </article>
+            </div>
+          </section>
+          <section class="credential-group" aria-labelledby="certification-heading">
+            <div class="credential-group-heading"><span class="credential-group-number">02</span><h3 id="certification-heading">자격증</h3></div>
+            <div class="credential-list">
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">국가기술자격</span><time datetime="2025-09-12">2025.09.12</time></div>
+                <h4>정보처리기사</h4>
+                <p>한국산업인력공단</p>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">데이터 자격</span><time datetime="2024-04-05">2024.04.05</time></div>
+                <h4>SQLD</h4>
+                <p>한국데이터산업진흥원(Kdata)</p>
+              </article>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -658,6 +669,26 @@
       else document.documentElement.dataset.theme = 'dark';
       localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark');
       setToggleLabel();
+    });
+  </script>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({
+      startOnLoad: true,
+      securityLevel: 'strict',
+      theme: 'default',
+      sequence: {
+        useMaxWidth: true,
+        diagramMarginX: 10,
+        diagramMarginY: 8,
+        actorMargin: 28,
+        width: 110,
+        height: 36,
+        boxMargin: 6,
+        messageMargin: 18,
+        noteMargin: 6,
+        mirrorActors: false
+      }
     });
   </script>
 </body>
