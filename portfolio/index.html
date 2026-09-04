@@ -16,6 +16,7 @@
       --text: #2f3440;
       --heading: #1f232b;
       --emphasis-text: #111827;
+      --solution-text: #d44c47;
       --muted: #727985;
       --subtle: #a0a7b2;
       --accent: #2563eb;
@@ -43,6 +44,7 @@
       --text: #d7dbe3;
       --heading: #f1f3f7;
       --emphasis-text: #f8fafc;
+      --solution-text: #ff7369;
       --muted: #a1a7b3;
       --subtle: #6c727e;
       --accent: #79aefb;
@@ -228,70 +230,38 @@
     .tags { display: flex; flex-wrap: wrap; gap: .45rem; }
     .tag { padding: .35rem .56rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--panel-soft); color: var(--muted); font-size: .76rem; font-weight: 720; }
 
-    .projects { display: grid; gap: 1.4rem; }
-    .project-card { overflow: hidden; border-radius: .85rem; padding: 1.5rem; }
-    .project-card p strong { color: inherit; font-weight: 850; }
-    .project-header { display: flex; align-items: flex-start; gap: .9rem; }
-    .project-icon { display: grid; flex: 0 0 auto; place-items: center; width: 52px; height: 52px; border-radius: .9rem; background: var(--accent-soft); color: var(--accent); font-size: .88rem; font-weight: 950; letter-spacing: -.05em; }
-    .project-icon.orange { background: var(--warm-soft); color: var(--warm); }
+    .projects { display: grid; gap: 3.5rem; }
+    .project-document { border-top: 2px solid var(--heading); padding: 1.5rem 0 0; }
+    .project-document p strong { color: inherit; font-weight: 850; }
+    .case-section[data-case-stage="solution"] strong { color: var(--solution-text); }
+    .project-header { display: block; }
     .project-heading { min-width: 0; flex: 1; }
     .project-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
-    .project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.35rem; }
-    .project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: .9rem; line-height: 1.65; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }
-    .project-repo { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .3rem; border: 1px solid var(--line); border-radius: .65rem; background: transparent; padding: .4rem .62rem; color: var(--accent); font-size: .76rem; font-weight: 850; }
+    .project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.65rem; }
+    .project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: 1.08rem; line-height: 1.72; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }
+    .project-repo { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .3rem; border: 1px solid var(--line); border-radius: .65rem; background: transparent; padding: .48rem .72rem; color: var(--accent); font-size: .84rem; font-weight: 850; }
     .project-repo:hover { border-color: var(--accent-line); background: var(--accent-soft); }
     .project-roles { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
-    .project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .72rem; font-weight: 800; }
+    .project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem; font-weight: 800; }
     .project-role.primary { background: var(--accent-soft); color: var(--accent); }
-    .project-highlights { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem 1.4rem; margin-top: 1.2rem; }
-    .project-highlight { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: transparent; padding: .8rem 0 0; }
-    .project-highlight > strong { display: block; margin-bottom: .3rem; color: var(--accent); font-size: .7rem; letter-spacing: .04em; }
-    .project-highlight p { margin: 0; color: var(--heading); font-size: .78rem; line-height: 1.55; }
-    .project-cases { display: grid; gap: 1rem; margin-top: 1.25rem; }
-    .project-case { overflow: hidden; border: 1px solid var(--line-strong); border-radius: .9rem; background: var(--panel); padding: 0; }
-    .project-case-heading { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: .8rem; margin: 0; border-bottom: 1px solid var(--line); background: var(--panel-soft); padding: .85rem 1rem; }
-    .project-case-number { display: inline-flex; align-items: center; justify-content: center; width: 2.25rem; height: 2.25rem; border-radius: .65rem; background: var(--accent); color: #fff; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .72rem; font-weight: 900; }
-    .project-case-heading h4 { margin: 0 0 .18rem; color: var(--heading); font-size: 1.02rem; }
-    .project-case-heading p { margin: 0; color: var(--muted); font-size: .76rem; line-height: 1.5; }
-    .case-summary { display: grid; padding: .2rem 1rem 1rem; }
-    .case-summary-row { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: .9rem; border-top: 1px solid var(--line); padding: .85rem 0; }
-    .case-summary-row:first-child { border-top: 0; }
-    .case-summary-label { color: var(--heading); font-size: .8rem; font-weight: 900; line-height: 1.55; }
-    .case-summary-content { min-width: 0; }
-    .case-summary-content p { margin: 0; color: var(--heading); font-size: .86rem; line-height: 1.62; }
-    .case-comparison-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; margin: 0; padding: 0; list-style: none; }
-    .case-comparison-list li { border: 1px solid var(--line); border-radius: .45rem; background: var(--panel-soft); padding: .55rem .65rem; color: var(--heading); line-height: 1.5; }
-    .case-comparison-list strong { display: block; margin-bottom: .12rem; color: var(--heading); font-size: .8rem; font-weight: 850; }
-    .case-comparison-list span { display: block; color: var(--heading); font-size: .76rem; font-weight: 500; }
-    .case-summary-note { margin-top: .55rem !important; }
-    .sequence-diagram { max-width: 100%; margin: .65rem 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: .4rem; background: #fff; padding: .65rem; text-align: center; }
-    .sequence-diagram > svg { display: block; width: 100% !important; min-width: 0; max-width: 100% !important; height: auto; margin: 0 auto; }
-    .project-architecture { margin: .95rem 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: .85rem; background: linear-gradient(145deg, var(--panel-soft), var(--panel)); }
-    .project-architecture figcaption { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); padding: .7rem 1rem; }
-    .architecture-kicker { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .68rem; font-weight: 900; letter-spacing: .1em; }
-    .architecture-summary { color: var(--heading); font-size: .7rem; }
-    .responsive-flow { display: grid; gap: .8rem; padding: 1rem; }
-    .flow-boundary { display: grid; gap: .65rem; border: 1px dashed var(--accent-line); border-radius: .75rem; background: color-mix(in srgb, var(--accent-soft) 42%, transparent); padding: .75rem; }
-    .flow-boundary.neutral { border-color: var(--line-strong); background: color-mix(in srgb, var(--panel) 72%, transparent); }
-    .flow-boundary-label { color: var(--heading); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .62rem; font-weight: 900; letter-spacing: .08em; }
-    .flow-track { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.25fr) auto minmax(0, 1fr); align-items: stretch; gap: .45rem; }
-    .flow-node { display: flex; min-width: 0; min-height: 64px; flex-direction: column; align-items: center; justify-content: center; gap: .16rem; border: 1px solid var(--line-strong); border-radius: .65rem; background: var(--panel); padding: .55rem .5rem; text-align: center; }
-    .flow-node.type-backend { border-color: var(--accent-line); background: var(--accent-soft); }
-    .flow-node.type-data { border-color: color-mix(in srgb, var(--teal) 52%, var(--line)); background: var(--teal-soft); }
-    .flow-node.type-warning { border-color: color-mix(in srgb, var(--warm) 55%, var(--line)); background: var(--warm-soft); }
-    .flow-node strong { color: var(--heading); font-size: .72rem; line-height: 1.35; }
-    .flow-node small { color: var(--heading); font-size: .6rem; line-height: 1.35; }
-    .flow-node ul { display: grid; gap: .12rem; width: 100%; margin: .22rem 0 0; padding: 0; list-style: none; color: var(--heading); font-size: .58rem; line-height: 1.35; }
-    .flow-node li + li { border-top: 1px solid color-mix(in srgb, var(--line) 72%, transparent); padding-top: .12rem; }
-    .flow-arrow { align-self: center; color: var(--accent); font-size: 1rem; font-weight: 900; line-height: 1; }
-    .flow-support-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .5rem; }
-    .flow-support-grid .flow-node { min-height: 54px; }
-    .flow-note { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35rem .75rem; border-radius: .6rem; background: var(--accent-soft); padding: .55rem .7rem; }
-    .flow-note-title { color: var(--accent); font-size: .65rem; font-weight: 900; }
-    .flow-note-copy { color: var(--heading); font-size: .62rem; }
+    .project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 1rem; margin-top: 1.5rem; border-block: 1px solid var(--line); padding: 1rem 0; }
+    .project-key-results h4 { margin: .05rem 0 0; color: var(--heading); font-size: .92rem; }
+    .project-key-results ol { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; counter-reset: project-result; }
+    .project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem; line-height: 1.65; counter-increment: project-result; }
+    .project-key-result::before { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; font-weight: 900; content: "0" counter(project-result); }
+    .project-cases { display: grid; }
+    .project-case { border-top: 1px solid var(--line-strong); padding: 1.8rem 0; }
+    .project-case:first-child { border-top: 0; }
+    .project-case-heading { display: grid; grid-template-columns: 28px minmax(0, 1fr); align-items: baseline; gap: .65rem; margin: 0; }
+    .project-case-number { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .82rem; font-weight: 900; }
+    .project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem; line-height: 1.45; }
+    .case-notion { display: grid; gap: 1.05rem; margin: 1.25rem 0 0 2.05rem; }
+    .case-section { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 1rem; }
+    .case-section h5 { margin: .1rem 0 0; color: var(--subtle); font-size: .95rem; font-weight: 850; line-height: 1.55; }
+    .case-section p { margin: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; }
     .project-tech { margin-top: .75rem; }
-    .project-tech .tag { color: var(--heading); }
-    .project-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: .85rem; }
+    .project-tech .tag { color: var(--heading); font-size: .84rem; }
+    .project-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1rem; }
     .project-footer .project-tech { margin-top: 0; }
 
     .credentials-grid { display: grid; grid-template-columns: minmax(0, 1.12fr) minmax(260px, .88fr); gap: 2rem; }
@@ -311,7 +281,7 @@
     .credential-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
     .credential-status { display: inline-flex; align-items: center; border-radius: 999px; background: var(--teal-soft); padding: .18rem .45rem; color: var(--teal); font-size: .64rem; font-weight: 850; }
 
-    .hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-summary-content p, .credential-item h4, .credential-item p {
+    .hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {
       text-wrap: pretty;
       word-break: keep-all;
       overflow-wrap: break-word;
@@ -346,17 +316,11 @@
       .skill-category { grid-template-columns: 1fr; gap: .45rem; padding: .65rem; }
       .tech-item { grid-template-columns: 32px minmax(0, 1fr); padding: .35rem .4rem; }
       .tech-icon { width: 32px; height: 32px; }
-      .project-card { padding: 1rem; }
       .project-title-row { align-items: stretch; flex-direction: column; gap: .6rem; }
       .project-repo { align-self: flex-start; }
-      .project-highlights { grid-template-columns: 1fr; }
-      .case-summary-row { grid-template-columns: 1fr; gap: .25rem; }
-      .case-comparison-list { grid-template-columns: 1fr; }
-      .project-architecture figcaption { align-items: flex-start; flex-direction: column; gap: .2rem; }
-      .responsive-flow { padding: .75rem; }
-      .flow-track { grid-template-columns: 1fr; }
-      .flow-arrow { justify-self: center; transform: rotate(90deg); }
-      .flow-support-grid { grid-template-columns: 1fr; }
+      .project-key-results { grid-template-columns: 1fr; gap: .65rem; }
+      .case-notion { margin-left: 0; }
+      .case-section { grid-template-columns: 1fr; gap: .3rem; }
       .project-footer { align-items: flex-start; flex-direction: column; }
       .credentials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .footer-inner { display: grid; }
@@ -477,12 +441,11 @@
       <div class="shell section-layout">
         <div class="section-heading">
           <div><p class="eyebrow">Featured projects</p><h2>대표 프로젝트</h2></div>
-          <p>담당 문제와 기술적 선택, 검증 결과 중심의 프로젝트 기록</p>
+          <p>적용한 해결 방법과 확인한 결과를 중심으로 정리한 프로젝트 기록</p>
         </div>
         <div class="projects">
-          <article class="card project-card">
+          <article class="project-document">
             <div class="project-header">
-              <span class="project-icon orange" aria-hidden="true">CY</span>
               <div class="project-heading">
                 <div class="project-title-row">
                   <div><h3>쿠폰 야호</h3><p class="project-summary">Redis와 MySQL의 쿠폰 발급 상태를 비교하고, 종료 이벤트와 관제 지표를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p></div>
@@ -491,59 +454,47 @@
                 <div class="project-roles"><span class="project-role">2026.08</span><span class="project-role">5인 팀</span><span class="project-role primary">관리자·관제</span><span class="project-role primary">운영현황·정합성 담당</span></div>
               </div>
             </div>
+            <section class="project-key-results" aria-label="쿠폰 야호 핵심 성과">
+              <h4>핵심 성과</h4>
+              <ol><li class="project-key-result">DB 커밋 이후 종료 이벤트를 전파하고 누락된 지표 보정</li><li class="project-key-result">Prometheus 장애를 영역별로 격리해 부분 응답 제공</li><li class="project-key-result">4개 비교 지표로 Redis·MySQL 불일치 지점 추적</li></ol>
+            </section>
             <div class="project-cases">
-              <article class="project-case" data-project-case="consistency-gaps">
-                <header class="project-case-heading"><span class="project-case-number">01</span><div><h4>Redis와 MySQL 간 데이터 불일치 추적</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>Redis 재고는 줄었지만 DB 발급 이력이 남지 않는 등 저장소가 어긋나도 <strong>전체 발급 수만으로는 문제가 생긴 지점</strong>을 찾기 어려움</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><ul class="case-comparison-list"><li><strong>재고 차감과 실제 발급</strong><span>전체 수량 − Redis 잔여 수량과 DB 활성 쿠폰 수 비교</span></li><li><strong>Redis 내부 기록</strong><span>Redis 누적 발급 수와 Redis 발급 회원 수 비교</span></li><li><strong>Redis와 DB 발급 이력</strong><span>Redis 누적 발급 수와 DB 누적 발급 이력 비교</span></li><li><strong>DB 내부 집계</strong><span>DB 활성 쿠폰 수와 재고 테이블의 활성 발급 수 비교</span></li></ul><p class="case-summary-note">운영 중인 LIVE에서는 처리 시점에 따른 차이를 확인. 마감 후 FINAL에서는 네 비교 결과가 모두 0이고 <strong>초과 발급이 없을 때 정상으로 판정</strong></p></div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p>차이의 부호로 <strong>어느 저장소가 앞섰는지 확인</strong>하고, FINAL에서는 모든 차이가 0일 때만 통과. 계산식·누락 값·숫자 범위 초과를 테스트로 확인</p></div></section>
-                </div>
-              </article>
-
               <article class="project-case" data-project-case="lifecycle-after-commit">
-                <header class="project-case-heading"><span class="project-case-number">02</span><div><h4>종료 이벤트 기반 다중 서버 지표 정리</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>배치 서버에서 쿠폰 회차가 종료돼도 각 API 서버는 이를 알 수 없어 <strong>종료된 회차의 Micrometer 지표가 계속 남을 수 있음</strong>. DB 반영 전에 이벤트를 보내면 롤백돼도 지표만 먼저 사라질 위험도 존재</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>종료 이벤트를 트랜잭션에 등록하고 <strong>DB 커밋이 끝난 뒤에만 발행</strong>. Redis Pub/Sub으로 모든 API 서버에 전달해 각 서버가 해당 회차의 지표를 제거</p>
-                    <pre class="mermaid sequence-diagram" aria-label="쿠폰 종료 이벤트 처리 흐름">
-sequenceDiagram
-    participant Batch as Batch 서버
-    participant DB as MySQL
-    participant Event as afterCommit
-    participant Redis as Redis Pub/Sub
-    participant APIs as API 서버들
-    Batch->>DB: 쿠폰 회차 종료 반영
-    Batch->>Event: 종료 이벤트 등록
-    alt DB 커밋
-        DB-->>Event: commit 완료
-        Event->>Redis: 종료 이벤트 발행
-        Redis-->>APIs: 모든 구독 서버에 전파
-        APIs->>APIs: 종료 회차 지표 제거
-    else DB 롤백
-        DB-->>Event: rollback
-        Note over Event,Redis: 이벤트 발행 안 함
-    end
-                    </pre>
-                  </div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p>커밋 전·롤백 시 이벤트가 나가지 않는지와 여러 API 서버의 수신을 테스트. Pub/Sub은 접속이 끊긴 동안 메시지를 보관하지 않으므로, API 기동 시 <strong>최근 종료 회차를 DB에서 다시 조회</strong>해 놓친 지표 정리를 보정</p></div></section>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>afterCommit과 Redis Pub/Sub으로 종료 지표 동기화</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>배치 서버에서 쿠폰 회차가 종료돼도 각 API 서버는 이를 알 수 없어 종료된 회차의 Micrometer 지표가 잔존. DB 반영 전에 이벤트를 보내면 롤백돼도 지표만 먼저 사라질 위험</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>배치 서버와 API 서버가 분리되어 회차 종료 상태가 자동으로 공유되지 않았고, DB 트랜잭션과 이벤트 발행 시점도 연결되어 있지 않았음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>종료 이벤트를 트랜잭션에 등록한 뒤 <strong>DB 커밋 완료 후에만 Redis Pub/Sub으로 발행</strong>. 모든 API 서버는 이벤트를 받아 해당 회차의 지표를 제거합니다.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>커밋 전과 롤백 시에는 이벤트가 발행되지 않고, 커밋 후에는 모든 API 서버가 수신</strong>하는지 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Pub/Sub은 연결이 끊긴 동안 메시지를 보관하지 않음. API 기동 시 최근 종료 회차를 DB에서 다시 조회해 누락된 지표를 정리하도록 보정</p></section>
                 </div>
               </article>
-
               <article class="project-case" data-project-case="prometheus-failure-isolation">
-                <header class="project-case-heading"><span class="project-case-number">03</span><div><h4>Prometheus 조회 실패 격리</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>쿠폰마다 Prometheus를 따로 조회하면 요청이 계속 늘고, <strong>지표 하나의 실패나 지연</strong> 때문에 운영현황 API 전체가 늦어질 수 있음</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>여러 쿠폰의 지표를 <strong>grouped query로 한 번에 조회</strong>하고 평가 시각을 하나로 고정. 발급·고객 결과·지연시간을 나눠 조회하고, 전체 제한 시간을 넘으면 다음 쿼리를 시작하지 않도록 구성</p></div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p><strong>빈 시계열과 측정값 0, 현재 값과 오래된 값</strong>을 구분. 한 영역이 실패해도 나머지는 반환하고 실패한 영역만 UNAVAILABLE로 표시하는 시나리오를 테스트</p></div></section>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>Grouped Query와 부분 응답으로 Prometheus 실패 격리</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰마다 Prometheus를 따로 조회하면 요청 수가 늘고, 지표 하나의 실패나 지연 때문에 운영현황 API 전체가 늦어질 가능성</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>쿠폰별 개별 쿼리가 요청 수를 늘렸고, 발급·고객 결과·지연시간 조회가 하나의 성공 응답에 묶여 일부 실패가 전체 응답에 영향을 줬음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>여러 쿠폰 지표를 <strong>Grouped Query로 묶고 영역별 제한 시간을 적용</strong>. 발급·고객 결과·지연시간을 나눠 조회하고 전체 제한 시간을 넘으면 다음 쿼리를 시작하지 않습니다.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>한 영역이 실패해도 나머지 결과를 반환하고 실패 영역만 UNAVAILABLE로 표시</strong>. 빈 시계열·측정값 0·현재 값·오래된 값의 구분은 시나리오 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>값이 없다는 사실과 실제 측정값이 0인 상태를 구분해야 운영자가 정상 상태로 오해하지 않습니다. 오래된 값도 별도 상태로 드러내도록 기준을 나눴습니다.</p></section>
+                </div>
+              </article>
+              <article class="project-case" data-project-case="consistency-gaps">
+                <header class="project-case-heading"><span class="project-case-number">03</span><h4>4개 비교 지표로 Redis·MySQL 불일치 추적</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis 재고는 줄었지만 DB 발급 이력이 남지 않는 등 저장소가 어긋나도 전체 발급 수만으로는 문제가 생긴 지점을 찾기 어려움</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>쿠폰 발급 상태가 Redis 재고·누적 발급 수·회원 기록과 DB 발급 이력·재고 카운터에 나뉘어 저장되고, 각 값의 반영 시점도 달랐음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>. 전체 발급 수만 확인하지 않고, <strong>불일치가 발생한 저장소와 처리 단계를 구분</strong>할 수 있도록 구성</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>LIVE에서는 처리 중 생긴 차이와 앞선 저장소를 표시하고, FINAL에서는 <strong>네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상</strong>으로 판정. 계산식·누락 값·숫자 범위 초과는 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>운영 중에는 저장소별 반영 시점이 달라 일시적인 차이가 발생. 이를 장애로 잘못 판단하지 않도록 LIVE와 FINAL의 기준을 분리</p></section>
                 </div>
               </article>
             </div>
             <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Prometheus</span><span class="tag">Micrometer</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Apache Kafka</span></div></div>
           </article>
-          <article class="card project-card">
+
+          <article class="project-document">
             <div class="project-header">
-              <span class="project-icon" aria-hidden="true">GM</span>
               <div class="project-heading">
                 <div class="project-title-row">
                   <div><h3>갈래말래</h3><p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p></div>
@@ -552,70 +503,39 @@ sequenceDiagram
                 <div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 기능 담당</span></div>
               </div>
             </div>
+            <section class="project-key-results" aria-label="갈래말래 핵심 성과">
+              <h4>핵심 성과</h4>
+              <ol><li class="project-key-result">Redis Lua로 동시 투표 변경과 후보별 집계를 한 번에 처리</li><li class="project-key-result">RabbitMQ로 재추천 요청과 장시간 추천 작업 분리</li><li class="project-key-result">Redis 마감 집계를 보존해 DB 저장 실패 후 재처리</li></ol>
+            </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="atomic-vote-change">
-                <header class="project-case-heading"><span class="project-case-number">01</span><div><h4>동시 투표 결과 정합성</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 <strong>개인 선택과 후보별 투표 수</strong>가 달라질 수 있음</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>투표 진행 정보는 <strong>Redis Hash</strong>에 저장. 상태와 마감 시간, 후보를 확인한 뒤 기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Lua Script 한 번</strong>에 처리</p></div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p>동시 제출·선택 변경·같은 후보 재선택 테스트에서 <strong>개인 선택과 투표 수가 일치</strong>. Redis 데이터가 사라지면 진행 중인 투표를 되살릴 수 없어 <strong>마감 결과는 MySQL에 저장</strong></p></div></section>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Redis Lua로 동시 투표 결과 일치</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>투표 진행 정보를 Redis Hash에 저장하고, 상태·마감 시간·후보 확인과 기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong>.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동시 제출·선택 변경·같은 후보 재선택에서도 <strong>개인 선택과 후보별 투표 수가 일치</strong>하는지 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>진행 중 Redis 데이터가 사라지면 투표를 복구할 수 없음. 보존해야 하는 확정 결과는 마감 후 MySQL에 저장</p></section>
                 </div>
               </article>
-
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">02</span><div><h4>RabbitMQ 기반 재추천 비동기 처리</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 바로 실행하면 <strong>AI 추천 결과를 기다려야 해 응답이 늦어지고</strong>, 외부 API 오류가 사용자 요청에 직접 영향을 줌</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p>API에서는 후보 수와 세션 상태를 확인하고 <strong>MENU_RECOMMENDING으로 변경</strong>한 뒤, DB 반영이 끝나면 <strong>SurveyRequested를 발행해 기존 RabbitMQ 추천 흐름에 연결</strong>. 추천 작업은 Consumer가 이어서 처리</p>
-                    <pre class="mermaid sequence-diagram" aria-label="재추천 비동기 처리 흐름">
-sequenceDiagram
-    participant Owner as 방장
-    participant Service as FinalMenuSelectionService
-    participant DB as MySQL
-    participant MQ as RabbitMQ
-    participant Worker as 추천 Consumer
-    Owner->>Service: 재추천 요청
-    Service->>DB: 세션 잠금 및 후보 수 확인
-    alt 새 재추천 요청
-        Service->>DB: MENU_RECOMMENDING 변경
-    else 추천 상태에 멈춘 세션
-        Service->>DB: 현재 상태 유지
-    end
-    DB-->>Service: commit
-    Service->>MQ: SurveyRequested 발행
-    MQ-->>Worker: 재추천 작업 전달
-                    </pre>
-                  </div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p><strong>API 응답을 장시간 추천 작업과 분리</strong>하고, 후보가 0개·1개인 경우와 추천 상태에 멈춘 세션에서 커밋 후 이벤트가 발행되는지 테스트. DB 커밋 직후 메시지 발행 전에 서버가 종료되는 경우까지 막으려면 <strong>Outbox 방식이 필요</strong></p></div></section>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>RabbitMQ로 재추천 응답 분리</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 바로 실행하면 AI 추천 결과를 기다리는 동안 API 응답이 늦어지고, 외부 API 오류가 사용자 요청에 직접 영향을 줬습니다.</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>점수 계산과 외부 AI 호출처럼 오래 걸리는 작업이 재추천 요청 흐름에 포함되어 API가 추천 완료까지 기다리는 구조였음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>API는 후보 수와 세션 상태를 확인해 MENU_RECOMMENDING으로 바꾸고, 커밋 후 SurveyRequested를 발행해 <strong>RabbitMQ 추천 Consumer에 작업을 전달</strong>.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>API 응답과 장시간 추천 작업을 분리</strong>하고, 후보 0개·1개와 추천 상태에 멈춘 세션의 재요청을 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB 커밋 직후 메시지를 발행하기 전에 서버가 종료되면 요청이 누락될 수 있습니다. 이 구간까지 보완하려면 Outbox 적용이 필요합니다.</p></section>
                 </div>
               </article>
-
               <article class="project-case" data-project-case="persistence-recovery">
-                <header class="project-case-heading"><span class="project-case-number">03</span><div><h4>DB 저장 실패 후 재처리</h4></div></header>
-                <div class="case-summary">
-                  <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장이 실패할 때 <strong>집계까지 지우면 같은 결과로 다시 저장할 수 없음</strong></p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><p><strong>마감 집계는 Redis에 남겨 두고</strong> MySQL 저장이 끝난 뒤에만 삭제. 저장이 실패하면 남아 있는 집계로 다시 시도</p>
-                    <pre class="mermaid sequence-diagram" aria-label="DB 저장 실패 후 재처리 흐름">
-sequenceDiagram
-    participant Service as VoteService
-    participant Redis as Redis 마감 집계
-    participant DB as MySQL
-    Service->>Redis: 마감 및 확정 집계 조회
-    Redis-->>Service: 마감 집계 반환
-    Service->>DB: 결과와 세션 상태 저장
-    alt DB 저장 성공
-        DB-->>Service: commit
-        Service->>Redis: 마감 집계 삭제
-    else DB 저장 실패
-        DB-->>Service: rollback
-        Note over Service,Redis: 마감 집계를 남겨 다시 시도
-        Service->>Redis: 남아 있는 마감 집계 조회
-        Redis-->>Service: 동일 확정 집계 반환
-        Service->>DB: 결과 저장 재시도
-    end
-                    </pre>
-                  </div></section>
-                  <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p>DB 저장 실패 테스트에서 <strong>같은 집계로 다시 저장</strong>되고, 저장 성공 후에만 Redis 데이터가 삭제됨을 확인. <strong>Redis 장애나 TTL 만료로 마감 집계가 유실되는 상황을 탐지할 지표가 필요</strong></p></div></section>
+                <header class="project-case-heading"><span class="project-case-number">03</span><h4>Redis 마감 집계 보존으로 DB 저장 재처리</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장이 실패할 때 집계까지 지우면 같은 결과로 다시 저장할 수 없었습니다.</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>Redis의 마감 집계와 MySQL의 확정 결과가 서로 다른 저장소에 있어 하나의 트랜잭션으로 묶을 수 없었고, 집계를 먼저 지우면 재시도 기준도 사라졌음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p><strong>Redis 마감 집계를 MySQL 저장 성공 전까지 보존</strong>하고, 저장 실패 시 남은 집계로 다시 시도. 저장 성공 후에만 Redis 집계를 삭제합니다.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>DB 저장 실패 후에도 <strong>같은 집계로 재저장되고 성공 후에만 삭제</strong>되는지 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Redis 장애나 TTL 만료로 마감 집계가 사라지는 상황은 별도로 감지해야 합니다. 집계 유실을 확인할 운영 지표가 추가로 필요합니다.</p></section>
                 </div>
               </article>
             </div>
@@ -681,26 +601,6 @@ sequenceDiagram
       else document.documentElement.dataset.theme = 'dark';
       localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark');
       setToggleLabel();
-    });
-  </script>
-  <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({
-      startOnLoad: true,
-      securityLevel: 'strict',
-      theme: 'default',
-      sequence: {
-        useMaxWidth: true,
-        diagramMarginX: 10,
-        diagramMarginY: 8,
-        actorMargin: 28,
-        width: 110,
-        height: 36,
-        boxMargin: 6,
-        messageMargin: 18,
-        noteMargin: 6,
-        mirrorActors: false
-      }
     });
   </script>
 </body>

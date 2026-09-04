@@ -57,6 +57,8 @@ required_patterns=(
   '저장 실패 시 재시도하고, 놓친 종료 정보는 DB 조회로 보정'
   '--emphasis-text: #111827;'
   '--emphasis-text: #f8fafc;'
+  '--solution-text: #d44c47;'
+  '--solution-text: #ff7369;'
   '.about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text);'
   'id="skills"'
   'class="skill-categories compact"'
@@ -76,84 +78,59 @@ required_patterns=(
   '투표 기능'
   '운영현황'
   'class="project-header"'
-  'class="project-icon"'
+  'class="project-document"'
+  'class="project-key-results"'
+  'class="project-key-result"'
   'class="project-cases"'
-  '.project-cases { display: grid; gap: 1rem; margin-top: 1.25rem; }'
-  '.project-card { overflow: hidden; border-radius: .85rem; padding: 1.5rem; }'
-  '.project-case { overflow: hidden; border: 1px solid var(--line-strong); border-radius: .9rem; background: var(--panel); padding: 0; }'
-  'background: var(--panel-soft); padding: .85rem 1rem;'
-  'background: var(--accent); color: #fff;'
-  '.case-summary { display: grid; padding: .2rem 1rem 1rem; }'
-  '.case-summary-row { display: grid; grid-template-columns: 88px minmax(0, 1fr);'
-  '.case-summary-label { color: var(--heading); font-size: .8rem;'
-  '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: .9rem; line-height: 1.65; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }'
-  '.hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-summary-content p, .credential-item h4, .credential-item p {'
+  '.project-document { border-top: 2px solid var(--heading);'
+  '.project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr);'
+  '.project-case { border-top: 1px solid var(--line-strong);'
+  '.case-notion { display: grid;'
+  '.case-section { display: grid; grid-template-columns: 78px minmax(0, 1fr);'
+  '.project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.65rem; }'
+  '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: 1.08rem; line-height: 1.72; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }'
+  '.hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {'
   'text-wrap: pretty;'
   'word-break: keep-all;'
   'overflow-wrap: break-word;'
-  '.project-role { padding: .25rem .48rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .72rem;'
-  '.project-highlight p { margin: 0; color: var(--heading);'
-  '.project-highlight > strong { display: block;'
-  '.case-summary-content p { margin: 0; color: var(--heading); font-size: .86rem;'
-  'class="case-comparison-list"'
-  '.case-comparison-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));'
-  '.case-comparison-list strong { display: block; margin-bottom: .12rem;'
-  '.case-comparison-list span { display: block; color: var(--heading);'
-  '.architecture-summary { color: var(--heading);'
-  '.flow-boundary-label { color: var(--heading);'
-  '.flow-node small { color: var(--heading);'
-  '.flow-note-copy { color: var(--heading);'
-  '.project-tech .tag { color: var(--heading);'
-  '.project-card p strong { color: inherit; font-weight: 850; }'
-  'class="case-summary"'
-  'class="case-summary-row problem"'
-  'class="case-summary-row decision"'
-  'class="case-summary-row outcome"'
-  'class="mermaid sequence-diagram"'
-  'sequenceDiagram'
-  'participant Owner as 방장'
-  'participant Service as FinalMenuSelectionService'
-  'participant MQ as RabbitMQ'
-  'participant Worker as 추천 Consumer'
-  'SurveyRequested 발행'
-  '재추천 작업 전달'
-  'participant Redis as Redis 마감 집계'
-  'alt DB 저장 성공'
-  'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
-  '.sequence-diagram { max-width: 100%; margin: .65rem 0 0; overflow: hidden;'
-  '.sequence-diagram > svg { display: block; width: 100% !important; min-width: 0; max-width: 100% !important;'
+  '.project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem;'
+  '.project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem;'
+  '.project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem;'
+  '.case-section h5 { margin: .1rem 0 0; color: var(--subtle); font-size: .95rem;'
+  '.case-section p { margin: 0; color: var(--heading); font-size: 1.1rem;'
+  '.project-tech .tag { color: var(--heading); font-size: .84rem;'
+  '.project-document p strong { color: inherit; font-weight: 850; }'
+  '.case-section[data-case-stage="solution"] strong { color: var(--solution-text); }'
+  'class="case-notion"'
+  'data-case-stage="problem"'
+  'data-case-stage="cause"'
+  'data-case-stage="solution"'
+  'data-case-stage="evaluation"'
+  'data-case-stage="reflection"'
   '.hero-intro { order: -1; }'
   '.profile-photo-slot { width: min(170px, 50vw); }'
-  'mirrorActors: false'
-  'participant Batch as Batch 서버'
-  'participant Event as afterCommit'
-  'participant Redis as Redis Pub/Sub'
-  'participant APIs as API 서버들'
   'data-project-case="atomic-vote-change"'
   'data-project-case="async-recommendation"'
   'data-project-case="persistence-recovery"'
   'data-project-case="consistency-gaps"'
   'data-project-case="lifecycle-after-commit"'
   'data-project-case="prometheus-failure-isolation"'
-  'Redis와 MySQL 간 데이터 불일치 추적'
-  '종료 이벤트 기반 다중 서버 지표 정리'
-  'Prometheus 조회 실패 격리'
-  '<strong>재고 차감과 실제 발급</strong><span>전체 수량 − Redis 잔여 수량과 DB 활성 쿠폰 수 비교</span>'
-  '<strong>Redis 내부 기록</strong><span>Redis 누적 발급 수와 Redis 발급 회원 수 비교</span>'
-  '<strong>Redis와 DB 발급 이력</strong><span>Redis 누적 발급 수와 DB 누적 발급 이력 비교</span>'
-  '<strong>DB 내부 집계</strong><span>DB 활성 쿠폰 수와 재고 테이블의 활성 발급 수 비교</span>'
-  '운영 중인 LIVE에서는 처리 시점에 따른 차이를 확인. 마감 후 FINAL에서는 네 비교 결과가 모두 0이고'
-  '<strong>초과 발급이 없을 때 정상으로 판정</strong>'
-  'DB 커밋이 끝난 뒤에만 발행'
+  '4개 비교 지표로 Redis·MySQL 불일치 추적'
+  'afterCommit과 Redis Pub/Sub으로 종료 지표 동기화'
+  'Grouped Query와 부분 응답으로 Prometheus 실패 격리'
+  'Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>'
+  '<strong>불일치가 발생한 저장소와 처리 단계를 구분</strong>'
+  '<strong>네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상</strong>'
+  'DB 커밋 완료 후에만 Redis Pub/Sub으로 발행'
   '최근 종료 회차를 DB에서 다시 조회'
-  'grouped query로 한 번에 조회'
-  '동시 투표 결과 정합성'
-  'RabbitMQ 기반 재추천 비동기 처리'
-  'AI 추천 결과를 기다려야 해 응답이 늦어지고'
-  '기존 RabbitMQ 추천 흐름에 연결'
-  'API 응답을 장시간 추천 작업과 분리'
-  'Redis 장애나 TTL 만료로 마감 집계가 유실되는 상황을 탐지할 지표가 필요'
-  'DB 저장 실패 후 재처리'
+  'Grouped Query로 묶고 영역별 제한 시간을 적용'
+  'Redis Lua로 동시 투표 결과 일치'
+  'RabbitMQ로 재추천 응답 분리'
+  'AI 추천 결과를 기다리는 동안 API 응답이 늦어지고'
+  'RabbitMQ 추천 Consumer에 작업을 전달'
+  'API 응답과 장시간 추천 작업을 분리'
+  'Redis 마감 집계 보존으로 DB 저장 재처리'
+  'Redis 장애나 TTL 만료로 마감 집계가 사라지는 상황은 별도로 감지'
   '<div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 기능 담당</span></div>'
   'id="credentials"'
   '<p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2>'
@@ -262,9 +239,9 @@ if (( project_case_count != 6 )); then
   exit 1
 fi
 
-case_summary_count="$(grep -Fc -- 'class="case-summary"' "$preview" || true)"
-if (( case_summary_count != 6 )); then
-  echo "FAIL: expected one concise summary per project case, found $case_summary_count"
+case_notion_count="$(grep -Fc -- 'class="case-notion"' "$preview" || true)"
+if (( case_notion_count != 6 )); then
+  echo "FAIL: expected one Notion-style body per project case, found $case_notion_count"
   exit 1
 fi
 
@@ -274,22 +251,12 @@ if (( case_process_list_count != 0 )); then
   exit 1
 fi
 
-mermaid_sequence_count="$(grep -Fc -- 'class="mermaid sequence-diagram"' "$preview" || true)"
-if (( mermaid_sequence_count != 3 )); then
-  echo "FAIL: only lifecycle propagation, async recommendation, and persistence recovery should use Mermaid sequences, found $mermaid_sequence_count"
-  exit 1
-fi
-
-scrollable_sequence_count="$(grep -Fc -- '좌우로 스크롤하여 확인' "$preview" || true)"
-if (( scrollable_sequence_count != 0 )); then
-  echo "FAIL: Mermaid sequences must fit inside the card without scroll instructions"
-  exit 1
-fi
-
-if grep -Fq -- 'class="mermaid sequence-diagram" tabindex="0"' "$preview"; then
-  echo "FAIL: fitted Mermaid sequences must not expose a redundant scroll viewport"
-  exit 1
-fi
+for removed_diagram_markup in 'class="mermaid' 'sequenceDiagram' 'mermaid.initialize' 'mermaid.esm.min.mjs' 'class="project-architecture' 'class="responsive-flow"'; do
+  if grep -Fq -- "$removed_diagram_markup" "$preview"; then
+    echo "FAIL: project diagrams must be removed completely: $removed_diagram_markup"
+    exit 1
+  fi
+done
 
 for removed_finalization_content in 'data-project-case="duplicate-finalization"' '자동·수동 마감 중복 막기' 'participant Scheduler as 자동 마감' 'participant User as 수동 마감'; do
   if grep -Fq -- "$removed_finalization_content" "$preview"; then
@@ -314,8 +281,8 @@ if grep -Fq -- 'project-summary-line' "$preview"; then
 fi
 
 gallae_markup="$(sed -n '/<h3>갈래말래<\/h3>/,/<div class="project-footer">/p' "$preview")"
-for case_stage in 문제 '선택과 실행' '검증과 한계'; do
-  stage_count="$(grep -Fc -- "<strong>$case_stage</strong>" <<< "$gallae_markup" || true)"
+for case_stage in problem cause solution evaluation reflection; do
+  stage_count="$(grep -Fc -- "data-case-stage=\"$case_stage\"" <<< "$gallae_markup" || true)"
   if (( stage_count != 3 )); then
     echo "FAIL: every Gallae-Mallae case must contain one '$case_stage' stage, found $stage_count"
     exit 1
@@ -329,37 +296,32 @@ for jargon in '원자성' '영속화' '직렬화' 'Snapshot' 'PESSIMISTIC_WRITE'
   fi
 done
 
-if grep -Fq -- '<div class="case-summary-content"><strong>' <<< "$gallae_markup"; then
-  echo "FAIL: project case content still splits one idea into a dark lead and gray explanation"
-  exit 1
-fi
-
-emphasized_case_row_count="$(grep -F -- '<div class="case-summary-content"><p>' <<< "$gallae_markup" | grep -Fc -- '<strong>' || true)"
-if (( emphasized_case_row_count != 9 )); then
-  echo "FAIL: every project case row must emphasize at least one key term, found $emphasized_case_row_count"
-  exit 1
-fi
-
 coupon_markup="$(sed -n '/<h3>쿠폰 야호<\/h3>/,/<div class="project-footer">/p' "$preview")"
-for case_stage in 문제 '선택과 실행' '검증과 한계'; do
-  stage_count="$(grep -Fc -- "<strong>$case_stage</strong>" <<< "$coupon_markup" || true)"
+coupon_lifecycle_line="$(grep -nF 'data-project-case="lifecycle-after-commit"' <<< "$coupon_markup" | cut -d: -f1)"
+coupon_prometheus_line="$(grep -nF 'data-project-case="prometheus-failure-isolation"' <<< "$coupon_markup" | cut -d: -f1)"
+coupon_consistency_line="$(grep -nF 'data-project-case="consistency-gaps"' <<< "$coupon_markup" | cut -d: -f1)"
+if (( coupon_lifecycle_line >= coupon_prometheus_line || coupon_prometheus_line >= coupon_consistency_line )); then
+  echo "FAIL: Coupon Yaho consistency case must appear third"
+  exit 1
+fi
+
+for case_stage in problem cause solution evaluation reflection; do
+  stage_count="$(grep -Fc -- "data-case-stage=\"$case_stage\"" <<< "$coupon_markup" || true)"
   if (( stage_count != 3 )); then
     echo "FAIL: every Coupon Yaho case must contain one '$case_stage' stage, found $stage_count"
     exit 1
   fi
 done
 
-emphasized_coupon_row_count="$(grep -F -- '<div class="case-summary-content"><p>' <<< "$coupon_markup" | grep -Fc -- '<strong>' || true)"
-if (( emphasized_coupon_row_count != 8 )); then
-  echo "FAIL: every prose row in Coupon Yaho must emphasize at least one key term, found $emphasized_coupon_row_count"
-  exit 1
-fi
-
-comparison_item_count="$(grep -Fo -- '<li>' <<< "$coupon_markup" | wc -l)"
-if (( comparison_item_count != 4 )); then
-  echo "FAIL: Coupon Yaho consistency case must show four comparison pairs, found $comparison_item_count"
-  exit 1
-fi
+for project_name in '갈래말래' '쿠폰 야호'; do
+  if [[ "$project_name" == '갈래말래' ]]; then project_markup="$gallae_markup"; else project_markup="$coupon_markup"; fi
+  for unbolded_stage in problem cause reflection; do
+    if grep -F -- "data-case-stage=\"$unbolded_stage\"" <<< "$project_markup" | grep -Fq -- '<strong>'; then
+      echo "FAIL: $unbolded_stage copy in $project_name must not use bold emphasis"
+      exit 1
+    fi
+  done
+done
 
 if ! grep -Fq -- '<span class="tag">Apache Kafka</span>' <<< "$coupon_markup"; then
   echo "FAIL: Apache Kafka is missing from the Coupon Yaho technology tags"
@@ -374,6 +336,19 @@ for removed_notification_copy in 'data-project-case="notification-retry"' '알�
 done
 
 projects_markup="$(sed -n '/<section class="section" id="projects">/,/<section class="section" id="credentials">/p' "$preview")"
+for obsolete_project_structure in 'class="case-summary"' 'class="case-summary-row' 'class="sequence-diagram"' 'class="case-comparison-list"' '<strong>검증과 한계</strong>' '<strong>선택과 실행</strong>' '전체 수량 − Redis 잔여 수량'; do
+  if grep -Fq -- "$obsolete_project_structure" <<< "$projects_markup"; then
+    echo "FAIL: obsolete project structure remains: $obsolete_project_structure"
+    exit 1
+  fi
+done
+
+for obsolete_case_stage in 'data-case-stage="work"' 'data-case-stage="process"' '<h5>업무</h5>' '<h5>과정</h5>'; do
+  if grep -Fq -- "$obsolete_case_stage" <<< "$projects_markup"; then
+    echo "FAIL: obsolete case stage remains: $obsolete_case_stage"
+    exit 1
+  fi
+done
 if grep -E '<h4>[^<]*하기</h4>' <<< "$projects_markup"; then
   echo "FAIL: project case titles must use concise noun phrases instead of '~하기' endings"
   exit 1
@@ -411,9 +386,9 @@ if (( section_layout_count != 4 )); then
   exit 1
 fi
 
-content_card_count="$(grep -Fc -- 'class="card ' "$preview" || true)"
-if (( content_card_count != 2 )); then
-  echo "FAIL: only the two featured projects should remain as full cards, found $content_card_count"
+project_document_count="$(grep -Fc -- 'class="project-document"' "$preview" || true)"
+if (( project_document_count != 2 )); then
+  echo "FAIL: expected two document-style projects, found $project_document_count"
   exit 1
 fi
 
@@ -422,10 +397,6 @@ if [[ ! -f "portfolio-preview-before-hybrid.png" ]]; then
   exit 1
 fi
 
-if ! grep -Fq -- '.flow-track { display: grid;' "$preview" || ! grep -Fq -- '.flow-track { grid-template-columns: 1fr;' "$preview"; then
-  echo "FAIL: project diagrams must switch from horizontal tracks to a vertical mobile flow"
-  exit 1
-fi
 
 profile_line="$(grep -nF 'class="profile-photo-slot"' "$preview" | head -n 1 | cut -d: -f1)"
 intro_line="$(grep -nF 'class="hero-intro"' "$preview" | head -n 1 | cut -d: -f1)"
