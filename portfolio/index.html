@@ -164,8 +164,12 @@
       letter-spacing: -.055em;
     }
     h1 span { color: var(--accent); }
-    .hero-statement { max-width: 650px; margin-bottom: .7rem; color: var(--heading); font-size: clamp(1.18rem, 2vw, 1.55rem); font-weight: 800; letter-spacing: -.025em; }
+    .hero-statement { max-width: 650px; margin-bottom: .7rem; color: var(--heading); font-size: clamp(1.18rem, 2vw, 1.55rem); font-weight: 600; letter-spacing: -.025em; }
     .hero-copy { max-width: 650px; margin-bottom: 0; color: var(--muted); font-size: .94rem; }
+    .hero-statement strong, .hero-copy strong, .section-heading > p strong, .about-main p strong {
+      color: var(--heading);
+      font-weight: 850;
+    }
     .hero-links { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; }
     .hero-links a { border-bottom: 1px solid var(--line-strong); color: var(--heading); font-size: .82rem; font-weight: 800; }
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
@@ -207,7 +211,7 @@
     .about-grid { display: grid; grid-template-columns: 1fr; gap: 1.4rem; }
     .card { border: 1px solid var(--line); border-radius: 1.15rem; background: var(--panel); padding: 1.5rem; }
     .about-main { padding: 0; }
-    .about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text); font-size: clamp(1.2rem, 2.4vw, 1.65rem); font-weight: 850; letter-spacing: -.035em; }
+    .about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text); font-size: clamp(1.2rem, 2.4vw, 1.65rem); font-weight: 600; letter-spacing: -.035em; }
     .about-main h3 { margin-bottom: .8rem; color: var(--heading); font-size: 1.3rem; }
     .about-main p { margin-bottom: .75rem; color: var(--muted); }
     .principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; border-top: 1px solid var(--line); padding-top: 1.25rem; }
@@ -366,8 +370,8 @@
         </div>
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
-          <p class="hero-statement">동시 요청과 장애 상황에서도 데이터 정합성을 지키는 백엔드 개발자입니다.</p>
-          <p class="hero-copy">동시성 제어, 실패 감지, 재처리가 가능한 구조를 프로젝트에서 구현하고 검증했습니다.</p>
+          <p class="hero-statement"><strong>동시 요청과 장애 상황에서도 데이터 정합성을 지키는</strong> 백엔드 개발자입니다.</p>
+          <p class="hero-copy"><strong>동시성 제어·실패 감지·재처리</strong>가 가능한 구조를 프로젝트에서 구현하고 검증했습니다.</p>
           <div class="hero-links" aria-label="외부 링크"><a href="/">Blog ↗</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           <div class="hero-facts" aria-label="핵심 정보">
             <div class="hero-fact"><strong>Concurrency Control</strong><span>Redis Lua로 여러 요청을 한 번에 처리</span></div>
@@ -382,12 +386,12 @@
       <div class="shell section-layout">
         <div class="section-heading">
           <div><p class="eyebrow">About me</p><h2>소개</h2></div>
-          <p>동시 요청, 저장소 간 데이터 차이, 실패 이후의 흐름을 프로젝트에서 직접 다뤘습니다.</p>
+          <p><strong>동시 요청, 저장소 간 데이터 차이, 실패 이후의 흐름</strong>을 프로젝트에서 직접 다뤘습니다.</p>
         </div>
         <div class="about-grid">
           <article class="about-main">
-            <p class="about-statement">정상 동작을 만드는 데서 멈추지 않고, 실패한 뒤에도 다시 이어질 수 있는 구조를 고민합니다.</p>
-            <p>백엔드 개발을 하며 동시에 요청이 들어올 때 데이터가 어떻게 바뀌는지, 서로 다른 저장소의 값이 어디에서 어긋날 수 있는지 살펴왔습니다. 갈래말래에서는 투표 변경과 집계를 한 번에 처리하고, 저장 실패 후 같은 결과로 다시 시도하는 흐름을 구현했습니다. 쿠폰 야호에서는 Redis와 MySQL의 발급 상태를 비교하고, DB 커밋 이후 종료 이벤트를 여러 서버에 전파했습니다. 기능을 완성하는 것뿐 아니라 실패 지점을 확인할 수 있는 지표와 누락을 보정하는 방법까지 함께 고민했습니다. 선택한 기술의 보장 범위와 한계를 테스트로 확인하며, 운영 중에도 문제를 찾고 대응할 수 있는 백엔드를 만들고자 합니다.</p>
+            <p class="about-statement"><strong>실패한 뒤에도 다시 이어질 수 있는 구조</strong>를 고민합니다. 정상 동작을 만드는 데서 멈추지 않습니다.</p>
+            <p><strong>데이터가 어긋나는 지점과 다시 처리할 방법을 함께 설계해 왔습니다.</strong> 동시에 요청이 들어올 때 데이터가 어떻게 바뀌는지, 서로 다른 저장소의 값이 어디에서 어긋날 수 있는지 프로젝트에서 확인했습니다. 갈래말래에서는 <strong>투표 변경과 집계를 한 번에 처리하고, 저장 실패 후 같은 결과로 다시 시도하는 흐름</strong>을 구현했습니다. 쿠폰 야호에서는 <strong>Redis와 MySQL의 발급 상태 비교와 DB 커밋 이후 종료 이벤트 전파</strong>를 구현했습니다. 기능을 완성하는 것뿐 아니라 실패 지점을 확인할 수 있는 지표와 누락을 보정하는 방법까지 함께 고민했습니다. 선택한 기술의 보장 범위와 한계를 테스트로 확인하며, 운영 중에도 문제를 찾고 대응할 수 있는 백엔드를 만들고자 합니다.</p>
           </article>
           <div class="principles">
             <div class="principle"><span class="principle-number">01</span><div><strong>동시 상태 정합성</strong><p>Redis Lua로 투표 변경과 집계를 한 번에 처리</p></div></div>
