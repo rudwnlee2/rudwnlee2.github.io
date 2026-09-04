@@ -316,9 +316,14 @@ for jargon in '원자성' '영속화' '직렬화' 'Snapshot' 'PESSIMISTIC_WRITE'
 done
 
 coupon_markup="$(sed -n '/<h3>쿠폰 야호<\/h3>/,/<div class="project-footer">/p' "$preview")"
+coupon_validation_line="$(grep -nF 'class="project-validation" aria-labelledby="coupon-validation-title"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_lifecycle_line="$(grep -nF 'data-project-case="lifecycle-after-commit"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_prometheus_line="$(grep -nF 'data-project-case="prometheus-failure-isolation"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_consistency_line="$(grep -nF 'data-project-case="consistency-gaps"' <<< "$coupon_markup" | cut -d: -f1)"
+if (( coupon_validation_line >= coupon_lifecycle_line )); then
+  echo "FAIL: team-wide verification results must appear before the personal case studies"
+  exit 1
+fi
 if (( coupon_lifecycle_line >= coupon_prometheus_line || coupon_prometheus_line >= coupon_consistency_line )); then
   echo "FAIL: Coupon Yaho consistency case must appear third"
   exit 1
