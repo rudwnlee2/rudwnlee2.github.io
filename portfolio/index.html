@@ -260,7 +260,9 @@
     .case-summary-content { min-width: 0; }
     .case-summary-content p { margin: 0; color: var(--heading); font-size: .86rem; line-height: 1.62; }
     .case-comparison-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .45rem; margin: 0; padding: 0; list-style: none; }
-    .case-comparison-list li { border: 1px solid var(--line); border-radius: .45rem; background: var(--panel-soft); padding: .55rem .65rem; color: var(--heading); font-size: .8rem; font-weight: 800; line-height: 1.5; }
+    .case-comparison-list li { border: 1px solid var(--line); border-radius: .45rem; background: var(--panel-soft); padding: .55rem .65rem; color: var(--heading); line-height: 1.5; }
+    .case-comparison-list strong { display: block; margin-bottom: .12rem; color: var(--heading); font-size: .8rem; font-weight: 850; }
+    .case-comparison-list span { display: block; color: var(--heading); font-size: .76rem; font-weight: 500; }
     .case-summary-note { margin-top: .55rem !important; }
     .sequence-diagram { max-width: 100%; margin: .65rem 0 0; overflow: hidden; border: 1px solid var(--line); border-radius: .4rem; background: #fff; padding: .65rem; text-align: center; }
     .sequence-diagram > svg { display: block; width: 100% !important; min-width: 0; max-width: 100% !important; height: auto; margin: 0 auto; }
@@ -494,7 +496,7 @@
                 <header class="project-case-heading"><span class="project-case-number">01</span><div><h4>Redis와 MySQL 간 데이터 불일치 추적</h4></div></header>
                 <div class="case-summary">
                   <section class="case-summary-row problem"><span class="case-summary-label"><strong>문제</strong></span><div class="case-summary-content"><p>Redis 재고는 줄었지만 DB 발급 이력이 남지 않는 등 저장소가 어긋나도 <strong>전체 발급 수만으로는 문제가 생긴 지점</strong>을 찾기 어려움</p></div></section>
-                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><ul class="case-comparison-list"><li>전체 수량 − Redis 잔여 수량 ↔ DB 활성 쿠폰 수</li><li>Redis 누적 발급 수 ↔ Redis 발급 회원 수</li><li>Redis 누적 발급 수 ↔ DB 누적 발급 이력</li><li>DB 활성 쿠폰 수 ↔ DB 재고 테이블의 활성 카운터</li></ul><p class="case-summary-note">네 가지 차이와 <strong>초과 발급</strong>을 따로 계산하고, 운영 중인 LIVE와 마감 뒤 FINAL의 판정 기준을 분리</p></div></section>
+                  <section class="case-summary-row decision"><span class="case-summary-label"><strong>선택과 실행</strong></span><div class="case-summary-content"><ul class="case-comparison-list"><li><strong>재고 차감과 실제 발급</strong><span>전체 수량 − Redis 잔여 수량과 DB 활성 쿠폰 수 비교</span></li><li><strong>Redis 내부 기록</strong><span>Redis 누적 발급 수와 Redis 발급 회원 수 비교</span></li><li><strong>Redis와 DB 발급 이력</strong><span>Redis 누적 발급 수와 DB 누적 발급 이력 비교</span></li><li><strong>DB 내부 집계</strong><span>DB 활성 쿠폰 수와 재고 테이블의 활성 발급 수 비교</span></li></ul><p class="case-summary-note">운영 중인 LIVE에서는 처리 시점에 따른 차이를 확인. 마감 후 FINAL에서는 네 비교 결과가 모두 0이고 <strong>초과 발급이 없을 때 정상으로 판정</strong></p></div></section>
                   <section class="case-summary-row outcome"><span class="case-summary-label"><strong>검증과 한계</strong></span><div class="case-summary-content"><p>차이의 부호로 <strong>어느 저장소가 앞섰는지 확인</strong>하고, FINAL에서는 모든 차이가 0일 때만 통과. 계산식·누락 값·숫자 범위 초과를 테스트로 확인</p></div></section>
                 </div>
               </article>
