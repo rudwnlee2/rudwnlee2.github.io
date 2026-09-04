@@ -243,7 +243,7 @@
     .project-validation-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
     .project-validation-heading h4 { margin: 0; color: var(--heading); font-size: 1.08rem; }
     .project-validation-heading span { color: var(--muted); font-size: .8rem; font-weight: 750; }
-    .project-validation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+    .project-validation-grid { display: grid; grid-template-columns: minmax(0, 1fr); border-block: 1px solid var(--line); }
     .project-validation-item { min-width: 0; padding: 1.15rem 1rem; border-right: 1px solid var(--line); }
     .project-validation-item:first-child { padding-left: 0; }
     .project-validation-item:last-child { border-right: 0; padding-right: 0; }
@@ -461,11 +461,9 @@
               <ol><li class="project-key-result">관리자 HTTP API 27개 계약 구축</li><li class="project-key-result">종료 이벤트 유실에 대비한 5초 재연결과 24시간 기동 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
             </section>
             <section class="project-validation" aria-labelledby="coupon-validation-title">
-              <div class="project-validation-heading"><h4 id="coupon-validation-title">팀 프로젝트 전체 검증 결과</h4><span>개인 담당 범위와 구분한 전체 시스템 결과</span></div>
+              <div class="project-validation-heading"><h4 id="coupon-validation-title">직접 진행한 검증 결과</h4><span>실제 API와 DB를 연결해 확인</span></div>
               <div class="project-validation-grid">
-                <div class="project-validation-item"><strong>600 / 600건</strong><span>20 RPS로 30초간 발급, 시스템 오류·타임아웃 0건, p95 497.98ms</span></div>
                 <div class="project-validation-item"><strong>80 / 80건</strong><span>발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치</span><small>전체 처리 실패 0건</small></div>
-                <div class="project-validation-item"><strong>534만 건</strong><span>회원 100만 명·발급 300만 건·이력 534만 건의 정상 데이터에서 오류 검출 0건</span><small>별도 오류 700건 주입으로 예상된 800건 모두 검출, 누락 0건·오탐 0건</small></div>
               </div>
             </section>
             <div class="project-cases">

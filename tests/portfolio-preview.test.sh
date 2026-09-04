@@ -79,16 +79,12 @@ required_patterns=(
   'class="project-key-results"'
   'class="project-key-result"'
   'class="project-validation" aria-labelledby="coupon-validation-title"'
-  '<h4 id="coupon-validation-title">팀 프로젝트 전체 검증 결과</h4>'
+  '<h4 id="coupon-validation-title">직접 진행한 검증 결과</h4>'
+  '실제 API와 DB를 연결해 확인'
   'class="project-validation-grid"'
   'class="project-validation-item"'
-  '<strong>600 / 600건</strong>'
-  '20 RPS로 30초간 발급, 시스템 오류·타임아웃 0건, p95 497.98ms'
   '<strong>80 / 80건</strong>'
   '발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치'
-  '<strong>534만 건</strong>'
-  '회원 100만 명·발급 300만 건·이력 534만 건의 정상 데이터에서 오류 검출 0건'
-  '별도 오류 700건 주입으로 예상된 800건 모두 검출, 누락 0건·오탐 0건'
   'class="project-cases"'
   '.project-document { border-top: 2px solid var(--heading);'
   '.project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr);'
@@ -104,7 +100,7 @@ required_patterns=(
   '.project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem;'
   '.project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem;'
   '.project-validation { border-top: 1px solid var(--line-strong); padding: 1.5rem 0; }'
-  '.project-validation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));'
+  '.project-validation-grid { display: grid; grid-template-columns: minmax(0, 1fr);'
   '.project-validation-item strong { display: block; color: var(--heading); font-size: 1.35rem;'
   '.project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem;'
   '.case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem;'
@@ -320,8 +316,14 @@ coupon_validation_line="$(grep -nF 'class="project-validation" aria-labelledby="
 coupon_lifecycle_line="$(grep -nF 'data-project-case="lifecycle-after-commit"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_prometheus_line="$(grep -nF 'data-project-case="prometheus-failure-isolation"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_consistency_line="$(grep -nF 'data-project-case="consistency-gaps"' <<< "$coupon_markup" | cut -d: -f1)"
+for unrelated_test_result in '600 / 600건' '20 RPS로 30초간 발급' '534만 건' '회원 100만 명' '오류 700건 주입'; do
+  if grep -Fq -- "$unrelated_test_result" <<< "$coupon_markup"; then
+    echo "FAIL: another contributor's test result remains in Coupon Yaho: $unrelated_test_result"
+    exit 1
+  fi
+done
 if (( coupon_validation_line >= coupon_lifecycle_line )); then
-  echo "FAIL: team-wide verification results must appear before the personal case studies"
+  echo "FAIL: directly executed verification results must appear before the personal case studies"
   exit 1
 fi
 if (( coupon_lifecycle_line >= coupon_prometheus_line || coupon_prometheus_line >= coupon_consistency_line )); then
