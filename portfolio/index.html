@@ -138,7 +138,7 @@
     .icon-button svg { width: 17px; height: 17px; }
 
     .hero { padding: 72px 0 66px; }
-    .hero-grid { display: block; }
+    .hero-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: start; gap: 88px; }
     .hero-intro { min-width: 0; }
     .eyebrow {
       display: inline-flex;
@@ -173,6 +173,13 @@
     .hero-links { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; }
     .hero-links a { border-bottom: 1px solid var(--line-strong); color: var(--heading); font-size: .82rem; font-weight: 800; }
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .profile-photo-slot {
+      aspect-ratio: 3 / 4;
+      border: 1px solid var(--line-strong);
+      border-radius: .45rem;
+      background: var(--panel-soft);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, .1);
+    }
     .hero-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.7rem; border-top: 1px solid var(--line); }
     .hero-fact { min-width: 0; padding: 1rem .9rem 0; border-right: 0; }
     .hero-fact:first-child { padding-left: 0; }
@@ -232,6 +239,17 @@
     .project-key-results ol { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; counter-reset: project-result; }
     .project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem; line-height: 1.65; counter-increment: project-result; }
     .project-key-result::before { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; font-weight: 900; content: "0" counter(project-result); }
+    .project-validation { border-top: 1px solid var(--line-strong); padding: 1.5rem 0; }
+    .project-validation-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+    .project-validation-heading h4 { margin: 0; color: var(--heading); font-size: 1.08rem; }
+    .project-validation-heading span { color: var(--muted); font-size: .8rem; font-weight: 750; }
+    .project-validation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-block: 1px solid var(--line); }
+    .project-validation-item { min-width: 0; padding: 1.15rem 1rem; border-right: 1px solid var(--line); }
+    .project-validation-item:first-child { padding-left: 0; }
+    .project-validation-item:last-child { border-right: 0; padding-right: 0; }
+    .project-validation-item strong { display: block; color: var(--heading); font-size: 1.35rem; line-height: 1.25; }
+    .project-validation-item span { display: block; margin-top: .45rem; color: var(--heading); font-size: .92rem; line-height: 1.65; word-break: keep-all; }
+    .project-validation-item small { display: block; margin-top: .25rem; color: var(--muted); font-size: .78rem; line-height: 1.55; }
     .project-cases { display: grid; }
     .project-case { border-top: 1px solid var(--line-strong); padding: 1.8rem 0; }
     .project-case:first-child { border-top: 0; }
@@ -276,6 +294,7 @@
     :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
     @media (max-width: 900px) {
       .primary-nav { display: none; }
+      .hero-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 42px; }
       .section-layout { grid-template-columns: 135px minmax(0, 1fr); gap: 38px; }
       .principles { grid-template-columns: 1fr; gap: .8rem; }
       .skill-category { grid-template-columns: 90px minmax(0, 1fr); }
@@ -284,6 +303,8 @@
     @media (max-width: 760px) {
       .shell { width: min(100% - 28px, 1120px); }
       .hero { padding: 40px 0 36px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .profile-photo-slot { display: none; }
       h1 { font-size: clamp(1.85rem, 8vw, 2.45rem); }
       .hero-facts { grid-template-columns: 1fr; }
       .hero-fact { border-right: 0; border-bottom: 1px solid var(--line); padding: .85rem 0; }
@@ -298,6 +319,10 @@
       .project-title-row { align-items: stretch; flex-direction: column; gap: .6rem; }
       .project-repo { align-self: flex-start; }
       .project-key-results { grid-template-columns: 1fr; gap: .65rem; }
+      .project-validation-heading { align-items: flex-start; flex-direction: column; gap: .25rem; }
+      .project-validation-grid { grid-template-columns: 1fr; }
+      .project-validation-item, .project-validation-item:first-child, .project-validation-item:last-child { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
+      .project-validation-item:last-child { border-bottom: 0; }
       .case-notion { margin-left: 0; }
       .case-section { grid-template-columns: 1fr; gap: .3rem; }
       .project-footer { align-items: flex-start; flex-direction: column; }
@@ -340,6 +365,7 @@
   <main id="main">
     <section class="hero hero-compact" id="top">
       <div class="shell hero-grid">
+        <div class="profile-photo-slot" aria-hidden="true"></div>
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
           <p class="hero-statement"><strong>동시 요청과 장애 상황에서도 데이터 정합성을 지키는</strong> 백엔드 개발자입니다.</p>
@@ -432,7 +458,7 @@
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 성과">
               <h4>핵심 성과</h4>
-              <ol><li class="project-key-result">DB 커밋 이후 종료 이벤트를 전파하고 누락된 지표 보정</li><li class="project-key-result">Prometheus 장애를 영역별로 격리해 부분 응답 제공</li><li class="project-key-result">4개 비교 지표로 Redis·MySQL 불일치 지점 추적</li></ol>
+              <ol><li class="project-key-result">관리자 HTTP API 27개 계약 구축</li><li class="project-key-result">종료 이벤트 유실에 대비한 5초 재연결과 24시간 기동 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="lifecycle-after-commit">
@@ -441,8 +467,8 @@
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>배치 서버에서 쿠폰 회차가 종료돼도 각 API 서버는 이를 알 수 없어 종료된 회차의 Micrometer 지표가 잔존. DB 반영 전에 이벤트를 보내면 롤백돼도 지표만 먼저 사라질 위험</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>배치 서버와 API 서버가 분리되어 회차 종료 상태가 자동으로 공유되지 않았고, DB 트랜잭션과 이벤트 발행 시점도 연결되어 있지 않았음</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>종료 이벤트를 트랜잭션에 등록한 뒤 <strong>DB 커밋 완료 후에만 Redis Pub/Sub으로 발행</strong>. 모든 API 서버는 이벤트를 받아 해당 회차의 지표를 제거합니다.</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>커밋 전과 롤백 시에는 이벤트가 발행되지 않고, 커밋 후에는 모든 API 서버가 수신</strong>하는지 테스트로 확인</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Pub/Sub은 연결이 끊긴 동안 메시지를 보관하지 않음. API 기동 시 최근 종료 회차를 DB에서 다시 조회해 누락된 지표를 정리하도록 보정</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>커밋 전과 롤백 시에는 이벤트가 발행되지 않고, 커밋 후에는 모든 API 서버가 수신</strong>하는지 테스트로 확인. Redis 구독 실패 시 5초 간격으로 재연결</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Pub/Sub은 연결이 끊긴 동안 메시지를 보관하지 않음. API 기동 시 최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회해 누락된 지표를 정리하도록 보정</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="prometheus-failure-isolation">
@@ -466,6 +492,14 @@
                 </div>
               </article>
             </div>
+            <section class="project-validation" aria-labelledby="coupon-validation-title">
+              <div class="project-validation-heading"><h4 id="coupon-validation-title">팀 프로젝트 전체 검증 결과</h4><span>개인 담당 범위와 구분한 전체 시스템 결과</span></div>
+              <div class="project-validation-grid">
+                <div class="project-validation-item"><strong>600 / 600건</strong><span>20 RPS로 30초간 발급, 시스템 오류·타임아웃 0건, p95 497.98ms</span></div>
+                <div class="project-validation-item"><strong>80 / 80건</strong><span>발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치</span><small>전체 처리 실패 0건</small></div>
+                <div class="project-validation-item"><strong>534만 건</strong><span>회원 100만 명·발급 300만 건·이력 534만 건의 정상 데이터에서 오류 검출 0건</span><small>별도 오류 700건 주입으로 예상된 800건 모두 검출, 누락 0건·오탐 0건</small></div>
+              </div>
+            </section>
             <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Prometheus</span><span class="tag">Micrometer</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Apache Kafka</span></div></div>
           </article>
 

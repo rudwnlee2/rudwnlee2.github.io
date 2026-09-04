@@ -18,7 +18,10 @@ required_patterns=(
   'class="hero hero-compact"'
   '--section-space: 48px;'
   '--section-space-mobile: 36px;'
-  '.hero-grid { display: block; }'
+  '.hero-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: start; gap: 88px; }'
+  'class="profile-photo-slot" aria-hidden="true"'
+  '.profile-photo-slot {'
+  'aspect-ratio: 3 / 4;'
   'class="hero-intro"'
   'class="hero-identity"'
   'class="hero-links"'
@@ -75,6 +78,17 @@ required_patterns=(
   'class="project-document"'
   'class="project-key-results"'
   'class="project-key-result"'
+  'class="project-validation" aria-labelledby="coupon-validation-title"'
+  '<h4 id="coupon-validation-title">팀 프로젝트 전체 검증 결과</h4>'
+  'class="project-validation-grid"'
+  'class="project-validation-item"'
+  '<strong>600 / 600건</strong>'
+  '20 RPS로 30초간 발급, 시스템 오류·타임아웃 0건, p95 497.98ms'
+  '<strong>80 / 80건</strong>'
+  '발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치'
+  '<strong>534만 건</strong>'
+  '회원 100만 명·발급 300만 건·이력 534만 건의 정상 데이터에서 오류 검출 0건'
+  '별도 오류 700건 주입으로 예상된 800건 모두 검출, 누락 0건·오탐 0건'
   'class="project-cases"'
   '.project-document { border-top: 2px solid var(--heading);'
   '.project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr);'
@@ -89,6 +103,9 @@ required_patterns=(
   'overflow-wrap: break-word;'
   '.project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem;'
   '.project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem;'
+  '.project-validation { border-top: 1px solid var(--line-strong); padding: 1.5rem 0; }'
+  '.project-validation-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));'
+  '.project-validation-item strong { display: block; color: var(--heading); font-size: 1.35rem;'
   '.project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem;'
   '.case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem;'
   '.case-section p { margin: 0; color: var(--heading); font-size: 1.1rem;'
@@ -109,12 +126,14 @@ required_patterns=(
   'data-project-case="prometheus-failure-isolation"'
   '4개 비교 지표로 Redis·MySQL 불일치 추적'
   'afterCommit과 Redis Pub/Sub으로 종료 지표 동기화'
+  '관리자 HTTP API 27개 계약 구축'
+  'Redis 구독 실패 시 5초 간격으로 재연결'
+  '최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회'
   'Grouped Query와 부분 응답으로 Prometheus 실패 격리'
   'Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>'
   '<strong>불일치가 발생한 저장소와 처리 단계를 구분</strong>'
   '<strong>네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상</strong>'
   'DB 커밋 완료 후에만 Redis Pub/Sub으로 발행'
-  '최근 종료 회차를 DB에서 다시 조회'
   'Grouped Query로 묶고 영역별 제한 시간을 적용'
   'Redis Lua로 동시 투표 결과 일치'
   'RabbitMQ로 재추천 응답 분리'
@@ -147,6 +166,7 @@ required_patterns=(
   'class="shell section-layout"'
   'aria-label="다크 모드로 전환"'
   '@media (max-width: 760px)'
+  '.profile-photo-slot { display: none; }'
   'prefers-reduced-motion: reduce'
 )
 
@@ -157,7 +177,7 @@ for pattern in "${required_patterns[@]}"; do
   fi
 done
 
-for removed_photo_marker in 'profile-photo-slot' 'class="profile-photo"' '/assets/img/profile/lee-gyeongju.jpg'; do
+for removed_photo_marker in 'class="profile-photo"' '/assets/img/profile/lee-gyeongju.jpg' '백엔드 개발자 이경주 프로필 사진'; do
   if grep -Fq -- "$removed_photo_marker" "$preview"; then
     echo "FAIL: profile photo remains in the standalone portfolio: $removed_photo_marker"
     exit 1
