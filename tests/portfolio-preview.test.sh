@@ -18,14 +18,7 @@ required_patterns=(
   'class="hero hero-compact"'
   '--section-space: 48px;'
   '--section-space-mobile: 36px;'
-  'class="profile-photo-slot"'
-  'class="profile-photo"'
-  'border: 1px solid var(--line-strong);'
-  'box-shadow: 0 14px 32px rgba(15, 23, 42, .1);'
-  'src="/assets/img/profile/lee-gyeongju.jpg"'
-  'alt="백엔드 개발자 이경주 프로필 사진"'
-  'width="591" height="787"'
-  'fetchpriority="high"'
+  '.hero-grid { display: block; }'
   'class="hero-intro"'
   'class="hero-identity"'
   'class="hero-links"'
@@ -97,7 +90,7 @@ required_patterns=(
   '.project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem;'
   '.project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem;'
   '.project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem;'
-  '.case-section h5 { margin: .1rem 0 0; color: var(--subtle); font-size: .95rem;'
+  '.case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem;'
   '.case-section p { margin: 0; color: var(--heading); font-size: 1.1rem;'
   '.project-tech .tag { color: var(--heading); font-size: .84rem;'
   '.project-document p strong { color: inherit; font-weight: 850; }'
@@ -108,8 +101,6 @@ required_patterns=(
   'data-case-stage="solution"'
   'data-case-stage="evaluation"'
   'data-case-stage="reflection"'
-  '.hero-intro { order: -1; }'
-  '.profile-photo-slot { width: min(170px, 50vw); }'
   'data-project-case="atomic-vote-change"'
   'data-project-case="async-recommendation"'
   'data-project-case="persistence-recovery"'
@@ -162,6 +153,13 @@ required_patterns=(
 for pattern in "${required_patterns[@]}"; do
   if ! grep -Fq -- "$pattern" "$preview"; then
     echo "FAIL: missing required pattern: $pattern"
+    exit 1
+  fi
+done
+
+for removed_photo_marker in 'profile-photo-slot' 'class="profile-photo"' '/assets/img/profile/lee-gyeongju.jpg'; do
+  if grep -Fq -- "$removed_photo_marker" "$preview"; then
+    echo "FAIL: profile photo remains in the standalone portfolio: $removed_photo_marker"
     exit 1
   fi
 done
