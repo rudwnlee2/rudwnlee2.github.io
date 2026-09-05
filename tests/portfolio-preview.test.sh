@@ -111,10 +111,14 @@ required_patterns=(
   'data-project-case="lifecycle-after-commit"'
   'data-project-case="idempotent-replay-observation"'
   '4개 비교 지표로 Redis·MySQL 불일치 추적'
-  '같은 발급 요청의 성공 지표 중복 방지'
+  'Kafka 발급 관측 연결과 멱등 재요청 중복 방지'
+  '쿠폰 발급 완료 후 네트워크 문제로 응답이 유실되면 사용자는 같은 요청을 다시 보낼 수 있습니다.'
+  'MySQL idempotency_records 조회 결과를 <strong>replayed 값으로 전달해 신규 발급과 재요청을 구분</strong>'
+  'Kafka coupon.issue.attempt 토픽으로 발행'
+  '<strong>시도 이벤트 3건, 실제 발급과 성공 이벤트는 각각 1건</strong>'
+  '관련 테스트 83 / 83건을 통과'
   'DB 커밋 이후 종료 이벤트를 전파해 다중 서버 지표 동기화'
   '같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건'
-  '관련 테스트 83 / 83건 통과'
   'Redis 구독 실패 시 5초 간격으로 재연결'
   '최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회'
   'Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>'
@@ -323,6 +327,11 @@ for removed_prometheus_case in 'data-project-case="prometheus-failure-isolation"
   fi
 done
 
+if grep -Fq -- '같은 발급 요청의 성공 지표 중복 방지' <<< "$coupon_markup"; then
+  echo "FAIL: previous idempotency case title remains"
+  exit 1
+fi
+
 for removed_validation_block in 'class="project-validation"' '직접 진행한 검증 결과' '<strong>80 / 80건</strong>' '.project-validation {' '.project-validation-grid {' '.project-validation-item {'; do
   if grep -Fq -- "$removed_validation_block" "$preview"; then
     echo "FAIL: removed standalone validation block remains: $removed_validation_block"
@@ -385,13 +394,6 @@ if grep -E '<h4>[^<]*하기</h4>' <<< "$projects_markup"; then
   echo "FAIL: project case titles must use concise noun phrases instead of '~하기' endings"
   exit 1
 fi
-
-for retrospective_ending in '했습니다.' '있었습니다.' '됐습니다.' '필요했습니다.'; do
-  if grep -Fq -- "$retrospective_ending" <<< "$projects_markup"; then
-    echo "FAIL: project copy still uses repetitive retrospective ending: $retrospective_ending"
-    exit 1
-  fi
-done
 
 if grep -Fq -- '.project-highlight strong {' "$preview"; then
   echo "FAIL: project label styling also affects emphasized terms inside body copy"

@@ -447,13 +447,13 @@
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="idempotent-replay-observation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>같은 발급 요청의 성공 지표 중복 방지</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Kafka 발급 관측 연결과 멱등 재요청 중복 방지</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>같은 요청 식별 키로 다시 요청하면 쿠폰은 한 번만 발급되지만, 이전 결과를 돌려준 요청까지 신규 성공으로 기록하면 실제보다 발급 성공 수가 늘어남</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>기존 발급 결과만으로는 이번 요청에서 새로 발급한 경우와 완료된 결과를 다시 사용한 경우를 구분할 수 없었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>발급 결과에 <strong>replayed 값을 추가해 신규 발급과 결과 재사용을 구분</strong>. 요청 시도는 남기되, 성공 결과는 실제 발급이 발생한 경우에만 기록하고 동시 경합에서도 요청당 시도 기록이 한 번만 남도록 구성</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>같은 요청 식별 키로 3번 요청해 <strong>실제 발급 1건·신규 성공 1건·재요청 2건</strong>을 확인. <strong>추가 발급 0건·성공 지표 중복 0건</strong>, 관련 테스트 83 / 83건 통과</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>쿠폰 중복 발급을 막는 것과 운영 지표의 중복 집계를 막는 것은 별도로 확인해야 했음. DB에 쿠폰이 한 장만 저장돼도 성공 지표는 중복될 수 있기 때문</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰 발급 완료 후 네트워크 문제로 응답이 유실되면 사용자는 같은 요청을 다시 보낼 수 있습니다. 쿠폰은 한 장만 발급돼도 요청마다 Kafka 성공 이벤트가 생성되면 운영 현황에는 여러 건이 발급된 것처럼 보입니다.</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>기존 발급 결과에는 신규 발급인지 MySQL에 저장된 완료 결과를 재사용한 것인지 구분하는 정보가 없어, Kafka 성공 이벤트 발행 여부를 판단할 수 없었습니다.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>MySQL idempotency_records 조회 결과를 <strong>replayed 값으로 전달해 신규 발급과 재요청을 구분</strong>. 정책 검증 통과 시 ISSUE_ATTEMPT, 발급 확정 시 ISSUE_RESULT를 요청·회원·쿠폰 정보와 함께 <strong>Kafka coupon.issue.attempt 토픽으로 발행</strong>. 재요청은 시도 이벤트만 남기고 성공 이벤트에서는 제외했으며, 동시 경합에서도 요청당 시도 이벤트가 한 번만 발행되도록 처리했습니다.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동일한 요청 식별 키로 3회 요청했을 때 <strong>시도 이벤트 3건, 실제 발급과 성공 이벤트는 각각 1건</strong>만 기록되는 것을 확인했습니다. <strong>추가 발급·성공 이벤트 중복은 각각 0건</strong>이며 관련 테스트 83 / 83건을 통과했습니다.</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB의 멱등 처리가 중복 발급을 막더라도 Kafka 이벤트의 중복까지 자동으로 막아주지는 않습니다. 실제 발급 결과와 재요청 이력을 분리해 운영 현황과 DB의 발급 수가 일치하도록 구성했습니다.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="lifecycle-after-commit">
