@@ -68,7 +68,7 @@ required_patterns=(
   'id="projects"'
   '갈래말래'
   '<p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p>'
-  '<p class="project-summary">멱등 재요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p>'
+  '<p class="project-summary">같은 발급 요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p>'
   '쿠폰 야호'
   'https://github.com/rudwnlee2/gallae-mallae-backend'
   'https://github.com/coupon-yaho/cy-be'
@@ -78,13 +78,6 @@ required_patterns=(
   'class="project-document"'
   'class="project-key-results"'
   'class="project-key-result"'
-  'class="project-validation" aria-labelledby="coupon-validation-title"'
-  '<h4 id="coupon-validation-title">직접 진행한 검증 결과</h4>'
-  '실제 API와 DB를 연결해 확인'
-  'class="project-validation-grid"'
-  'class="project-validation-item"'
-  '<strong>80 / 80건</strong>'
-  '발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치'
   'class="project-cases"'
   '.project-document { border-top: 2px solid var(--heading);'
   '.project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr);'
@@ -99,9 +92,6 @@ required_patterns=(
   'overflow-wrap: break-word;'
   '.project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem;'
   '.project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem;'
-  '.project-validation { border-top: 1px solid var(--line-strong); padding: 1.5rem 0; }'
-  '.project-validation-grid { display: grid; grid-template-columns: minmax(0, 1fr);'
-  '.project-validation-item strong { display: block; color: var(--heading); font-size: 1.35rem;'
   '.project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem;'
   '.case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem;'
   '.case-section p { margin: 0; color: var(--heading); font-size: 1.1rem;'
@@ -121,9 +111,9 @@ required_patterns=(
   'data-project-case="lifecycle-after-commit"'
   'data-project-case="idempotent-replay-observation"'
   '4개 비교 지표로 Redis·MySQL 불일치 추적'
-  '멱등 재요청을 구분해 성공 지표 중복 방지'
+  '같은 발급 요청의 성공 지표 중복 방지'
   'DB 커밋 이후 종료 이벤트를 전파해 다중 서버 지표 동기화'
-  '멱등 재요청 2건의 추가 발급 0건·성공 지표 중복 0건'
+  '같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건'
   '관련 테스트 83 / 83건 통과'
   'Redis 구독 실패 시 5초 간격으로 재연결'
   '최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회'
@@ -312,7 +302,6 @@ for jargon in '원자성' '영속화' '직렬화' 'Snapshot' 'PESSIMISTIC_WRITE'
 done
 
 coupon_markup="$(sed -n '/<h3>쿠폰 야호<\/h3>/,/<div class="project-footer">/p' "$preview")"
-coupon_validation_line="$(grep -nF 'class="project-validation" aria-labelledby="coupon-validation-title"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_idempotent_line="$(grep -nF 'data-project-case="idempotent-replay-observation"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_lifecycle_line="$(grep -nF 'data-project-case="lifecycle-after-commit"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_consistency_line="$(grep -nF 'data-project-case="consistency-gaps"' <<< "$coupon_markup" | cut -d: -f1)"
@@ -322,10 +311,6 @@ for unrelated_test_result in '600 / 600건' '20 RPS로 30초간 발급' '534만 
     exit 1
   fi
 done
-if (( coupon_validation_line >= coupon_idempotent_line )); then
-  echo "FAIL: directly executed verification results must appear before the personal case studies"
-  exit 1
-fi
 if (( coupon_idempotent_line >= coupon_lifecycle_line || coupon_lifecycle_line >= coupon_consistency_line )); then
   echo "FAIL: Coupon Yaho cases must be ordered idempotency, lifecycle, consistency"
   exit 1
@@ -334,6 +319,13 @@ fi
 for removed_prometheus_case in 'data-project-case="prometheus-failure-isolation"' 'Grouped Query와 부분 응답으로 Prometheus 실패 격리'; do
   if grep -Fq -- "$removed_prometheus_case" <<< "$coupon_markup"; then
     echo "FAIL: replaced Prometheus case remains: $removed_prometheus_case"
+    exit 1
+  fi
+done
+
+for removed_validation_block in 'class="project-validation"' '직접 진행한 검증 결과' '<strong>80 / 80건</strong>' '.project-validation {' '.project-validation-grid {' '.project-validation-item {'; do
+  if grep -Fq -- "$removed_validation_block" "$preview"; then
+    echo "FAIL: removed standalone validation block remains: $removed_validation_block"
     exit 1
   fi
 done

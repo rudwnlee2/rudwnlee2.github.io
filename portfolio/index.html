@@ -239,17 +239,6 @@
     .project-key-results ol { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; counter-reset: project-result; }
     .project-key-result { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: .55rem; color: var(--heading); font-size: 1.05rem; line-height: 1.65; counter-increment: project-result; }
     .project-key-result::before { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .78rem; font-weight: 900; content: "0" counter(project-result); }
-    .project-validation { border-top: 1px solid var(--line-strong); padding: 1.5rem 0; }
-    .project-validation-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-    .project-validation-heading h4 { margin: 0; color: var(--heading); font-size: 1.08rem; }
-    .project-validation-heading span { color: var(--muted); font-size: .8rem; font-weight: 750; }
-    .project-validation-grid { display: grid; grid-template-columns: minmax(0, 1fr); border-block: 1px solid var(--line); }
-    .project-validation-item { min-width: 0; padding: 1.15rem 1rem; border-right: 1px solid var(--line); }
-    .project-validation-item:first-child { padding-left: 0; }
-    .project-validation-item:last-child { border-right: 0; padding-right: 0; }
-    .project-validation-item strong { display: block; color: var(--heading); font-size: 1.35rem; line-height: 1.25; }
-    .project-validation-item span { display: block; margin-top: .45rem; color: var(--heading); font-size: .92rem; line-height: 1.65; word-break: keep-all; }
-    .project-validation-item small { display: block; margin-top: .25rem; color: var(--muted); font-size: .78rem; line-height: 1.55; }
     .project-cases { display: grid; }
     .project-case { border-top: 1px solid var(--line-strong); padding: 1.8rem 0; }
     .project-case:first-child { border-top: 0; }
@@ -319,10 +308,6 @@
       .project-title-row { align-items: stretch; flex-direction: column; gap: .6rem; }
       .project-repo { align-self: flex-start; }
       .project-key-results { grid-template-columns: 1fr; gap: .65rem; }
-      .project-validation-heading { align-items: flex-start; flex-direction: column; gap: .25rem; }
-      .project-validation-grid { grid-template-columns: 1fr; }
-      .project-validation-item, .project-validation-item:first-child, .project-validation-item:last-child { border-right: 0; border-bottom: 1px solid var(--line); padding: 1rem 0; }
-      .project-validation-item:last-child { border-bottom: 0; }
       .case-notion { margin-left: 0; }
       .case-section { grid-template-columns: 1fr; gap: .3rem; }
       .project-footer { align-items: flex-start; flex-direction: column; }
@@ -450,7 +435,7 @@
             <div class="project-header">
               <div class="project-heading">
                 <div class="project-title-row">
-                  <div><h3>쿠폰 야호</h3><p class="project-summary">멱등 재요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p></div>
+                  <div><h3>쿠폰 야호</h3><p class="project-summary">같은 발급 요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p></div>
                   <a class="project-repo" href="https://github.com/coupon-yaho/cy-be" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
                 <div class="project-roles"><span class="project-role">2026.08</span><span class="project-role">5인 팀</span><span class="project-role primary">관리자·관제</span><span class="project-role primary">운영현황·정합성 담당</span></div>
@@ -458,22 +443,16 @@
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 성과">
               <h4>핵심 성과</h4>
-              <ol><li class="project-key-result">멱등 재요청 2건의 추가 발급 0건·성공 지표 중복 0건</li><li class="project-key-result">종료 이벤트 유실에 대비한 5초 재연결과 24시간 기동 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
-            </section>
-            <section class="project-validation" aria-labelledby="coupon-validation-title">
-              <div class="project-validation-heading"><h4 id="coupon-validation-title">직접 진행한 검증 결과</h4><span>실제 API와 DB를 연결해 확인</span></div>
-              <div class="project-validation-grid">
-                <div class="project-validation-item"><strong>80 / 80건</strong><span>발급 40건·사용 20건·사용 취소 10건·발급 취소 10건의 최종 상태 일치</span><small>전체 처리 실패 0건</small></div>
-              </div>
+              <ol><li class="project-key-result">같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건</li><li class="project-key-result">종료 이벤트 유실에 대비한 5초 재연결과 24시간 기동 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="idempotent-replay-observation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>멱등 재요청을 구분해 성공 지표 중복 방지</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>같은 발급 요청의 성공 지표 중복 방지</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>같은 멱등키로 요청하면 쿠폰은 한 번만 발급되지만, 이전 결과를 돌려준 요청까지 신규 성공으로 기록하면 실제보다 발급 성공 수가 늘어남</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>같은 요청 식별 키로 다시 요청하면 쿠폰은 한 번만 발급되지만, 이전 결과를 돌려준 요청까지 신규 성공으로 기록하면 실제보다 발급 성공 수가 늘어남</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>기존 발급 결과만으로는 이번 요청에서 새로 발급한 경우와 완료된 결과를 다시 사용한 경우를 구분할 수 없었음</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>발급 결과에 <strong>replayed 값을 추가해 신규 발급과 결과 재사용을 구분</strong>. 요청 시도는 남기되, 성공 결과는 실제 발급이 발생한 경우에만 기록하고 동시 경합에서도 요청당 시도 기록이 한 번만 남도록 구성</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>같은 멱등키로 3번 요청해 <strong>실제 발급 1건·신규 성공 1건·재요청 2건</strong>을 확인. <strong>추가 발급 0건·성공 지표 중복 0건</strong>, 관련 테스트 83 / 83건 통과</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>같은 요청 식별 키로 3번 요청해 <strong>실제 발급 1건·신규 성공 1건·재요청 2건</strong>을 확인. <strong>추가 발급 0건·성공 지표 중복 0건</strong>, 관련 테스트 83 / 83건 통과</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>쿠폰 중복 발급을 막는 것과 운영 지표의 중복 집계를 막는 것은 별도로 확인해야 했음. DB에 쿠폰이 한 장만 저장돼도 성공 지표는 중복될 수 있기 때문</p></section>
                 </div>
               </article>
