@@ -65,6 +65,8 @@ required_patterns=(
   'data-skill-category="data"'
   'data-skill-category="messaging"'
   'data-skill-category="etc"'
+  '<img class="tech-icon-image" src="/assets/img/tech/rabbitmq.svg" alt="">'
+  '<div class="tech-label"><strong>RabbitMQ</strong></div>'
   'id="projects"'
   '갈래말래'
   '<p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p>'
@@ -118,6 +120,7 @@ required_patterns=(
   '<strong>시도 이벤트 3건, 실제 발급과 성공 이벤트는 각각 1건</strong>'
   '관련 테스트 83 / 83건을 통과'
   'DB 커밋 이후 종료 이벤트를 전파해 다중 서버 지표 동기화'
+  '종료된 회차의 운영 지표가 각 API 서버 메모리에 남음'
   '같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건'
   'Redis 구독 실패 시 5초 간격으로 재연결'
   '최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회'
@@ -187,13 +190,13 @@ if grep -Fq -- '<span class="tag">Lua Script</span>' "$preview"; then
 fi
 
 tech_icon_count="$(grep -Fc -- 'class="tech-icon"' "$preview" || true)"
-if (( tech_icon_count != 8 )); then
-  echo "FAIL: expected exactly 8 technology icon slots, found $tech_icon_count"
+if (( tech_icon_count != 9 )); then
+  echo "FAIL: expected exactly 9 technology icon slots, found $tech_icon_count"
   exit 1
 fi
 
 tech_image_count="$(grep -Fc -- 'class="tech-icon-image"' "$preview" || true)"
-if (( tech_image_count != 8 )); then
+if (( tech_image_count != 9 )); then
   echo "FAIL: every technology must use a real image logo, found $tech_image_count"
   exit 1
 fi
@@ -206,7 +209,7 @@ for removed_skill in 'Linux' 'Prometheus'; do
   fi
 done
 
-for icon in java spring hibernate mysql redis apachekafka docker githubactions; do
+for icon in java spring hibernate mysql redis apachekafka rabbitmq docker githubactions; do
   icon_path="assets/img/tech/$icon.svg"
   if [[ ! -f "$icon_path" ]]; then
     echo "FAIL: real technology icon is missing: $icon_path"
@@ -214,6 +217,13 @@ for icon in java spring hibernate mysql redis apachekafka docker githubactions; 
   fi
   if ! grep -Fq -- "src=\"/$icon_path\"" "$preview"; then
     echo "FAIL: portfolio does not use technology icon: $icon_path"
+    exit 1
+  fi
+done
+
+for removed_observability_name in 'Micrometer' 'Prometheus'; do
+  if grep -Fq -- "$removed_observability_name" "$preview"; then
+    echo "FAIL: observability technology name remains in portfolio copy: $removed_observability_name"
     exit 1
   fi
 done
