@@ -68,7 +68,7 @@ required_patterns=(
   'id="projects"'
   '갈래말래'
   '<p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p>'
-  '<p class="project-summary">Redis와 MySQL의 쿠폰 발급 상태를 비교하고, 종료 이벤트와 관제 지표를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p>'
+  '<p class="project-summary">멱등 재요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p>'
   '쿠폰 야호'
   'https://github.com/rudwnlee2/gallae-mallae-backend'
   'https://github.com/coupon-yaho/cy-be'
@@ -119,18 +119,18 @@ required_patterns=(
   'data-project-case="persistence-recovery"'
   'data-project-case="consistency-gaps"'
   'data-project-case="lifecycle-after-commit"'
-  'data-project-case="prometheus-failure-isolation"'
+  'data-project-case="idempotent-replay-observation"'
   '4개 비교 지표로 Redis·MySQL 불일치 추적'
-  'afterCommit과 Redis Pub/Sub으로 종료 지표 동기화'
-  '관리자 HTTP API 27개 계약 구축'
+  '멱등 재요청을 구분해 성공 지표 중복 방지'
+  'DB 커밋 이후 종료 이벤트를 전파해 다중 서버 지표 동기화'
+  '멱등 재요청 2건의 추가 발급 0건·성공 지표 중복 0건'
+  '관련 테스트 83 / 83건 통과'
   'Redis 구독 실패 시 5초 간격으로 재연결'
   '최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회'
-  'Grouped Query와 부분 응답으로 Prometheus 실패 격리'
   'Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>'
   '<strong>불일치가 발생한 저장소와 처리 단계를 구분</strong>'
   '<strong>네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상</strong>'
   'DB 커밋 완료 후에만 Redis Pub/Sub으로 발행'
-  'Grouped Query로 묶고 영역별 제한 시간을 적용'
   'Redis Lua로 동시 투표 결과 일치'
   'RabbitMQ로 재추천 응답 분리'
   'AI 추천 결과를 기다리는 동안 API 응답이 늦어지고'
@@ -313,8 +313,8 @@ done
 
 coupon_markup="$(sed -n '/<h3>쿠폰 야호<\/h3>/,/<div class="project-footer">/p' "$preview")"
 coupon_validation_line="$(grep -nF 'class="project-validation" aria-labelledby="coupon-validation-title"' <<< "$coupon_markup" | cut -d: -f1)"
+coupon_idempotent_line="$(grep -nF 'data-project-case="idempotent-replay-observation"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_lifecycle_line="$(grep -nF 'data-project-case="lifecycle-after-commit"' <<< "$coupon_markup" | cut -d: -f1)"
-coupon_prometheus_line="$(grep -nF 'data-project-case="prometheus-failure-isolation"' <<< "$coupon_markup" | cut -d: -f1)"
 coupon_consistency_line="$(grep -nF 'data-project-case="consistency-gaps"' <<< "$coupon_markup" | cut -d: -f1)"
 for unrelated_test_result in '600 / 600건' '20 RPS로 30초간 발급' '534만 건' '회원 100만 명' '오류 700건 주입'; do
   if grep -Fq -- "$unrelated_test_result" <<< "$coupon_markup"; then
@@ -322,14 +322,28 @@ for unrelated_test_result in '600 / 600건' '20 RPS로 30초간 발급' '534만 
     exit 1
   fi
 done
-if (( coupon_validation_line >= coupon_lifecycle_line )); then
+if (( coupon_validation_line >= coupon_idempotent_line )); then
   echo "FAIL: directly executed verification results must appear before the personal case studies"
   exit 1
 fi
-if (( coupon_lifecycle_line >= coupon_prometheus_line || coupon_prometheus_line >= coupon_consistency_line )); then
-  echo "FAIL: Coupon Yaho consistency case must appear third"
+if (( coupon_idempotent_line >= coupon_lifecycle_line || coupon_lifecycle_line >= coupon_consistency_line )); then
+  echo "FAIL: Coupon Yaho cases must be ordered idempotency, lifecycle, consistency"
   exit 1
 fi
+
+for removed_prometheus_case in 'data-project-case="prometheus-failure-isolation"' 'Grouped Query와 부분 응답으로 Prometheus 실패 격리'; do
+  if grep -Fq -- "$removed_prometheus_case" <<< "$coupon_markup"; then
+    echo "FAIL: replaced Prometheus case remains: $removed_prometheus_case"
+    exit 1
+  fi
+done
+
+for overlong_detail in 'ACTIVE_DB_GAP' 'LUA_GAP' 'PERSIST_GAP' 'DB_COUNTER_GAP' 'coupon-round:lifecycle:closed' '총 발급 수량 - Redis 잔여 재고'; do
+  if grep -Fq -- "$overlong_detail" <<< "$coupon_markup"; then
+    echo "FAIL: document-level implementation detail remains in project summary: $overlong_detail"
+    exit 1
+  fi
+done
 
 for case_stage in problem cause solution evaluation reflection; do
   stage_count="$(grep -Fc -- "data-case-stage=\"$case_stage\"" <<< "$coupon_markup" || true)"
