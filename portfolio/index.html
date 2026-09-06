@@ -186,7 +186,6 @@
     .hero-fact:last-child { border-right: 0; padding-right: 0; }
     .hero-fact > strong { display: block; margin-bottom: .22rem; color: var(--heading); font-size: .9rem; line-height: 1.35; }
     .hero-fact span { display: block; color: var(--muted); font-size: .74rem; line-height: 1.45; }
-    .hero-fact span strong { display: inline; color: var(--heading); font-size: inherit; line-height: inherit; font-weight: 850; }
 
     .section { padding: var(--section-space) 0; scroll-margin-top: 64px; }
     .section.alt { background: var(--panel-soft); }
@@ -201,11 +200,6 @@
     .about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text); font-size: clamp(1.2rem, 2.4vw, 1.65rem); font-weight: 600; letter-spacing: -.035em; }
     .about-main h3 { margin-bottom: .8rem; color: var(--heading); font-size: 1.3rem; }
     .about-main p { margin-bottom: .75rem; color: var(--muted); }
-    .principles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; border-top: 1px solid var(--line); padding-top: 1.25rem; }
-    .principle { display: grid; grid-template-columns: 38px 1fr; gap: .85rem; align-items: start; }
-    .principle-number { display: grid; place-items: center; width: 38px; height: 38px; border-radius: .75rem; background: var(--accent-soft); color: var(--accent); font-size: .78rem; font-weight: 900; }
-    .principle strong { display: block; margin-bottom: .12rem; color: var(--heading); font-size: .92rem; }
-    .principle p { margin: 0; color: var(--muted); font-size: .82rem; }
 
     .skill-categories { overflow: hidden; border-block: 1px solid var(--line); background: transparent; }
     .skill-category { display: grid; grid-template-columns: 110px minmax(0, 1fr); align-items: center; gap: .75rem; padding: .6rem .75rem; border-bottom: 1px solid var(--line); }
@@ -272,7 +266,7 @@
     .credential-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
     .credential-status { display: inline-flex; align-items: center; border-radius: 999px; background: var(--teal-soft); padding: .18rem .45rem; color: var(--teal); font-size: .64rem; font-weight: 850; }
 
-    .hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {
+    .hero-statement, .hero-copy, .section-heading > p, .about-main p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {
       text-wrap: pretty;
       word-break: keep-all;
       overflow-wrap: break-word;
@@ -286,7 +280,6 @@
       .primary-nav { display: none; }
       .hero-grid { grid-template-columns: 220px minmax(0, 1fr); gap: 42px; }
       .section-layout { grid-template-columns: 135px minmax(0, 1fr); gap: 38px; }
-      .principles { grid-template-columns: 1fr; gap: .8rem; }
       .skill-category { grid-template-columns: 90px minmax(0, 1fr); }
       .tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
@@ -358,9 +351,9 @@
           <p class="hero-copy"><strong>Redis Lua로 동시 상태 변경</strong>을 묶고, <strong>Kafka 성공 이벤트 중복</strong>을 막았으며, <strong>저장 실패와 이벤트 누락을 다시 처리하는 흐름</strong>을 구현했습니다.</p>
           <div class="hero-links" aria-label="외부 링크"><a href="/">Blog ↗</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           <div class="hero-facts" aria-label="핵심 정보">
-            <div class="hero-fact"><strong>동시성 제어</strong><span>Redis Lua로 <strong>투표 변경과 집계를 한 번에 처리</strong></span></div>
-            <div class="hero-fact"><strong>정합성 검증</strong><span>Kafka 재요청 중복을 막고 <strong>Redis·MySQL 상태 불일치를 추적</strong></span></div>
-            <div class="hero-fact"><strong>실패 복구</strong><span>저장 실패 후 재처리하고 <strong>누락된 종료 정보를 DB 조회로 보정</strong></span></div>
+            <div class="hero-fact"><strong>동시성 제어</strong><span>Redis Lua로 투표 변경과 집계를 한 번에 처리</span></div>
+            <div class="hero-fact"><strong>정합성 검증</strong><span>Kafka 재요청 중복을 막고 Redis·MySQL 상태 불일치를 추적</span></div>
+            <div class="hero-fact"><strong>실패 복구</strong><span>저장 실패 후 재처리하고 누락된 종료 정보를 DB 조회로 보정</span></div>
           </div>
         </div>
       </div>
@@ -375,15 +368,10 @@
         <div class="about-grid">
           <article class="about-main">
             <p class="about-statement"><strong>기능이 성공하는 경로뿐 아니라 실패한 뒤 다시 이어지는 흐름까지 함께 설계합니다.</strong></p>
-            <p>갈래말래에서는 Redis Lua로 투표 변경과 집계를 한 번에 처리하고, RabbitMQ로 시간이 오래 걸리는 추천 작업을 API 응답과 분리했습니다. Redis 마감 집계는 MySQL 저장이 끝날 때까지 남겨 실패 후 같은 결과로 다시 저장할 수 있게 했습니다.</p>
-            <p>쿠폰 야호에서는 완료된 요청의 재전송을 구분해 Kafka 성공 이벤트 중복을 막고, Redis와 MySQL의 발급 상태를 네 가지 기준으로 비교했습니다. DB 커밋 이후에만 종료 이벤트를 전파하고, Pub/Sub 단절 중 놓친 정보는 DB 조회로 보정했습니다.</p>
+            <p>갈래말래에서는 <strong>Redis Lua로 투표 변경과 집계를 한 번에 처리</strong>하고, <strong>RabbitMQ로 추천 작업을 API 응답과 분리</strong>했습니다. Redis 마감 집계는 MySQL 저장이 끝날 때까지 남겨 <strong>저장 실패 후 같은 결과로 다시 처리</strong>할 수 있게 했습니다.</p>
+            <p>쿠폰 야호에서는 완료된 요청의 재전송을 구분해 <strong>Kafka 성공 이벤트 중복을 방지</strong>하고, <strong>Redis와 MySQL의 발급 상태를 네 가지 기준으로 비교</strong>했습니다. DB 커밋 이후에만 종료 이벤트를 전파하고, <strong>Pub/Sub 단절 중 놓친 정보는 DB 조회로 보정</strong>했습니다.</p>
             <p>선택한 방식이 어디까지 보장되는지는 테스트로 확인하며, 데이터가 어긋나는 위치를 찾고 중단된 처리를 이어갈 수 있는 백엔드를 만들고자 합니다.</p>
           </article>
-          <div class="principles">
-            <div class="principle"><span class="principle-number">01</span><div><strong>동시 요청 제어</strong><p>Redis Lua로 투표 변경과 집계를 한 번에 처리</p></div></div>
-            <div class="principle"><span class="principle-number">02</span><div><strong>중복과 불일치 확인</strong><p>재요청 이벤트를 구분하고 Redis·MySQL 상태를 비교</p></div></div>
-            <div class="principle"><span class="principle-number">03</span><div><strong>실패 이후 재처리</strong><p>마감 집계를 보존하고 놓친 종료 정보는 DB 조회로 보정</p></div></div>
-          </div>
         </div>
       </div>
     </section>

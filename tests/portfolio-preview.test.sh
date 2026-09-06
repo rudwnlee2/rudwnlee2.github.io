@@ -30,24 +30,18 @@ required_patterns=(
   'class="hero-facts"'
   '<p class="hero-statement"><strong>동시 요청과 실패 이후의 데이터 흐름을 설계하는</strong> 백엔드 개발자입니다.</p>'
   '<p class="hero-copy"><strong>Redis Lua로 동시 상태 변경</strong>을 묶고, <strong>Kafka 성공 이벤트 중복</strong>을 막았으며, <strong>저장 실패와 이벤트 누락을 다시 처리하는 흐름</strong>을 구현했습니다.</p>'
-  '<div class="hero-fact"><strong>동시성 제어</strong><span>Redis Lua로 <strong>투표 변경과 집계를 한 번에 처리</strong></span></div>'
-  '<div class="hero-fact"><strong>정합성 검증</strong><span>Kafka 재요청 중복을 막고 <strong>Redis·MySQL 상태 불일치를 추적</strong></span></div>'
-  '<div class="hero-fact"><strong>실패 복구</strong><span>저장 실패 후 재처리하고 <strong>누락된 종료 정보를 DB 조회로 보정</strong></span></div>'
+  '<div class="hero-fact"><strong>동시성 제어</strong><span>Redis Lua로 투표 변경과 집계를 한 번에 처리</span></div>'
+  '<div class="hero-fact"><strong>정합성 검증</strong><span>Kafka 재요청 중복을 막고 Redis·MySQL 상태 불일치를 추적</span></div>'
+  '<div class="hero-fact"><strong>실패 복구</strong><span>저장 실패 후 재처리하고 누락된 종료 정보를 DB 조회로 보정</span></div>'
   'id="about"'
   '<h2>소개</h2>'
   '<p><strong>동시 요청, 중복 이벤트, 저장 실패 이후의 동작</strong>을 프로젝트에서 직접 다뤘습니다.</p>'
   '<p class="about-statement"><strong>기능이 성공하는 경로뿐 아니라 실패한 뒤 다시 이어지는 흐름까지 함께 설계합니다.</strong></p>'
-  '갈래말래에서는 Redis Lua로 투표 변경과 집계를 한 번에 처리하고, RabbitMQ로 시간이 오래 걸리는 추천 작업을 API 응답과 분리했습니다.'
-  'Redis 마감 집계는 MySQL 저장이 끝날 때까지 남겨 실패 후 같은 결과로 다시 저장할 수 있게 했습니다.'
-  '쿠폰 야호에서는 완료된 요청의 재전송을 구분해 Kafka 성공 이벤트 중복을 막고, Redis와 MySQL의 발급 상태를 네 가지 기준으로 비교했습니다.'
-  'DB 커밋 이후에만 종료 이벤트를 전파하고, Pub/Sub 단절 중 놓친 정보는 DB 조회로 보정했습니다.'
+  '갈래말래에서는 <strong>Redis Lua로 투표 변경과 집계를 한 번에 처리</strong>하고, <strong>RabbitMQ로 추천 작업을 API 응답과 분리</strong>했습니다.'
+  'Redis 마감 집계는 MySQL 저장이 끝날 때까지 남겨 <strong>저장 실패 후 같은 결과로 다시 처리</strong>할 수 있게 했습니다.'
+  '쿠폰 야호에서는 완료된 요청의 재전송을 구분해 <strong>Kafka 성공 이벤트 중복을 방지</strong>하고, <strong>Redis와 MySQL의 발급 상태를 네 가지 기준으로 비교</strong>했습니다.'
+  'DB 커밋 이후에만 종료 이벤트를 전파하고, <strong>Pub/Sub 단절 중 놓친 정보는 DB 조회로 보정</strong>했습니다.'
   '선택한 방식이 어디까지 보장되는지는 테스트로 확인하며, 데이터가 어긋나는 위치를 찾고 중단된 처리를 이어갈 수 있는 백엔드를 만들고자 합니다.'
-  '<strong>동시 요청 제어</strong>'
-  'Redis Lua로 투표 변경과 집계를 한 번에 처리'
-  '<strong>중복과 불일치 확인</strong>'
-  '재요청 이벤트를 구분하고 Redis·MySQL 상태를 비교'
-  '<strong>실패 이후 재처리</strong>'
-  '마감 집계를 보존하고 놓친 종료 정보는 DB 조회로 보정'
   '--emphasis-text: #111827;'
   '--emphasis-text: #f8fafc;'
   '--solution-text: #d44c47;'
@@ -55,7 +49,6 @@ required_patterns=(
   '.about-main .about-statement { margin-bottom: 1rem; color: var(--emphasis-text);'
   '.hero-statement strong, .hero-copy strong, .section-heading > p strong, .about-main p strong {'
   '.hero-fact > strong { display: block;'
-  '.hero-fact span strong { display: inline; color: var(--heading); font-size: inherit; line-height: inherit; font-weight: 850; }'
   'id="skills"'
   'class="skill-categories compact"'
   'class="tech-grid"'
@@ -87,7 +80,7 @@ required_patterns=(
   '.case-section { display: grid; grid-template-columns: 78px minmax(0, 1fr);'
   '.project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.65rem; }'
   '.project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: 1.08rem; line-height: 1.72; text-wrap: balance; word-break: keep-all; overflow-wrap: break-word; }'
-  '.hero-statement, .hero-copy, .section-heading > p, .about-main p, .principle p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {'
+  '.hero-statement, .hero-copy, .section-heading > p, .about-main p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {'
   'text-wrap: pretty;'
   'word-break: keep-all;'
   'overflow-wrap: break-word;'
@@ -168,6 +161,18 @@ for pattern in "${required_patterns[@]}"; do
     exit 1
   fi
 done
+
+for removed_about_duplication in 'class="principles"' 'class="principle"' 'class="principle-number"' '.principles {' '.principle {' '.principle-number {' '.principle strong {' '.principle p {'; do
+  if grep -Fq -- "$removed_about_duplication" "$preview"; then
+    echo "FAIL: duplicated About keyword block remains: $removed_about_duplication"
+    exit 1
+  fi
+done
+
+if grep -E '<div class="hero-fact"><strong>[^<]+</strong><span>[^<]*<strong>' "$preview"; then
+  echo "FAIL: hero fact descriptions must not contain bold emphasis"
+  exit 1
+fi
 
 for removed_photo_marker in 'class="profile-photo"' '/assets/img/profile/lee-gyeongju.jpg' '백엔드 개발자 이경주 프로필 사진'; do
   if grep -Fq -- "$removed_photo_marker" "$preview"; then
