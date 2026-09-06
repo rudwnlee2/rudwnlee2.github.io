@@ -184,8 +184,9 @@
     .hero-fact { min-width: 0; padding: 1rem .9rem 0; border-right: 0; }
     .hero-fact:first-child { padding-left: 0; }
     .hero-fact:last-child { border-right: 0; padding-right: 0; }
-    .hero-fact strong { display: block; margin-bottom: .22rem; color: var(--heading); font-size: .9rem; line-height: 1.35; }
+    .hero-fact > strong { display: block; margin-bottom: .22rem; color: var(--heading); font-size: .9rem; line-height: 1.35; }
     .hero-fact span { display: block; color: var(--muted); font-size: .74rem; line-height: 1.45; }
+    .hero-fact span strong { display: inline; color: var(--heading); font-size: inherit; line-height: inherit; font-weight: 850; }
 
     .section { padding: var(--section-space) 0; scroll-margin-top: 64px; }
     .section.alt { background: var(--panel-soft); }
@@ -354,12 +355,12 @@
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
           <p class="hero-statement"><strong>동시 요청과 실패 이후의 데이터 흐름을 설계하는</strong> 백엔드 개발자입니다.</p>
-          <p class="hero-copy">Redis Lua로 동시 상태 변경을 묶고, 재요청의 Kafka 성공 이벤트 중복을 막았으며, 저장 실패와 이벤트 누락을 다시 처리하는 흐름을 구현했습니다.</p>
+          <p class="hero-copy"><strong>Redis Lua로 동시 상태 변경</strong>을 묶고, <strong>Kafka 성공 이벤트 중복</strong>을 막았으며, <strong>저장 실패와 이벤트 누락을 다시 처리하는 흐름</strong>을 구현했습니다.</p>
           <div class="hero-links" aria-label="외부 링크"><a href="/">Blog ↗</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           <div class="hero-facts" aria-label="핵심 정보">
-            <div class="hero-fact"><strong>동시 요청 제어</strong><span>Redis Lua로 투표 변경과 집계를 한 번에 처리</span></div>
-            <div class="hero-fact"><strong>중복과 불일치 확인</strong><span>재요청 이벤트를 구분하고 Redis·MySQL 상태를 비교</span></div>
-            <div class="hero-fact"><strong>실패 이후 재처리</strong><span>마감 집계를 보존하고 놓친 종료 정보는 DB 조회로 보정</span></div>
+            <div class="hero-fact"><strong>동시성 제어</strong><span>Redis Lua로 <strong>투표 변경과 집계를 한 번에 처리</strong></span></div>
+            <div class="hero-fact"><strong>정합성 검증</strong><span>Kafka 재요청 중복을 막고 <strong>Redis·MySQL 상태 불일치를 추적</strong></span></div>
+            <div class="hero-fact"><strong>실패 복구</strong><span>저장 실패 후 재처리하고 <strong>누락된 종료 정보를 DB 조회로 보정</strong></span></div>
           </div>
         </div>
       </div>
