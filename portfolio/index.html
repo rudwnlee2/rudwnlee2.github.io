@@ -244,6 +244,8 @@
     .case-section { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 1rem; }
     .case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem; font-weight: 850; line-height: 1.55; }
     .case-section p { margin: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; }
+    .case-section ul { margin: 0; padding-left: 1.2em; min-width: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; word-break: keep-all; overflow-wrap: anywhere; }
+    .case-section li + li { margin-top: .45rem; }
     .project-tech { margin-top: .75rem; }
     .project-tech .tag { color: var(--heading); font-size: .84rem; }
     .project-footer { display: flex; align-items: center; justify-content: space-between; gap: 1rem; border-top: 1px solid var(--line); padding-top: 1rem; }
@@ -427,25 +429,25 @@
             <div class="project-header">
               <div class="project-heading">
                 <div class="project-title-row">
-                  <div><h3>쿠폰 야호</h3><p class="project-summary">같은 발급 요청의 중복 집계를 막고, 종료 이벤트와 Redis·MySQL 발급 상태를 여러 서버에서 일관되게 관리한 선착순 쿠폰 서비스</p></div>
+                  <div><h3>쿠폰 야호</h3><p class="project-summary">재요청의 성공 집계 중복을 막고, 서버 간 종료 이벤트 전파와 Redis·MySQL 발급 상태 비교를 구현한 선착순 쿠폰 서비스</p></div>
                   <a class="project-repo" href="https://github.com/coupon-yaho/cy-be" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
                 <div class="project-roles"><span class="project-role">2026.08</span><span class="project-role">5인 팀</span><span class="project-role primary">관리자·관제</span><span class="project-role primary">운영현황·정합성 담당</span></div>
               </div>
             </div>
-            <section class="project-key-results" aria-label="쿠폰 야호 핵심 성과">
-              <h4>핵심 성과</h4>
-              <ol><li class="project-key-result">같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건</li><li class="project-key-result">종료 이벤트 유실에 대비한 5초 재연결과 24시간 기동 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
+            <section class="project-key-results" aria-label="쿠폰 야호 핵심 구현 및 검증">
+              <h4>핵심 구현 및 검증</h4>
+              <ol><li class="project-key-result">같은 요청을 2번 다시 보내도 추가 발급 0건·성공 지표 중복 0건</li><li class="project-key-result">Redis 구독 재연결과 API 서버 기동 시 DB 조회로 종료 정보 누락 보정</li><li class="project-key-result">4개 비교 지표와 LIVE·FINAL 2단계로 Redis·MySQL 불일치 추적</li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="idempotent-replay-observation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Kafka 발급 관측 연결과 멱등 재요청 중복 방지</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>재요청에 따른 Kafka 성공 이벤트 중복 생성 방지</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰 발급 완료 후 네트워크 문제로 응답이 유실되면 사용자는 같은 요청을 다시 보낼 수 있습니다. 쿠폰은 한 장만 발급돼도 요청마다 Kafka 성공 이벤트가 생성되면 운영 현황에는 여러 건이 발급된 것처럼 보입니다.</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>기존 발급 결과에는 신규 발급인지 MySQL에 저장된 완료 결과를 재사용한 것인지 구분하는 정보가 없어, Kafka 성공 이벤트 발행 여부를 판단할 수 없었습니다.</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>MySQL idempotency_records 조회 결과를 <strong>replayed 값으로 전달해 신규 발급과 재요청을 구분</strong>. 정책 검증 통과 시 ISSUE_ATTEMPT, 발급 확정 시 ISSUE_RESULT를 요청·회원·쿠폰 정보와 함께 <strong>Kafka coupon.issue.attempt 토픽으로 발행</strong>. 재요청은 시도 이벤트만 남기고 성공 이벤트에서는 제외했으며, 동시 경합에서도 요청당 시도 이벤트가 한 번만 발행되도록 처리했습니다.</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동일한 요청 식별 키로 3회 요청했을 때 <strong>시도 이벤트 3건, 실제 발급과 성공 이벤트는 각각 1건</strong>만 기록되는 것을 확인했습니다. <strong>추가 발급·성공 이벤트 중복은 각각 0건</strong>이며 관련 테스트 83 / 83건을 통과했습니다.</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB의 멱등 처리가 중복 발급을 막더라도 Kafka 이벤트의 중복까지 자동으로 막아주지는 않습니다. 실제 발급 결과와 재요청 이력을 분리해 운영 현황과 DB의 발급 수가 일치하도록 구성했습니다.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>발급 완료 후 네트워크 문제로 응답이 유실되면 같은 요청이 다시 들어올 수 있음. 쿠폰은 한 장만 발급돼도 요청마다 성공 이벤트를 만들면 운영 현황의 발급 성공 수가 실제보다 증가</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>기존 발급 결과에 신규 발급과 DB에 저장된 완료 응답의 재사용을 구분하는 정보가 없어 성공 이벤트 생성 여부를 판단하기 어려움</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>발급 결과에 <strong>replayed 값을 추가해 신규 발급과 완료 응답 재사용을 구분</strong></li><li>정책 검증 후 시도 이벤트, 발급 결과 확정 후 결과 이벤트를 Kafka 발행 흐름에 연결. <strong>완료 응답을 재사용한 요청은 성공 이벤트 생성에서 제외</strong></li><li>동시 경합 중 완료 응답을 재사용하게 된 경우에도 요청당 시도 이벤트가 한 번만 기록되도록 처리</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동일한 요청 식별 키로 3회 요청 시 <strong>시도 이벤트 3건, 실제 발급·성공 이벤트 각각 1건</strong> 확인. 추가 발급·성공 이벤트 중복 각각 0건, 관련 테스트 83 / 83건 통과</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>중복 발급 방지와 별도로, 완료 응답을 재사용한 요청이 성공 집계에 다시 포함되지 않도록 구분 필요. 이번 처리는 애플리케이션의 이벤트 중복 생성을 막는 범위이며 Kafka 전송·재소비 중복 처리는 별도 고려</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="lifecycle-after-commit">
@@ -453,7 +455,7 @@
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>배치 서버에서 회차를 종료해도 각 API 서버는 이를 알 수 없어 종료된 회차의 운영 지표가 각 API 서버 메모리에 남음. DB 반영 전에 이벤트를 보내면 롤백돼도 지표만 먼저 사라질 수 있었음</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>회차 종료는 배치 서버에서 처리하고 지표는 각 API 서버의 메모리에 저장됨. MySQL 트랜잭션과 Redis 이벤트 발행도 하나의 작업으로 묶을 수 없었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>종료 이벤트를 트랜잭션에 등록한 뒤 <strong>DB 커밋 완료 후에만 Redis Pub/Sub으로 발행</strong>. 모든 API 서버가 해당 회차의 지표를 제거하고, Redis 구독 실패 시 5초 간격으로 재연결</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>종료 이벤트를 트랜잭션에 등록하고 <strong>DB 커밋 완료 후에만 Redis Pub/Sub으로 발행</strong></li><li>이벤트를 수신한 각 API 서버에서 해당 회차의 지표를 제거하고, Redis 구독 실패 시 5초 간격으로 재연결 시도</li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>커밋 전 0건·커밋 후 1건·롤백 후 0건 발행</strong>을 확인. Subscriber 2개가 같은 이벤트를 수신하고, 재연결 뒤 신규 이벤트부터 다시 받는 실제 Redis 동작도 검증</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Pub/Sub은 연결이 끊긴 동안의 메시지를 다시 보내지 않음. API 기동 시 최근 24시간 동안 종료된 회차를 최대 1,000개까지 DB에서 다시 조회해 누락된 지표를 정리</p></section>
                 </div>
@@ -463,7 +465,7 @@
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis 재고는 줄었지만 DB 발급 이력이 남지 않는 등 저장소가 어긋나도 전체 발급 수만으로는 문제가 생긴 지점을 찾기 어려움</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>쿠폰 발급 상태가 Redis 재고·누적 발급 수·회원 기록과 DB 발급 이력·재고 카운터에 나뉘어 저장되고, 각 값의 반영 시점도 달랐음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>Redis와 MySQL에 흩어진 발급 상태를 대조하는 <strong>정합성 검증 로직을 구현</strong>. Redis 재고와 DB 활성 쿠폰, Redis 누적 발급과 회원 기록, Redis와 DB의 누적 발급, DB 발급 행과 재고 카운터를 각각 비교해 <strong>불일치가 발생한 저장소와 처리 단계를 구분</strong></p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>Redis와 MySQL에 나뉜 재고·누적 발급·회원 기록·DB 집계를 <strong>네 가지 기준으로 대조하는 검증 로직 구현</strong></li><li>비교 결과의 차이와 방향을 나누어 <strong>우선 확인할 저장소와 처리 구간을 좁히도록 구성</strong></li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>양수·음수 차이, 원천 값 누락, 조회 불가, 오래된 값과 숫자 범위 초과를 테스트. FINAL에서는 <strong>네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상</strong>으로 판정</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>운영 중에는 Redis와 MySQL의 반영 시점 차이를 허용하되, 처리가 끝난 뒤에는 한 건의 차이도 허용하지 않도록 LIVE와 FINAL의 판정 기준을 분리</p></section>
                 </div>
@@ -482,8 +484,8 @@
                 <div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장</span><span class="project-role primary">투표 기능 담당</span></div>
               </div>
             </div>
-            <section class="project-key-results" aria-label="갈래말래 핵심 성과">
-              <h4>핵심 성과</h4>
+            <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
+              <h4>핵심 구현 및 검증</h4>
               <ol><li class="project-key-result">Redis Lua로 동시 투표 변경과 후보별 집계를 한 번에 처리</li><li class="project-key-result">RabbitMQ로 재추천 요청과 장시간 추천 작업 분리</li><li class="project-key-result">Redis 마감 집계를 보존해 DB 저장 실패 후 재처리</li></ol>
             </section>
             <div class="project-cases">
@@ -492,29 +494,29 @@
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>투표 진행 정보를 Redis Hash에 저장하고, 상태·마감 시간·후보 확인과 기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong>.</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동시 제출·선택 변경·같은 후보 재선택에서도 <strong>개인 선택과 후보별 투표 수가 일치</strong>하는지 테스트로 확인</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 진행 정보를 Redis Hash에 저장하고 상태·마감 시간·후보를 Lua에서 확인</li><li>기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong></li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>개인 선택과 후보별 집계를 하나의 변경 단위로 묶어, <strong>여러 명령 사이에 다른 요청이 끼어들 가능성을 제거</strong></p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>진행 중 Redis 데이터가 사라지면 투표를 복구할 수 없음. 보존해야 하는 확정 결과는 마감 후 MySQL에 저장</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="async-recommendation">
                 <header class="project-case-heading"><span class="project-case-number">02</span><h4>RabbitMQ로 재추천 응답 분리</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 바로 실행하면 AI 추천 결과를 기다리는 동안 API 응답이 늦어지고, 외부 API 오류가 사용자 요청에 직접 영향을 줬습니다.</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>점수 계산과 외부 AI 호출처럼 오래 걸리는 작업이 재추천 요청 흐름에 포함되어 API가 추천 완료까지 기다리는 구조였음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p>API는 후보 수와 세션 상태를 확인해 MENU_RECOMMENDING으로 바꾸고, 커밋 후 SurveyRequested를 발행해 <strong>RabbitMQ 추천 Consumer에 작업을 전달</strong>.</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>API 응답과 장시간 추천 작업을 분리</strong>하고, 후보 0개·1개와 추천 상태에 멈춘 세션의 재요청을 테스트로 확인</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB 커밋 직후 메시지를 발행하기 전에 서버가 종료되면 요청이 누락될 수 있습니다. 이 구간까지 보완하려면 Outbox 적용이 필요합니다.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 기다리면 API 응답이 늦어지고, 외부 API 오류가 요청 처리에 직접 영향을 줄 가능성</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>추천 작업에 점수 계산과 외부 AI 응답 대기가 포함되므로, 재추천 API에서 직접 실행할 경우 작업 완료까지 요청이 대기</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>재추천 API에서 권한·후보 수·세션 상태를 확인하고 추천 진행 상태로 변경</li><li>DB 커밋 후 추천 요청 이벤트를 발행해 <strong>기존 RabbitMQ 비동기 추천 흐름에 재추천 API를 연결</strong></li><li>후보가 없는 추천 진행 상태에서도 재요청을 허용해 중단된 추천을 다시 요청할 경로 마련</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>재추천 API가 <strong>추천 결과를 기다리지 않고 요청 접수 후 응답하도록 분리</strong></p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB 커밋 후 메시지 발행 전에 서버가 종료되면 요청 누락 가능. 이 구간을 보완하려면 Outbox 적용 필요</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="persistence-recovery">
                 <header class="project-case-heading"><span class="project-case-number">03</span><h4>Redis 마감 집계 보존으로 DB 저장 재처리</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장이 실패할 때 집계까지 지우면 같은 결과로 다시 저장할 수 없었습니다.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장에 실패했을 때 집계까지 지우면 같은 결과로 재저장 불가</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>Redis의 마감 집계와 MySQL의 확정 결과가 서로 다른 저장소에 있어 하나의 트랜잭션으로 묶을 수 없었고, 집계를 먼저 지우면 재시도 기준도 사라졌음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><p><strong>Redis 마감 집계를 MySQL 저장 성공 전까지 보존</strong>하고, 저장 실패 시 남은 집계로 다시 시도. 저장 성공 후에만 Redis 집계를 삭제합니다.</p></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>DB 저장 실패 후에도 <strong>같은 집계로 재저장되고 성공 후에만 삭제</strong>되는지 테스트로 확인</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Redis 장애나 TTL 만료로 마감 집계가 사라지는 상황은 별도로 감지해야 합니다. 집계 유실을 확인할 운영 지표가 추가로 필요합니다.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>Redis 마감 집계를 MySQL 저장 성공 전까지 보존</strong>해 실패 후 같은 결과로 다시 시도할 기준 마련</li><li>저장이 완료된 뒤에만 Redis 집계를 삭제하도록 처리 순서 분리</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>DB 저장에 실패해도 마감 집계를 남겨, <strong>투표를 다시 집계하지 않고 같은 결과로 재시도할 기준 확보</strong></p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Redis 장애나 TTL 만료로 집계가 사라지면 재처리 기준도 유실. 이를 감지할 운영 지표와 대응 방법 추가 필요</p></section>
                 </div>
               </article>
             </div>
