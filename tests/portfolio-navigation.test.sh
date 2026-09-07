@@ -8,13 +8,13 @@ portfolio="portfolio/index.html"
 coupon="portfolio/coupon-yaho/index.html"
 vote="portfolio/gallae-mallae/index.html"
 
-if ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\">소개</a>" "$navigation"; then
-  echo "FAIL: the site introduction menu does not link to /portfolio/"
+if grep -Fq -- '/portfolio/' "$navigation"; then
+  echo "FAIL: the site navigation still links to /portfolio/"
   exit 1
 fi
 
-if ! grep -Fq -- 'class="flat-category-item portfolio-link"' "$mobile_navigation" || ! grep -Fq -- "href=\"{{ '/portfolio/' | prepend: site.baseurl }}\"" "$mobile_navigation"; then
-  echo "FAIL: the mobile navigation does not link to /portfolio/"
+if grep -Fq -- '/portfolio/' "$mobile_navigation"; then
+  echo "FAIL: the sidebar navigation still links to /portfolio/"
   exit 1
 fi
 
@@ -36,4 +36,4 @@ for obsolete in _pages/portfolio/index.html _pages/portfolio/coupon-yaho.html _p
   fi
 done
 
-echo "PASS: the introduction menu links to standalone portfolio pages at stable public URLs"
+echo "PASS: blog navigation omits portfolio links while standalone portfolio pages remain available"
