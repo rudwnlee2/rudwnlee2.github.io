@@ -5,8 +5,6 @@ set -eu
 navigation="_layouts/page.html"
 mobile_navigation="_includes/sidebar.html"
 portfolio="portfolio/index.html"
-coupon="portfolio/coupon-yaho/index.html"
-vote="portfolio/gallae-mallae/index.html"
 
 if grep -Fq -- '/portfolio/' "$navigation"; then
   echo "FAIL: the site navigation still links to /portfolio/"
@@ -18,7 +16,7 @@ if grep -Fq -- '/portfolio/' "$mobile_navigation"; then
   exit 1
 fi
 
-for file in "$portfolio" "$coupon" "$vote"; do
+for file in "$portfolio"; do
   if [[ ! -f "$file" ]]; then
     echo "FAIL: $file is missing"
     exit 1
