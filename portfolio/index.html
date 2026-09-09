@@ -141,6 +141,17 @@
     .tag { padding: .35rem .56rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--panel-soft); color: var(--muted); font-size: .76rem; font-weight: 720; }
 
     .projects { display: grid; gap: 3.5rem; }
+    .project-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+    .project-overview-link { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; border: 1px solid var(--line); border-radius: .65rem; text-align: center; word-break: keep-all; overflow-wrap: anywhere; }
+    .project-overview-link:hover { border-color: var(--accent-line); background: var(--panel-soft); }
+    .project-overview-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .project-overview-logo { width: 88px; height: 88px; object-fit: contain; border-radius: 50%; background: #fff; margin-bottom: .75rem; }
+    .project-overview-name { color: var(--heading); font-size: 1.15rem; }
+    .project-overview-description { margin-top: .35rem; color: var(--text); font-size: .9rem; }
+    .project-overview-role { margin-top: .5rem; color: var(--heading); font-size: .85rem; }
+    .project-overview-period { margin-top: .2rem; color: var(--muted); font-size: .8rem; }
+    .project-overview-jump { margin-top: .8rem; color: var(--accent); font-size: .8rem; }
+    .project-document[id] { scroll-margin-top: 1rem; }
     .project-document { border-top: 2px solid var(--heading); padding: 1.5rem 0 0; }
     .project-document p strong { color: inherit; font-weight: 850; }
     .case-section[data-case-stage="solution"] strong { color: var(--solution-text); }
@@ -238,6 +249,9 @@
       .project-footer { align-items: flex-start; flex-direction: column; }
       .credentials-grid { grid-template-columns: 1fr; gap: 1.5rem; }
       .footer-inner { display: grid; }
+    }
+    @media (max-width: 480px) {
+      .project-overview { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
@@ -370,7 +384,25 @@
           <p>적용한 해결 방법과 확인한 결과를 중심으로 정리한 프로젝트 기록</p>
         </div>
         <div class="projects">
-          <article class="project-document">
+          <nav class="project-overview" aria-label="프로젝트 바로가기">
+            <a class="project-overview-link" href="#project-coupon-yaho">
+              <img class="project-overview-logo" src="../assets/img/coupon-yaho-logo.png" alt="" width="88" height="88" loading="lazy">
+              <strong class="project-overview-name">쿠폰 야호</strong>
+              <span class="project-overview-description">선착순 쿠폰 발급 서비스</span>
+              <span class="project-overview-role">운영현황·정합성 담당</span>
+              <span class="project-overview-period">2026.08.11 ~ 09.01</span>
+              <span class="project-overview-jump">프로젝트로 이동 ↓</span>
+            </a>
+            <a class="project-overview-link" href="#project-gallae-mallae">
+              <img class="project-overview-logo" src="../assets/img/gallae-mallae-logo.png" alt="" width="88" height="88" loading="lazy">
+              <strong class="project-overview-name">갈래말래</strong>
+              <span class="project-overview-description">메뉴 추천·투표 서비스</span>
+              <span class="project-overview-role">팀장·투표 기능 담당</span>
+              <span class="project-overview-period">2026.07.16 ~ 07.27</span>
+              <span class="project-overview-jump">프로젝트로 이동 ↓</span>
+            </a>
+          </nav>
+          <article class="project-document" id="project-coupon-yaho">
             <div class="project-header">
               <div class="project-logo-slot" data-project-logo="coupon-yaho"><img src="../assets/img/coupon-yaho-logo.png" alt="쿠폰 야호 조직 로고" width="460" height="460" loading="lazy"></div>
               <div class="project-heading">
@@ -420,7 +452,7 @@
             <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">Apache Kafka</span></div></div>
           </article>
 
-          <article class="project-document">
+          <article class="project-document" id="project-gallae-mallae">
             <div class="project-header">
               <div class="project-logo-slot" data-project-logo="gallae-mallae"><img src="../assets/img/gallae-mallae-logo.png" alt="갈래말래 로고" width="1254" height="1254" loading="lazy"></div>
               <div class="project-heading">
