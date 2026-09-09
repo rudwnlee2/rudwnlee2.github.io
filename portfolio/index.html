@@ -144,7 +144,9 @@
     .project-document { border-top: 2px solid var(--heading); padding: 1.5rem 0 0; }
     .project-document p strong { color: inherit; font-weight: 850; }
     .case-section[data-case-stage="solution"] strong { color: var(--solution-text); }
-    .project-header { display: block; }
+    .project-header { display: flex; align-items: flex-start; gap: 1rem; }
+    .project-logo-slot { display: grid; place-items: center; flex: 0 0 64px; width: 64px; height: 64px; border-radius: .65rem; background: #fff; overflow: hidden; }
+    .project-logo-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
     .project-heading { min-width: 0; flex: 1; }
     .project-title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
     .project-title-row h3 { margin-bottom: .22rem; color: var(--heading); font-size: 1.65rem; }
@@ -211,6 +213,8 @@
       .tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
+      .project-header { gap: .75rem; }
+      .project-logo-slot { flex-basis: 44px; width: 44px; height: 44px; font-size: .65rem; }
       .shell { width: min(100% - 28px, 1120px); }
       .hero { padding: 40px 0 36px; }
       .hero-grid { grid-template-columns: 1fr; }
@@ -319,6 +323,46 @@
       </div>
     </section>
 
+    <section class="section" id="credentials">
+      <div class="shell section-layout">
+        <div class="section-heading">
+          <div><p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2></div>
+          <p>백엔드 개발과 관련된 교육·학력 및 자격</p>
+        </div>
+        <div class="credentials-grid">
+          <section class="credential-group" aria-labelledby="education-heading">
+            <div class="credential-group-heading"><span class="credential-group-number">01</span><h3 id="education-heading">교육·학력</h3></div>
+            <div class="credential-list">
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">학력</span><span class="credential-period"><time datetime="2020-02">2020.02</time><span>~</span><time datetime="2026-08">2026.08</time></span></div>
+                <h4>한신대학교</h4>
+                <p>컴퓨터공학부 · 졸업</p>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">교육</span><span class="credential-period"><time datetime="2026-04">2026.04</time><span>~</span><time datetime="2026-10">2026.10</time></span></div>
+                <div class="credential-title-row"><h4>LG U+ 유레카 백엔드 과정</h4><span class="credential-status">진행 중</span></div>
+              </article>
+            </div>
+          </section>
+          <section class="credential-group" aria-labelledby="certification-heading">
+            <div class="credential-group-heading"><span class="credential-group-number">02</span><h3 id="certification-heading">자격증</h3></div>
+            <div class="credential-list">
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">국가기술자격</span><time datetime="2025-09-12">2025.09.12</time></div>
+                <h4>정보처리기사</h4>
+                <p>한국산업인력공단</p>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">데이터 자격</span><time datetime="2024-04-05">2024.04.05</time></div>
+                <h4>SQLD</h4>
+                <p>한국데이터산업진흥원(Kdata)</p>
+              </article>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
     <section class="section" id="projects">
       <div class="shell section-layout">
         <div class="section-heading">
@@ -328,6 +372,7 @@
         <div class="projects">
           <article class="project-document">
             <div class="project-header">
+              <div class="project-logo-slot" data-project-logo="coupon-yaho"><img src="../assets/img/coupon-yaho-logo.png" alt="쿠폰 야호 로고" width="320" height="320" loading="lazy"></div>
               <div class="project-heading">
                 <div class="project-title-row">
                   <div><h3>쿠폰 야호</h3><p class="project-summary">재요청의 성공 집계 중복을 막고, 서버 간 종료 이벤트 전파와 Redis·MySQL 발급 상태 비교를 구현한 선착순 쿠폰 서비스</p></div>
@@ -377,6 +422,7 @@
 
           <article class="project-document">
             <div class="project-header">
+              <div class="project-logo-slot" data-project-logo="gallae-mallae"><img src="../assets/img/gallae-mallae-logo.png" alt="갈래말래 로고" width="1254" height="1254" loading="lazy"></div>
               <div class="project-heading">
                 <div class="project-title-row">
                   <div><h3>갈래말래</h3><p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p></div>
@@ -423,46 +469,6 @@
             </div>
             <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">MySQL</span></div></div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="credentials">
-      <div class="shell section-layout">
-        <div class="section-heading">
-          <div><p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2></div>
-          <p>백엔드 개발과 관련된 교육·학력 및 자격</p>
-        </div>
-        <div class="credentials-grid">
-          <section class="credential-group" aria-labelledby="education-heading">
-            <div class="credential-group-heading"><span class="credential-group-number">01</span><h3 id="education-heading">교육·학력</h3></div>
-            <div class="credential-list">
-              <article class="credential-item">
-                <div class="credential-topline"><span class="credential-kind">학력</span><span class="credential-period"><time datetime="2020-02">2020.02</time><span>~</span><time datetime="2026-08">2026.08</time></span></div>
-                <h4>한신대학교</h4>
-                <p>컴퓨터공학부 · 졸업</p>
-              </article>
-              <article class="credential-item">
-                <div class="credential-topline"><span class="credential-kind">교육</span><span class="credential-period"><time datetime="2026-04">2026.04</time><span>~</span><time datetime="2026-10">2026.10</time></span></div>
-                <div class="credential-title-row"><h4>LG U+ 유레카 백엔드 과정</h4><span class="credential-status">진행 중</span></div>
-              </article>
-            </div>
-          </section>
-          <section class="credential-group" aria-labelledby="certification-heading">
-            <div class="credential-group-heading"><span class="credential-group-number">02</span><h3 id="certification-heading">자격증</h3></div>
-            <div class="credential-list">
-              <article class="credential-item">
-                <div class="credential-topline"><span class="credential-kind">국가기술자격</span><time datetime="2025-09-12">2025.09.12</time></div>
-                <h4>정보처리기사</h4>
-                <p>한국산업인력공단</p>
-              </article>
-              <article class="credential-item">
-                <div class="credential-topline"><span class="credential-kind">데이터 자격</span><time datetime="2024-04-05">2024.04.05</time></div>
-                <h4>SQLD</h4>
-                <p>한국데이터산업진흥원(Kdata)</p>
-              </article>
-            </div>
-          </section>
         </div>
       </div>
     </section>
