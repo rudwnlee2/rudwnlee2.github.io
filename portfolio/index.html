@@ -141,16 +141,17 @@
     .tag { padding: .35rem .56rem; border: 1px solid var(--line); border-radius: .55rem; background: var(--panel-soft); color: var(--muted); font-size: .76rem; font-weight: 720; }
 
     .projects { display: grid; gap: 3.5rem; }
-    .project-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
-    .project-overview-link { display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; border: 1px solid var(--line); border-radius: .65rem; text-align: center; word-break: keep-all; overflow-wrap: anywhere; }
+    .project-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-bottom: -1.5rem; }
+    .project-overview-link { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: .75rem; align-content: start; padding: .85rem; border: 1px solid var(--line); border-radius: .65rem; text-align: left; word-break: keep-all; overflow-wrap: anywhere; }
+    .project-overview-link > :not(img) { grid-column: 2; }
     .project-overview-link:hover { border-color: var(--accent-line); background: var(--panel-soft); }
     .project-overview-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-    .project-overview-logo { width: 88px; height: 88px; object-fit: contain; border-radius: 50%; background: #fff; margin-bottom: .75rem; }
-    .project-overview-name { color: var(--heading); font-size: 1.15rem; }
-    .project-overview-description { margin-top: .35rem; color: var(--text); font-size: .9rem; }
-    .project-overview-role { margin-top: .5rem; color: var(--heading); font-size: .85rem; }
-    .project-overview-period { margin-top: .2rem; color: var(--muted); font-size: .8rem; }
-    .project-overview-jump { margin-top: .8rem; color: var(--accent); font-size: .8rem; }
+    .project-overview-logo { grid-row: 1 / 6; width: 48px; height: 48px; object-fit: contain; border-radius: 50%; background: #fff; }
+    .project-overview-name { color: var(--heading); font-size: 1rem; }
+    .project-overview-description { margin-top: .15rem; color: var(--text); font-size: .82rem; }
+    .project-overview-role { margin-top: .25rem; color: var(--heading); font-size: .8rem; }
+    .project-overview-period { margin-top: .1rem; color: var(--muted); font-size: .78rem; }
+    .project-overview-jump { margin-top: .3rem; color: var(--accent); font-size: .78rem; }
     .project-document[id] { scroll-margin-top: 1rem; }
     .project-document { border-top: 2px solid var(--heading); padding: 1.5rem 0 0; }
     .project-document p strong { color: inherit; font-weight: 850; }
