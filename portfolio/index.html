@@ -192,6 +192,7 @@
     .case-section p { margin: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; }
     .case-section ul { margin: 0; padding-left: 1.2em; min-width: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; word-break: keep-all; overflow-wrap: anywhere; }
     .case-section li + li { margin-top: .45rem; }
+    .case-evaluation-body p + p { margin-top: .65rem; }
     .section-layout > *, .case-section > *, .project-key-results > *, .project-key-result > span { min-width: 0; }
     .project-key-result, .project-responsibility, .case-section li, .case-context { word-break: keep-all; overflow-wrap: break-word; text-wrap: pretty; }
     .project-case-heading h4 { text-wrap: balance; }
@@ -426,27 +427,27 @@
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>같은 발급 요청을 3회 보내도 성공 이벤트는 1건만 생성</span></li><li class="project-key-result"><span>발급 기록을 네 가지 기준으로 비교해 먼저 확인할 저장소와 처리 구간 구분</span></li><li class="project-key-result"><span>쿠폰 발급 종료가 DB에 확정된 뒤 각 API 서버의 관련 운영 지표 정리</span></li></ol>
+              <ol><li class="project-key-result"><span>누적 발급 수 비교가 놓치는 재고 복원 누락을 탐지하고, 정상·오류 상태 9종의 예상 결과 확인</span></li><li class="project-key-result"><span>같은 발급 요청을 3회 보내도 성공 이벤트는 1건만 생성</span></li><li class="project-key-result"><span>쿠폰 발급 종료가 DB에 확정된 뒤 각 API 서버의 관련 운영 지표 정리</span></li></ol>
             </section>
             <div class="project-cases">
+              <article class="project-case" data-project-case="consistency-gaps">
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>누적 발급 수 비교로 놓치는 재고 불일치 탐지</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰 발급을 취소한 뒤 Redis 재고가 복원되지 않아도, Redis와 DB의 누적 발급 수는 같을 수 있음. <strong>누적 발급 수만 비교하면 재고 복원 누락을 발견하기 어려움.</strong></p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>취소·만료 시 현재 재고와 활성 쿠폰 수는 바뀌지만, 누적 발급 기록은 유지됨. 또한 Redis와 DB 사이의 수량이 같더라도 각 저장소의 카운터와 실제 기록이 일치한다고 볼 수는 없음.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>현재 재고와 누적 발급 기록을 나누어 비교</strong>해 재고 복원 누락과 발급 기록 누락을 각각 확인</li><li>Redis의 발급 수·회원 기록, DB의 실제 쿠폰 수·집계 카운터까지 <strong>네 가지 비교 기준으로 구성</strong></li><li>처리 중(LIVE)에는 저장소 반영 시차를 고려하고, <strong>처리 종료 후(FINAL)에는 적용되는 비교값에 1건이라도 차이가 남으면 실패로 판정</strong></li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL에 취소 후 재고 복원이 누락된 상태를 구성. <strong>양쪽 누적 발급 수가 각각 4건으로 같아도 재고 1건 차이를 탐지</strong>하고 FINAL 실패 판정 확인.</p><p>정상 2종·수량 불일치 4종에서 예상 비교값과 판정이 모두 일치했으며, 필수 값 누락·조회 실패 3종에서도 정상 판정을 거부하는 동작 확인.</p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>네 비교값이 모두 같아도 개별 회원·쿠폰 기록까지 정확하다고 보장할 수는 없음. 수량 불일치를 찾는 역할과 초과 발급·1인 1매를 확인하는 역할을 구분해야 함.</p></section>
+                </div>
+              </article>
               <article class="project-case" data-project-case="idempotent-replay-observation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>재요청을 신규 발급으로 집계하지 않도록 처리</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>재요청을 신규 발급으로 집계하지 않도록 처리</h4></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰은 한 장 발급됐는데 같은 요청을 다시 보낼 때마다 성공으로 기록하면, 운영 현황에는 여러 장 발급된 것처럼 집계될 수 있음</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>응답을 받지 못한 사용자가 다시 요청하면 서버는 저장된 발급 결과를 반환. 기존 반환값에는 신규 발급인지 이전 결과를 다시 돌려준 것인지 구분하는 정보가 없었음</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>발급 결과에 <strong>신규 발급과 이전 결과 재사용을 구분하는 replayed 값 추가</strong></li><li>발급 시도와 결과를 알리는 이벤트를 Kafka 발행 흐름에 연결. <strong>이전 결과를 돌려준 요청은 신규 성공 이벤트 생성에서 제외</strong></li><li>같은 요청이 동시에 들어와 이전 결과를 반환하게 된 경우에도, 한 요청의 시도 이벤트를 중복 기록하지 않도록 처리</li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>같은 요청 식별 키로 3회 요청했을 때 <strong>성공 이벤트는 1건만 생성</strong>. 시도 이벤트 3건·실제 발급 1건, 추가 발급·성공 이벤트 중복 각각 0건 확인. 관련 테스트 83 / 83건 통과</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>쿠폰을 중복 발급하지 않는 것과 운영 현황을 중복 집계하지 않는 것은 별개. 담당한 부분은 발급 결과를 구분해 성공 이벤트의 중복 생성을 막는 처리이며, Kafka의 중복 전달·재소비 처리는 별도 고려</p></section>
-                </div>
-              </article>
-              <article class="project-case" data-project-case="consistency-gaps">
-                <header class="project-case-heading"><span class="project-case-number">02</span><h4>발급 기록을 비교해 데이터가 어긋난 구간 확인</h4></header>
-                <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재고는 줄었는데 발급 기록은 없는 경우처럼, 처리 단계마다 남은 데이터가 다를 수 있음. 전체 발급 수만 비교하면 어디에서 차이가 생겼는지 찾기 어려움</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>빠른 발급 처리를 위한 Redis와 발급 이력을 저장하는 MySQL에 재고·발급 수·회원 기록이 나뉘어 있고, 각 값이 갱신되는 시점도 다름</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>Redis와 MySQL에 나뉜 재고·누적 발급·회원 기록·DB 집계를 <strong>네 가지 기준으로 대조하는 검증 로직 구현</strong></li><li>비교 결과의 차이와 방향을 나누어 <strong>우선 확인할 저장소와 처리 구간을 좁히도록 구성</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>비교값의 양수·음수 계산, 입력값 누락·조회 실패·오래된 값·숫자 범위 초과 상황을 테스트. 처리 종료 후(FINAL)에는 <strong>유효한 네 비교 결과가 모두 0이고 초과 발급이 없을 때만 정상으로 판정</strong>하도록 구현</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>발급 진행 중(LIVE)에는 저장소별 반영 시점 차이를 고려하고, 처리 종료 후(FINAL)에는 차이가 남지 않아야 한다는 기준으로 구분. 차이가 생긴 위치를 찾기 위한 기능이며 데이터를 자동으로 수정하는 기능은 아님</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="lifecycle-after-commit">
