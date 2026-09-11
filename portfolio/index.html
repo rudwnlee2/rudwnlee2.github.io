@@ -465,27 +465,27 @@
             </div>
             <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result">Redis Lua로 동시 투표 변경과 후보별 집계를 한 번에 처리</li><li class="project-key-result">통제 실험에서 동기 비교 구현 대비 재추천 HTTP 응답 p95 약 98% 단축</li><li class="project-key-result">Redis 마감 집계를 보존해 DB 저장 실패 후 재처리</li></ol>
+              <ol><li class="project-key-result">통제 실험에서 동기 비교 구현 대비 재추천 HTTP 응답 p95 약 98% 단축</li><li class="project-key-result">Redis Lua로 동시 투표 변경과 후보별 집계를 한 번에 처리</li><li class="project-key-result">Redis 마감 집계를 보존해 DB 저장 실패 후 재처리</li></ol>
             </section>
             <div class="project-cases">
-              <article class="project-case" data-project-case="atomic-vote-change">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Redis Lua로 투표 변경과 집계를 원자적으로 처리</h4></header>
-                <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 진행 정보를 Redis Hash에 저장하고 상태·마감 시간·후보를 Lua에서 확인</li><li>기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>개인 선택과 집계를 함께 변경하고 동일 선택은 중복 가산하지 않는 처리 기준 확립</strong>. 사용자 40명의 요청에서 총 40표 집계 확인. 선택 변경·동일 선택 재요청·마감 처리를 포함한 Redis 통합 테스트 14개 통과</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>진행 중 Redis 데이터가 사라지면 투표를 복구할 수 없음. 보존해야 하는 확정 결과는 마감 후 MySQL에 저장</p></section>
-                </div>
-              </article>
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">02</span><h4>재추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연을 3초로 고정한 비교 실험 · 초당 2건 · Consumer 8개</p></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>재추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연을 3초로 고정한 비교 실험 · 초당 2건 · Consumer 8개</p></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 기다리면 API 응답이 늦어지고, 외부 API 오류가 요청 처리에 직접 영향을 줄 가능성</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>추천 작업에 점수 계산과 외부 AI 응답 대기가 포함되므로, 재추천 API에서 직접 실행할 경우 작업 완료까지 요청이 대기</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>방장 권한과 세션 상태를 확인하고, 메뉴 선택 단계에서 후보가 0개·1개인 경우 재추천을 허용하도록 기준 설정</li><li>추천 진행 상태로 변경한 뒤 DB 커밋 후 이벤트를 발행해 <strong>기존 RabbitMQ 비동기 추천 흐름에 재추천 API를 연결</strong></li><li>후보가 없는 추천 진행 상태에서도 재요청을 허용해 중단된 추천을 다시 요청할 경로 마련</li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동기 비교 구현 대비 <strong>재추천 HTTP 응답 p95를 3,168ms → 64ms로 약 98% 단축</strong>. 외부 응답 지연을 3초로 고정하고 초당 2건·Consumer 8개 조건에서 방식별 100건씩 3회 측정. 총 600건의 결과 저장과 Redis 상태 정합성 확인, HTTP 실패·미완료·결과 불일치 0건</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 결과 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 외부 AI 대기를 HTTP 응답에서 분리한 효과. 과거 운영 버전이 아닌 동기 비교 구현과의 통제 실험 결과. DB 커밋 후 메시지 발행 전 요청 누락 가능성은 별도로 남아 있어 Outbox 적용 필요</p></section>
+                </div>
+              </article>
+              <article class="project-case" data-project-case="atomic-vote-change">
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>Redis Lua로 투표 변경과 집계를 원자적으로 처리</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 진행 정보를 Redis Hash에 저장하고 상태·마감 시간·후보를 Lua에서 확인</li><li>기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong></li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>개인 선택과 집계를 함께 변경하고 동일 선택은 중복 가산하지 않는 처리 기준 확립</strong>. 사용자 40명의 요청에서 총 40표 집계 확인. 선택 변경·동일 선택 재요청·마감 처리를 포함한 Redis 통합 테스트 14개 통과</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>진행 중 Redis 데이터가 사라지면 투표를 복구할 수 없음. 보존해야 하는 확정 결과는 마감 후 MySQL에 저장</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="persistence-recovery">
