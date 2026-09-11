@@ -269,7 +269,7 @@
         <div class="profile-photo-slot" aria-hidden="true"></div>
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
-          <p class="hero-statement">실패 이후의 데이터 흐름을 설계하는 백엔드 개발자입니다.</p>
+          <p class="hero-statement">데이터의 정확성을 지키는 백엔드 개발자입니다.</p>
           <p class="hero-copy">요청이 정상적으로 끝나는 것뿐 아니라, 중복되거나 중간에 실패했을 때 데이터가 어떻게 남는지 신경 씁니다.</p>
           <div class="hero-links" aria-label="연락처 및 외부 링크"><a href="mailto:lgj0731@naver.com">이메일: lgj0731@naver.com</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
           <div class="hero-facts" aria-label="핵심 정보">
@@ -289,9 +289,9 @@
         </div>
         <div class="about-grid">
           <article class="about-main">
-            <p>갈래말래에서는 투표 변경과 집계를 함께 처리하고, 추천 작업을 API 응답과 분리했습니다. 저장에 실패한 투표 결과는 남겨 두어 <strong>같은 결과로 다시 처리할 수 있도록 구현</strong>했습니다.</p>
-            <p>쿠폰 야호에서는 재요청을 신규 발급과 구분하고, Redis와 MySQL의 발급 상태를 비교했습니다. 발급 수가 다르다는 사실을 표시하는 데서 그치지 않고 <strong>어느 저장소와 처리 구간을 확인해야 하는지 구분</strong>했습니다.</p>
-            <p>두 프로젝트를 통해 기능마다 성공 여부뿐 아니라, 실패했을 때 남는 데이터와 다음 처리까지 살펴보게 됐습니다.</p>
+            <p>저는 요청이 성공했는지만큼, <strong>처리 결과가 실제 데이터와 일치하는지</strong>를 중요하게 생각합니다.</p>
+            <p>갈래말래에서는 여러 사용자가 투표를 변경할 때 개인 선택과 전체 집계가 함께 바뀌도록 구현했습니다. 쿠폰 야호에서는 이미 완료된 요청이 다시 들어와도 새로운 발급 성공으로 집계되지 않도록 구분했습니다.</p>
+            <p>두 경험을 통해 정상 응답을 반환하는 것과 데이터를 정확하게 처리하는 것은 다를 수 있다는 점을 배웠습니다. 기능을 개발할 때 <strong>함께 바뀌어야 하는 값과 중복되면 안 되는 처리</strong>를 먼저 살피고 있습니다.</p>
           </article>
         </div>
       </div>
