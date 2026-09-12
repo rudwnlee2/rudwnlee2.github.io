@@ -478,7 +478,7 @@
             </div>
             <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>동기 방식과 비교해 재추천 HTTP 응답 p95 약 98% 단축</span></li><li class="project-key-result"><span>Redis Lua로 동시 투표 변경과 후보별 집계를 한 번에 처리</span></li><li class="project-key-result"><span>Redis 마감 집계를 보존해 DB 저장 실패 후 재처리</span></li></ol>
+              <ol><li class="project-key-result"><span>동기 방식 대비 <strong>재추천 HTTP 응답 p95 약 98% 단축</strong></span></li><li class="project-key-result"><span>동시 투표 경합 요청 누적 <strong>14,400건에서 개인 선택·집계 불일치 0건</strong></span></li><li class="project-key-result"><span>DB 저장 실패 후 같은 결과로 재시도, <strong>완료 후 추가 갱신 0회</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="async-recommendation">
@@ -492,23 +492,23 @@
                 </div>
               </article>
               <article class="project-case" data-project-case="atomic-vote-change">
-                <header class="project-case-heading"><span class="project-case-number">02</span><h4>Redis Lua로 투표 변경과 집계를 원자적으로 처리</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>동시 투표 변경에도 개인 선택과 집계 일치</h4></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 진행 정보를 Redis Hash에 저장하고 상태·마감 시간·후보를 Lua에서 확인</li><li>기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>개인 선택과 집계를 함께 변경하고 동일 선택은 중복 가산하지 않는 처리 기준 확립</strong>. 사용자 40명의 요청에서 총 40표 집계 확인. 선택 변경·동일 선택 재요청·마감 처리를 포함한 Redis 통합 테스트 14개 통과</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>진행 중 Redis 데이터가 사라지면 투표를 복구할 수 없음. 보존해야 하는 확정 결과는 마감 후 MySQL에 저장</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis에서 최초 제출·선택 변경·동일 선택 반복·마감 경합 등 6개 시나리오를 각각 20회 실행. 누적 경합 요청 <strong>14,400건에서 개인 선택으로 다시 계산한 표 수와 후보별 집계의 불일치 0건</strong> 확인.</p><p>마감으로 인한 정상 거절과 오류를 구분했으며, 예상하지 못한 오류는 0건.</p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>총표 수가 같더라도 후보별 집계는 다를 수 있어 개인 선택과 후보별 수량을 함께 비교해야 함. 이번 확인 범위는 Redis의 투표 변경·마감 처리이며, HTTP 요청부터 인증·응답까지 연결한 동시성 검증과는 구분.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="persistence-recovery">
-                <header class="project-case-heading"><span class="project-case-number">03</span><h4>DB 저장 실패 시 Redis에 남긴 투표 결과로 재시도</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">03</span><h4>DB 저장 실패 후 남겨 둔 투표 집계로 재처리</h4></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장에 실패했을 때 집계까지 지우면 같은 결과로 재저장 불가</p></section>
                   <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>Redis의 마감 집계와 MySQL의 확정 결과가 서로 다른 저장소에 있어 하나의 트랜잭션으로 묶을 수 없었고, 집계를 먼저 지우면 재시도 기준도 사라졌음</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>Redis 마감 집계를 MySQL 저장 성공 전까지 보존</strong>해 실패 후 같은 결과로 다시 시도할 기준 마련</li><li>저장이 완료된 뒤에만 Redis 집계를 삭제하도록 처리 순서 분리</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>저장 실패 시 같은 마감 집계로 재시도하고, 이미 저장된 결과는 정리만 재시도하는 기준 확립</strong>. DB 저장 실패를 모의한 단위 테스트에서 집계 삭제 미호출과 완료 결과의 중복 저장 방지 검증. 마감·재처리 관련 단위 테스트 9개 통과</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Redis 장애나 TTL 만료로 집계가 사라지면 재처리 기준도 유실. 이를 감지할 운영 지표와 대응 방법 추가 필요</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 MySQL에서 후보 결과 갱신 후 SQL 오류를 발생시켜 <strong>부분 저장은 롤백되고 Redis 마감 집계는 유지</strong>되는 동작 확인.</p><p>실패 원인을 제거한 뒤 직접 재호출과 만료 세션 재처리 경로에서 <strong>후보 3개의 결과를 기존 집계와 동일하게 저장</strong>하고 Redis 집계를 삭제. 완료 후 다시 호출해도 추가 결과 갱신은 0회.</p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB 저장이 끝나기 전에 Redis 집계를 삭제하면 재시도에 필요한 값이 사라지므로, 커밋 이후에 정리하도록 구성. 재시도는 Redis 집계가 남아 있는 동안 가능하며, TTL 만료나 Redis 데이터 유실은 별도 대응 필요. 만료 세션의 재처리 경로까지 확인했지만 스케줄러의 자동 실행은 이번 검증에서 제외.</p></section>
                 </div>
               </article>
             </div>
