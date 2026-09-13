@@ -100,11 +100,13 @@
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
     .profile-photo-slot {
       aspect-ratio: 3 / 4;
+      overflow: hidden;
       border: 1px solid var(--line-strong);
       border-radius: .45rem;
       background: var(--panel-soft);
       box-shadow: 0 14px 32px rgba(15, 23, 42, .1);
     }
+    .profile-photo-slot img { display: block; width: 100%; height: 100%; object-fit: cover; }
     .hero-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1.7rem; border-top: 1px solid var(--line); }
     .hero-fact { min-width: 0; padding: 1rem .9rem 0; border-right: 0; }
     .hero-fact:first-child { padding-left: 0; }
@@ -240,8 +242,8 @@
       .project-logo-slot { flex-basis: 44px; width: 44px; height: 44px; font-size: .65rem; }
       .shell { width: min(100% - 28px, 1120px); }
       .hero { padding: 40px 0 36px; }
-      .hero-grid { grid-template-columns: 1fr; }
-      .profile-photo-slot { display: none; }
+      .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+      .profile-photo-slot { width: min(180px, 100%); justify-self: center; }
       h1 { font-size: clamp(1.85rem, 8vw, 2.45rem); }
       .hero-facts { grid-template-columns: 1fr; }
       .hero-fact { border-right: 0; border-bottom: 1px solid var(--line); padding: .85rem 0; }
@@ -277,7 +279,7 @@
   <main id="main">
     <section class="hero hero-compact" id="top">
       <div class="shell hero-grid">
-        <div class="profile-photo-slot" aria-hidden="true"></div>
+        <div class="profile-photo-slot"><img src="../assets/img/profile/lee-gyeongju.jpg" alt="이경주 프로필 사진" width="591" height="787"></div>
         <div class="hero-intro">
           <div class="hero-identity"><p class="hero-role">BACKEND DEVELOPER</p><h1>이경주</h1></div>
           <p class="hero-statement">기다림은 줄이고, 결과는 정확하게 만드는 백엔드 개발자입니다.</p>
