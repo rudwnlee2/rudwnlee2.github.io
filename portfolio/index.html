@@ -475,21 +475,21 @@
                   <a class="project-repo" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
                 <div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·투표 기능 담당</span></div>
-                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>재추천 요청에 비동기 처리를 적용해 추천 완료를 기다리지 않고 응답하도록 변경. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청에 비동기 처리를 적용해 추천 완료를 기다리지 않고 응답하도록 변경. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
               </div>
             </div>
             <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>동기 방식 대비 <strong>재추천 HTTP 응답 p95 약 98% 단축</strong></span></li><li class="project-key-result"><span>동시 투표 경합 요청 누적 <strong>14,400건에서 개인 선택·집계 불일치 0건</strong></span></li><li class="project-key-result"><span>DB 저장 실패 후 같은 결과로 재시도, <strong>완료 후 추가 갱신 0회</strong></span></li></ol>
+              <ol><li class="project-key-result"><span>동기 방식 대비 <strong>추천 HTTP 응답 p95 약 98% 단축</strong></span></li><li class="project-key-result"><span>동시 투표 경합 요청 누적 <strong>14,400건에서 개인 선택·집계 불일치 0건</strong></span></li><li class="project-key-result"><span>DB 저장 실패 후 같은 결과로 재시도, <strong>완료 후 추가 갱신 0회</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>재추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연 3초 · 초당 2건 · 방식별 300건 비교 · Consumer 8개</p></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연 3초 · 초당 2건 · 방식별 300건 비교 · Consumer 8개</p></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>재추천 요청에서 점수 계산과 외부 AI 호출까지 기다리면 API 응답이 늦어지고, 외부 API 오류가 요청 처리에 직접 영향을 줄 가능성</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>추천 작업에 점수 계산과 외부 AI 응답 대기가 포함되므로, 재추천 API에서 직접 실행할 경우 작업 완료까지 요청이 대기</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>방장 권한과 세션 상태를 확인하고, 메뉴 선택 단계에서 후보가 0개·1개인 경우 재추천을 허용하도록 기준 설정</li><li>추천 진행 상태를 저장한 뒤 DB 커밋 후 재추천 작업을 RabbitMQ로 전달해 별도로 처리. <strong>API는 추천 작업 완료를 기다리지 않고 먼저 응답</strong></li><li>후보가 없는 추천 진행 상태에서도 재요청을 허용해 중단된 추천을 다시 요청할 경로 마련</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동기 방식과 비교해 <strong>재추천 HTTP 응답 p95를 3,168ms에서 64ms로 약 98% 단축</strong>. 동일한 추천 작업을 응답 전에 끝내는 동기 비교용 구현을 사용하고, 방식별 100건씩 3회 측정. 총 600건의 결과 저장과 Redis 상태 정합성 확인, HTTP 실패·미완료·결과 불일치 0건</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 요청에서 점수 계산과 외부 AI 호출까지 기다리면 API 응답이 늦어지고, 외부 API 오류가 요청 처리에 직접 영향을 줄 가능성</p></section>
+                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>추천 작업에 점수 계산과 외부 AI 응답 대기가 포함되므로, 추천 API에서 직접 실행할 경우 작업 완료까지 요청이 대기</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>방장 권한과 세션 상태를 확인하고, 메뉴 선택 단계에서 후보가 0개·1개인 경우 추천을 허용하도록 기준 설정</li><li>추천 진행 상태를 저장한 뒤 DB 커밋 후 추천 작업을 RabbitMQ로 전달해 별도로 처리. <strong>API는 추천 작업 완료를 기다리지 않고 먼저 응답</strong></li><li>후보가 없는 추천 진행 상태에서도 재요청을 허용해 중단된 추천을 다시 요청할 경로 마련</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동기 방식과 비교해 <strong>추천 HTTP 응답 p95를 3,168ms에서 64ms로 약 98% 단축</strong>. 동일한 추천 작업을 응답 전에 끝내는 동기 비교용 구현을 사용하고, 방식별 100건씩 3회 측정. 총 600건의 결과 저장과 Redis 상태 정합성 확인, HTTP 실패·미완료·결과 불일치 0건</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 결과 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 작업 완료 시간이 아닌 요청 응답 대기를 줄인 결과. DB 커밋 후 메시지 발행 전 요청 누락 가능성은 별도로 남아 있어 Outbox 적용 필요</p></section>
                 </div>
               </article>
