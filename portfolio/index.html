@@ -16,9 +16,9 @@
       --text: #2f3440;
       --heading: #1f232b;
       --emphasis-text: #111827;
-      --solution-text: #d44c47;
-      --muted: #727985;
-      --subtle: #a0a7b2;
+      --solution-text: #c5403b;
+      --muted: #656d79;
+      --subtle: #69717e;
       --accent: #2563eb;
       --accent-strong: #1d4ed8;
       --accent-soft: #eef5ff;
@@ -135,7 +135,7 @@
     .projects { display: grid; gap: 3.5rem; }
     .project-overview { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem; margin-bottom: -1.5rem; }
     .project-overview-link { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: .75rem; align-content: start; padding: .85rem; border: 1px solid var(--line); border-radius: .65rem; text-align: left; word-break: keep-all; overflow-wrap: anywhere; }
-    .project-overview-link > :not(img) { grid-column: 2; }
+    .project-overview-link > :not(.project-overview-logo) { grid-column: 2; }
     .project-overview-link:hover { border-color: var(--accent-line); background: var(--panel-soft); }
     .project-overview-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
     .project-overview-logo { grid-row: 1 / 6; width: 48px; height: 48px; object-fit: contain; border-radius: 50%; background: #fff; }
@@ -148,6 +148,9 @@
     .project-document { border-top: 2px solid var(--heading); padding: 1.5rem 0 0; }
     .project-document p strong { color: inherit; font-weight: 850; }
     .case-section[data-case-stage="solution"] strong { color: var(--solution-text); }
+    .project-architecture { margin: 1rem 0 1.4rem; }
+    .project-architecture > a { display: block; border: 1px solid var(--line); border-radius: .65rem; overflow: hidden; }
+    .project-architecture img { display: block; width: 100%; height: auto; }
     .project-header { display: flex; align-items: flex-start; gap: 1rem; }
     .project-logo-slot { display: grid; place-items: center; flex: 0 0 64px; width: 64px; height: 64px; border-radius: .65rem; background: #fff; overflow: hidden; }
     .project-logo-slot img { display: block; width: 100%; height: 100%; object-fit: contain; }
@@ -158,6 +161,7 @@
     .project-summary { max-width: 760px; margin-bottom: 0; color: var(--heading); font-size: 1.08rem; line-height: 1.72; text-wrap: pretty; word-break: keep-all; overflow-wrap: break-word; }
     .project-repo { display: inline-flex; flex: 0 0 auto; align-items: center; gap: .3rem; border: 1px solid var(--line); border-radius: .65rem; background: transparent; padding: .48rem .72rem; color: var(--accent); font-size: .84rem; font-weight: 850; }
     .project-repo:hover { border-color: var(--accent-line); background: var(--accent-soft); }
+    .project-repos { display: flex; flex: 0 0 auto; flex-wrap: wrap; gap: .5rem; max-width: 100%; }
     .project-roles { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .65rem; }
     .project-responsibility { margin: .75rem 0 0; color: var(--heading); font-size: 1rem; line-height: 1.72; word-break: keep-all; overflow-wrap: break-word; }
     .project-responsibility-label { display: block; margin-bottom: .2rem; font-size: .85rem; font-weight: 700; }
@@ -178,8 +182,10 @@
     .project-case-heading h4 { margin: 0; color: var(--heading); font-size: 1.4rem; line-height: 1.45; }
     .project-case-heading .case-context { grid-column: 2; margin: 0; color: var(--muted); font-size: .85rem; line-height: 1.6; word-break: keep-all; overflow-wrap: anywhere; }
     .case-notion { display: grid; gap: 1.05rem; margin: 1.25rem 0 0 2.05rem; }
+    .case-topic { display: grid; gap: .8rem; }
+    .case-topic-title { margin: 0; color: var(--heading); font-size: 1.05rem; font-weight: 850; }
     .case-section { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 1rem; }
-    .case-section h5 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem; font-weight: 850; line-height: 1.55; }
+    .case-section h5, .case-section h6 { margin: .1rem 0 0; color: var(--heading); font-size: .95rem; font-weight: 850; line-height: 1.55; }
     .case-section p { margin: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; }
     .case-section ul { margin: 0; padding-left: 1.2em; min-width: 0; color: var(--heading); font-size: 1.1rem; line-height: 1.78; word-break: keep-all; overflow-wrap: anywhere; }
     .case-section li + li { margin-top: .45rem; }
@@ -313,6 +319,7 @@
             <div class="tech-grid">
               <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/docker.svg" alt=""></span><div class="tech-label"><strong>Docker</strong></div></div>
               <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/githubactions.svg" alt=""></span><div class="tech-label"><strong>GitHub Actions</strong></div></div>
+              <div class="tech-item"><span class="tech-icon"><img class="tech-icon-image" src="/assets/img/tech/amazonwebservices.svg" alt=""></span><div class="tech-label"><strong>AWS</strong></div></div>
             </div>
           </div>
         </div>
@@ -336,7 +343,7 @@
               </article>
               <article class="credential-item">
                 <div class="credential-topline"><span class="credential-kind">교육</span><span class="credential-period"><time datetime="2026-04">2026.04</time><span>~</span><time datetime="2026-10">2026.10</time></span></div>
-                <div class="credential-title-row"><h4>LG U+ 유레카 백엔드 과정</h4><span class="credential-status">진행 중</span></div>
+                <h4>LG U+ 유레카 백엔드 과정</h4>
               </article>
             </div>
           </section>
@@ -367,6 +374,14 @@
         </div>
         <div class="projects">
           <nav class="project-overview" aria-label="프로젝트 바로가기">
+            <a class="project-overview-link" href="#project-getddo">
+              <img class="project-overview-logo" src="../assets/img/getddo-juggling-mascot.webp" alt="" width="800" height="800" loading="lazy">
+              <strong class="project-overview-name">GETDDO</strong>
+              <span class="project-overview-description">이벤트 응모·추첨 서비스</span>
+              <span class="project-overview-role">인프라·공통 기반·사용자 담당</span>
+              <span class="project-overview-period">2026.09.10 ~ 10.27</span>
+              <span class="project-overview-jump">프로젝트로 이동 ↓</span>
+            </a>
             <a class="project-overview-link" href="#project-coupon-yaho">
               <img class="project-overview-logo" src="../assets/img/coupon-yaho-logo.png" alt="" width="88" height="88" loading="lazy">
               <strong class="project-overview-name">쿠폰 야호</strong>
@@ -380,10 +395,73 @@
               <strong class="project-overview-name">갈래말래</strong>
               <span class="project-overview-description">메뉴 추천·투표 서비스</span>
               <span class="project-overview-role">팀장·투표 기능 담당</span>
-              <span class="project-overview-period">2026.07.16 ~ 07.27</span>
+              <span class="project-overview-period">2026.07.09 ~ 07.27</span>
               <span class="project-overview-jump">프로젝트로 이동 ↓</span>
             </a>
+            <a class="project-overview-link" href="https://github.com/sago-panda/sapari-be" target="_blank" rel="noreferrer">
+              <img class="project-overview-logo" src="../assets/img/sapari-logo.png" alt="" width="460" height="460" loading="lazy">
+              <strong class="project-overview-name">Sapari</strong>
+              <span class="project-overview-description">라이브 커머스 서비스</span>
+              <span class="project-overview-role">회원 기능 담당</span>
+              <span class="project-overview-period">2026.04.24 ~ 09.12</span>
+              <span class="project-overview-jump">GitHub에서 보기 ↗</span>
+            </a>
           </nav>
+          <article class="project-document" id="project-getddo">
+            <div class="project-header">
+              <div class="project-logo-slot" data-project-logo="getddo"><img src="../assets/img/getddo-juggling-mascot.webp" alt="저글링하는 GETDDO 마스코트" width="800" height="800" loading="lazy"></div>
+              <div class="project-heading">
+                <div class="project-title-row">
+                  <div><h3>GETDDO</h3><p class="project-summary">출석·미션·게임으로 응모권을 모아 경품 이벤트에 참여하는 서비스</p></div>
+                  <div class="project-repos">
+                    <a class="project-repo" href="https://github.com/Uplus-GETDDO/getddo-be" target="_blank" rel="noreferrer">백엔드 GitHub ↗</a>
+                    <a class="project-repo" href="https://github.com/Uplus-GETDDO/getddo-infra" target="_blank" rel="noreferrer">인프라 GitHub ↗</a>
+                  </div>
+                </div>
+                <div class="project-roles"><span class="project-role">2026.09.10 ~ 10.27</span><span class="project-role">5인 팀</span><span class="project-role primary">인프라·공통 기반·사용자 담당</span></div>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>AWS 인프라·CI/CD와 IP별 요청 차단 구성, DB·Redis 이중화 및 장애 전환 검증. 공통 응답·오류 처리와 사용자 기능 구현, AI 개발·검토 기준 제안 및 적용</p>
+              </div>
+            </div>
+            <section class="project-key-results" aria-label="GETDDO 핵심 구현 및 검증">
+              <h4>핵심 구현 및 검증</h4>
+              <ol><li class="project-key-result"><span><strong>공통 코드와 AI 활용 기준</strong>을 실제 기능 개발·검토에 적용</span></li><li class="project-key-result"><span><strong>WAF의 IP별 요청 차단·자동 해제 검증</strong>, DB·Redis 장애 전환 후 <strong>앱 재시작 없이 기능 복구 확인</strong></span></li></ol>
+            </section>
+            <div class="project-cases">
+              <article class="project-case" data-project-case="shared-development-foundation">
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>팀이 함께 사용할 공통 코드와 AI 작업 기준 마련</h4></header>
+                <div class="case-notion">
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>사용자 확인·응답·오류 처리를 기능마다 따로 구현하면 <strong>공통 코드가 중복되고, 같은 오류에도 API마다 다른 형식으로 응답할 수 있음</strong>. AI가 작성하는 코드에도 팀의 컨벤션과 모듈별 책임을 공통으로 적용할 기준이 필요했음.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>사용자 정보 확인과 성공·실패 응답을 공통 코드로 구현</strong>. 각 API에서 같은 방식으로 사용자를 확인하고, 한 요청 안에서는 사용자 정보를 반복 조회하지 않도록 구성</li><li>시간을 기록하는 방식을 통일하고, 업무 처리 결과와 함께 누가 무엇을 바꿨는지 저장하는 공통 기능 구현</li><li><strong>AI가 코드 컨벤션과 모듈별 책임을 참고하도록 공통 문서 제공</strong>. 예를 들어 core는 도메인·Service·저장 인터페이스를 맡고, 저장 구현은 storage에 두는 의존 규칙 명시</li><li>작업 기록에 변경 이유·구현 내용·검증 결과를 남기는 양식과 담당자 검토 절차 적용. 같은 기준 문서를 연결한 CodeRabbit 리뷰 설정 구성</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>확인</h5><p>이벤트·알림 API에서 같은 사용자 확인 코드를 사용하도록 적용. 요청에 담긴 사용자 정보가 올바른지 검사하고, 한 요청에서 사용자 정보를 한 번 조회해 재사용하는지 테스트. AI 작업 기록에도 <strong>담당자가 실제 코드와 실행 결과를 대조한 뒤 공유</strong>하는 절차 적용.</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>공통 기준을 코드와 검토 절차에서 함께 사용하고, AI 초안과 담당자가 실제로 확인한 결과를 구분해야 함.</p></section>
+                </div>
+              </article>
+              <article class="project-case" data-project-case="aws-infrastructure">
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>IP별 과도한 요청 차단과 DB·Redis 장애 전환 검증</h4></header>
+                <figure class="project-architecture">
+                  <a href="../assets/img/getddo-infrastructure.svg" target="_blank" rel="noreferrer" aria-label="GETDDO AWS 인프라 구성도 크게 보기, 새 창">
+                    <img src="../assets/img/getddo-infrastructure.svg" alt="CloudFront와 WAF에서 내부 ALB를 거쳐 두 API 서버로 요청을 전달하고, RDS 주·대기 DB와 Redis 메인·복제본, S3, Prometheus·Grafana를 연결한 GETDDO 운영 인프라 구성도" width="1720" height="920" loading="lazy">
+                  </a>
+                </figure>
+                <div class="case-notion">
+                  <section class="case-topic" aria-labelledby="getddo-rate-limit">
+                    <h5 class="case-topic-title" id="getddo-rate-limit">요청 제한 · IP별 과도한 요청을 앱 도달 전에 차단</h5>
+                    <section class="case-section" data-case-stage="problem"><h6>문제</h6><p>같은 IP에서 API를 과도하게 호출하면 <strong>반복 요청이 앱·DB 자원을 점유해 다른 사용자의 요청 처리에도 영향을 줄 수 있음</strong>. 앱에 도달하기 전에 과도한 요청을 제한할 필요가 있었음.</p></section>
+                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><ul><li><strong>CloudFront에 AWS WAF를 연결해 접속 IP별 API 요청량을 기준으로 429 응답</strong>. 최근 60초에 600회 기준으로 설정하고, 사용자가 바꿀 수 있는 전달 헤더 대신 접속 IP로 집계</li><li>OPTIONS와 이미지 조회는 제한 대상에서 제외. 차단 로그를 CloudWatch에 저장하고 쿼리 문자열·인증·사용자 헤더는 마스킹</li></ul></section>
+                    <section class="case-section" data-case-stage="evaluation"><h6>확인</h6><p>임시 ALB 응답 경로로 앱·DB에 부하를 주지 않고 <strong>같은 IP의 반복 요청 차단과 다른 IP의 정상 통과</strong> 확인. 요청 중단 후 규칙 변경 없이 자동 해제됐으며, OPTIONS·이미지 조회와 차단 로그 저장·민감 값 마스킹도 검증.</p></section>
+                  </section>
+                  <section class="case-topic" aria-labelledby="getddo-failover">
+                    <h5 class="case-topic-title" id="getddo-failover">장애 대응 · 다른 AZ로 전환한 뒤 앱 기능 복구</h5>
+                    <section class="case-section" data-case-stage="problem"><h6>문제</h6><p>DB·Redis의 주 노드가 중단되면 <strong>DB 조회·저장이나 Redis를 사용하는 요청 처리가 실패할 수 있음</strong>. 대기 노드가 역할을 이어받은 뒤 앱이 다시 연결돼 기능을 복구하는지 확인할 필요가 있었음.</p></section>
+                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><p>Terraform으로 <strong>RDS Multi-AZ의 대기 DB와 다른 AZ의 Redis 복제본</strong>을 구성하고 자동 장애 전환 활성화. 기존 접속 주소를 유지하고, DB 연결 장애는 공통 503 응답으로 구분하며 연결·DNS 설정 조정.</p></section>
+                    <section class="case-section" data-case-stage="evaluation"><h6>확인</h6><div class="case-evaluation-body"><p>실제 RDS 전환 중 조회 요청의 503과 자동 재연결 확인. Redis 복제본 승격 후에는 양쪽 API의 재연결과 실제 Redis 명령 처리를 관찰해 <strong>앱 재시작 없이 기존 기능이 복구</strong>된 것을 확인.</p><p>RDS 복구 후 기존 미션·응모 기능의 정상 처리 요청을 같은 키로 재전송해 <strong>추가 지급·응모·차감이 없음을 검증</strong>. 두 API의 조회도 재시작 없이 복구.</p></div></section>
+                  </section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>대기 DB와 Redis 복제본은 읽기 분산에 사용하지 않음. Redis는 비동기 복제라 전환 시 최근 변경분이 유실될 수 있음. 기능 복구 확인을 전체 요청의 무중단·무유실 보장으로 확대하지 않음.</p></section>
+                </div>
+              </article>
+            </div>
+            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">MySQL</span><span class="tag">Redis</span><span class="tag">AWS</span><span class="tag">Terraform</span><span class="tag">Docker</span><span class="tag">GitHub Actions</span></div></div>
+          </article>
           <article class="project-document" id="project-coupon-yaho">
             <div class="project-header">
               <div class="project-logo-slot" data-project-logo="coupon-yaho"><img src="../assets/img/coupon-yaho-logo.png" alt="쿠폰 야호 조직 로고" width="460" height="460" loading="lazy"></div>
@@ -393,42 +471,30 @@
                   <a class="project-repo" href="https://github.com/coupon-yaho/cy-be" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
                 <div class="project-roles"><span class="project-role">2026.08.11 ~ 09.01</span><span class="project-role">5인 팀</span><span class="project-role primary">운영현황·정합성 담당</span></div>
-                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>운영자가 발급 현황을 정확하게 확인할 수 있도록, 재요청의 중복 집계를 막고 저장소별 발급 기록을 비교하는 기능 구현</p>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>운영자가 발급 현황을 정확하게 확인할 수 있도록, 재요청의 중복 집계를 막고 저장소별 발급 기록을 비교하는 기능 구현. 회차 종료 후 운영 지표 정리와 누락된 종료 정보의 DB 조회 보정 구현</p>
               </div>
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>누적 발급 수가 같아도 <strong>재고 복원 누락 1건 탐지</strong></span></li><li class="project-key-result"><span>재요청·동시 경합에서도 <strong>신규 성공 이벤트 1건만 생성</strong></span></li><li class="project-key-result"><span>DB 커밋 이후 <strong>대상 회차의 지표만 제거</strong>, 롤백 시 유지</span></li></ol>
+              <ol><li class="project-key-result"><span>누적 발급 수가 같아도 <strong>재고 복원 누락 1건 탐지</strong></span></li><li class="project-key-result"><span>재요청·동시 경합에서도 <strong>신규 성공 이벤트 1건만 생성</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="consistency-gaps">
                 <header class="project-case-heading"><span class="project-case-number">01</span><h4>누적 발급 수 비교로 놓치는 재고 불일치 탐지</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰 발급을 취소한 뒤 Redis 재고가 복원되지 않아도, Redis와 DB의 누적 발급 수는 같을 수 있음. <strong>누적 발급 수만 비교하면 재고 복원 누락을 발견하기 어려움.</strong></p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>취소·만료 시 현재 재고와 활성 쿠폰 수는 바뀌지만, 누적 발급 기록은 유지됨. 또한 Redis와 DB 사이의 수량이 같더라도 각 저장소의 카운터와 실제 기록이 일치한다고 볼 수는 없음.</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>현재 재고와 누적 발급 기록을 나누어 비교</strong>해 재고 복원 누락과 발급 기록 누락을 각각 확인</li><li>Redis의 발급 수·회원 기록, DB의 실제 쿠폰 수·집계 카운터까지 <strong>네 가지 비교 기준으로 구성</strong></li><li>처리 중(LIVE)에는 저장소 반영 시차를 고려하고, <strong>처리 종료 후(FINAL)에는 적용되는 비교값에 1건이라도 차이가 남으면 실패로 판정</strong></li></ul></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>취소·만료로 현재 재고와 활성 쿠폰 수가 바뀌어도 누적 발급 기록은 유지됨. Redis 재고가 복원되지 않아도 양쪽 누적값은 같을 수 있어, <strong>누적 발급 수만으로는 재고 복원 누락을 발견하기 어려움.</strong></p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>총재고 − Redis 잔여 재고를 DB 활성 발급 수와 비교</strong>하고, 누적 발급 기록은 별도로 대조</li><li>Redis의 발급 수·회원 기록과 DB의 실제 쿠폰 수·집계 카운터도 대조</li><li>처리 중(LIVE)에는 저장소 반영 시차를 고려하고, <strong>처리 종료 후(FINAL)에는 적용되는 비교값에 1건이라도 차이가 남으면 실패로 판정</strong></li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL에 취소 후 재고가 복원되지 않은 상황을 구성. <strong>양쪽 누적 발급 수가 각각 4건으로 같아도 재고 1건 차이를 탐지</strong>하고, 처리 종료 후 정합성 실패로 판정.</p><p>정상 2종·수량 불일치 4종에서 예상 결과가 일치했으며, 필수 값 누락·조회 실패 3종은 정상으로 판정하지 않도록 확인.</p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>네 비교값이 모두 같아도 개별 회원·쿠폰 기록까지 정확하다고 보장할 수는 없음. 수량 불일치를 찾는 역할과 초과 발급·1인 1매를 확인하는 역할을 구분해야 함.</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>수량이 일치해도 개별 회원·쿠폰 기록의 정확성까지 보장하지는 않으므로, 초과 발급·1인 1매 검증과 구분해야 함.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="idempotent-replay-observation">
                 <header class="project-case-heading"><span class="project-case-number">02</span><h4>재요청에 따른 성공 이벤트 중복 생성 방지</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰은 한 장 발급됐는데 같은 요청을 다시 보낼 때마다 성공으로 기록하면, 운영 현황에는 여러 장 발급된 것처럼 집계될 수 있음</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>응답을 받지 못한 사용자가 다시 요청하면 서버는 저장된 발급 결과를 반환. 기존 반환값에는 신규 발급인지 이전 결과를 다시 돌려준 것인지 구분하는 정보가 없었음</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>기존 발급 결과에는 신규 발급과 이전 결과 재사용을 구분하는 정보가 없었음. 재요청에 저장된 결과를 반환해도 새 성공으로 기록하면, <strong>쿠폰은 한 장 발급됐는데 운영 현황에는 여러 장 발급된 것처럼 집계될 수 있음</strong>.</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>발급 결과에 <strong>신규 발급과 이전 결과 재사용을 구분하는 replayed 값 추가</strong></li><li>발급 시도와 결과를 알리는 이벤트를 Kafka 발행 흐름에 연결. <strong>이전 결과를 돌려준 요청은 신규 성공 이벤트 생성에서 제외</strong></li><li>같은 요청이 동시에 들어와 이전 결과를 반환하게 된 경우에도, 한 요청의 시도 이벤트를 중복 기록하지 않도록 처리</li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>실제 MySQL에서 동일 요청의 재전송과 두 요청의 동시 경합을 각각 실행. 두 경우 모두 <strong>실제 발급과 신규 성공 이벤트는 각각 1건</strong>, 시도 이벤트는 요청당 1건만 생성. 완료된 응답을 다시 반환해도 성공 집계가 늘어나지 않는 동작 확인.</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>중복 발급 방지와 성공 이벤트 중복 방지는 별도로 처리해야 함. 이번 구현은 완료된 응답을 재사용한 요청의 성공 이벤트 중복 생성을 막는 범위이며, Kafka 전송·재소비 과정의 중복 처리는 별도로 필요.</p></section>
-                </div>
-              </article>
-              <article class="project-case" data-project-case="lifecycle-after-commit">
-                <header class="project-case-heading"><span class="project-case-number">03</span><h4>종료된 쿠폰 회차의 지표를 각 서버에서 정리</h4></header>
-                <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>쿠폰 발급 단위인 회차가 종료돼도, 요청을 받는 각 API 서버에는 해당 회차의 운영 지표가 남음. 반대로 종료가 확정되기 전에 지표를 지우면 종료 처리가 취소돼도 지표만 사라질 수 있음</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>회차 종료는 별도의 배치 서버가 처리하지만 운영 지표는 각 API 서버 메모리에 있어 종료 사실을 전달해야 함. DB 저장과 서버 간 종료 알림을 하나의 트랜잭션으로 묶을 수 없었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>종료 알림을 트랜잭션에 등록하고 <strong>DB에 종료가 확정된 뒤(afterCommit)에만 Redis Pub/Sub으로 각 API 서버에 전달</strong></li><li>알림을 받은 각 API 서버에서 해당 회차의 지표를 제거. Redis 알림 수신 연결에 실패하면 5초 간격으로 재연결 시도</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 MySQL 커밋과 Redis Pub/Sub을 연결해, <strong>정리 유예 시간이 지난 대상 회차의 지표가 독립 지표 저장소 두 곳에서 각각 5개씩 제거</strong>되는 동작 확인.</p><p>롤백 시에는 지표를 유지하고, 중복 종료 알림에도 다른 회차의 지표는 유지. 기동 시 DB 조회에서도 조회 대상인 종료 회차의 지표만 제거.</p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>Redis Pub/Sub은 연결이 끊긴 동안의 메시지를 보관하지 않으므로 재연결만으로 누락된 종료 정보를 받을 수 없음. API 기동 시 최근 24시간·최대 1,000개의 종료 회차를 DB에서 다시 조회하도록 구성. 이번 연결 테스트는 한 JVM의 독립 지표 저장소 두 곳에서 진행했으며, 별도 API 서버 두 대를 실행한 결과와는 구분.</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>중복 발급과 성공 이벤트 중복 생성은 별도로 막아야 함. 이번 확인 범위는 이벤트 생성까지이며, Kafka 전송·재소비 과정의 중복 처리는 별도로 필요.</p></section>
                 </div>
               </article>
             </div>
@@ -443,7 +509,7 @@
                   <div><h3>갈래말래</h3><p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p></div>
                   <a class="project-repo" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
-                <div class="project-roles"><span class="project-role">2026.07.16 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·투표 기능 담당</span></div>
+                <div class="project-roles"><span class="project-role">2026.07.09 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·투표 기능 담당</span></div>
                 <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청에 비동기 처리를 적용해 추천 완료를 기다리지 않고 응답하도록 변경. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
               </div>
             </div>
@@ -455,31 +521,19 @@
               <article class="project-case" data-project-case="async-recommendation">
                 <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연 3초 · 초당 2건 · 방식별 300건 비교 · Consumer 8개</p></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 요청에서 점수 계산과 외부 AI 호출까지 기다리면 API 응답이 늦어지고, 외부 API 오류가 요청 처리에 직접 영향을 줄 가능성</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>추천 작업에 점수 계산과 외부 AI 응답 대기가 포함되므로, 추천 API에서 직접 실행할 경우 작업 완료까지 요청이 대기</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>방장 권한과 세션 상태를 확인하고, 메뉴 선택 단계에서 후보가 0개·1개인 경우 추천을 허용하도록 기준 설정</li><li>추천 진행 상태를 저장한 뒤 DB 커밋 후 추천 작업을 RabbitMQ로 전달해 별도로 처리. <strong>API는 추천 작업 완료를 기다리지 않고 먼저 응답</strong></li><li>후보가 없는 추천 진행 상태에서도 재요청을 허용해 중단된 추천을 다시 요청할 경로 마련</li></ul></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 API가 점수 계산과 외부 AI 호출을 모두 끝낸 뒤 응답하면, <strong>사용자는 추천이 완료될 때까지 요청 접수 응답도 받지 못함</strong>.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>권한·세션 상태·후보 수를 확인하고, 후보가 없는 진행 상태에서도 재요청할 수 있도록 조건 설정</li><li>추천 진행 상태를 저장하고 DB 커밋 후 <strong>RabbitMQ로 추천 작업을 비동기 처리</strong>. API는 작업 완료를 기다리지 않고 접수 응답 반환</li></ul></section>
                   <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동기 방식과 비교해 <strong>추천 HTTP 응답 p95를 3,168ms에서 64ms로 약 98% 단축</strong>. 동일한 추천 작업을 응답 전에 끝내는 동기 비교용 구현을 사용하고, 방식별 100건씩 3회 측정. 총 600건의 결과 저장과 Redis 상태 정합성 확인, HTTP 실패·미완료·결과 불일치 0건</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 결과 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 작업 완료 시간이 아닌 요청 응답 대기를 줄인 결과. DB 커밋 후 메시지 발행 전 요청 누락 가능성은 별도로 남아 있어 Outbox 적용 필요</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 줄인 것은 HTTP 응답 대기 시간. DB 커밋 후 메시지 발행 전의 요청 누락 가능성은 Outbox로 보완할 필요가 있음.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="atomic-vote-change">
-                <header class="project-case-heading"><span class="project-case-number">02</span><h4>동시 투표 변경에도 개인 선택과 집계 일치</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>동시 투표의 집계를 맞추고 저장 실패 후 같은 결과로 재처리</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>선택 변경을 여러 단계로 나누면 요청이 동시에 들어올 때 개인 선택과 후보별 투표 수가 달라질 가능성</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>개인 선택 변경과 후보별 투표 수 갱신이 여러 명령으로 나뉘면 동시 요청의 실행 순서에 따라 일부 변경만 반영될 수 있었음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 진행 정보를 Redis Hash에 저장하고 상태·마감 시간·후보를 Lua에서 확인</li><li>기존 표 차감·새 표 가산·개인 선택 변경을 <strong>Redis Lua 한 번으로 처리</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis에서 최초 제출·선택 변경·동일 선택 반복·마감 경합 등 6개 시나리오를 각각 20회 실행. 누적 경합 요청 <strong>14,400건에서 개인 선택으로 다시 계산한 표 수와 후보별 집계의 불일치 0건</strong> 확인.</p><p>마감으로 인한 정상 거절과 오류를 구분했으며, 예상하지 못한 오류는 0건.</p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>총표 수가 같더라도 후보별 집계는 다를 수 있어 개인 선택과 후보별 수량을 함께 비교해야 함. 이번 확인 범위는 Redis의 투표 변경·마감 처리이며, HTTP 요청부터 인증·응답까지 연결한 동시성 검증과는 구분.</p></section>
-                </div>
-              </article>
-              <article class="project-case" data-project-case="persistence-recovery">
-                <header class="project-case-heading"><span class="project-case-number">03</span><h4>DB 저장 실패 후 남겨 둔 투표 집계로 재처리</h4></header>
-                <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>Redis에서 마감 집계를 만든 뒤 MySQL 저장에 실패했을 때 집계까지 지우면 같은 결과로 재저장 불가</p></section>
-                  <section class="case-section" data-case-stage="cause"><h5>원인</h5><p>Redis의 마감 집계와 MySQL의 확정 결과가 서로 다른 저장소에 있어 하나의 트랜잭션으로 묶을 수 없었고, 집계를 먼저 지우면 재시도 기준도 사라졌음</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>Redis 마감 집계를 MySQL 저장 성공 전까지 보존</strong>해 실패 후 같은 결과로 다시 시도할 기준 마련</li><li>저장이 완료된 뒤에만 Redis 집계를 삭제하도록 처리 순서 분리</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 MySQL에서 후보 결과 갱신 후 SQL 오류를 발생시켜 <strong>부분 저장은 롤백되고 Redis 마감 집계는 유지</strong>되는 동작 확인.</p><p>실패 원인을 제거한 뒤 직접 재호출과 만료 세션 재처리 경로에서 <strong>후보 3개의 결과를 기존 집계와 동일하게 저장</strong>하고 Redis 집계를 삭제. 완료 후 다시 호출해도 추가 결과 갱신은 0회.</p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>DB 저장이 끝나기 전에 Redis 집계를 삭제하면 재시도에 필요한 값이 사라지므로, 커밋 이후에 정리하도록 구성. 재시도는 Redis 집계가 남아 있는 동안 가능하며, TTL 만료나 Redis 데이터 유실은 별도 대응 필요. 만료 세션의 재처리 경로까지 확인했지만 스케줄러의 자동 실행은 이번 검증에서 제외.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>메뉴를 바꾸는 요청이 동시에 들어오면 <strong>사용자의 선택 내역과 메뉴별 득표 수가 서로 맞지 않을 수 있음</strong>. 투표 종료 후 Redis의 결과를 먼저 지우면 <strong>DB 저장 실패 시 재시도할 투표 결과가 남지 않음</strong>.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>투표 상태와 마감 시간을 확인하고, 투표할 메뉴를 바꿀 때 <strong>내가 선택한 메뉴와 메뉴별 득표 수를 Redis Lua로 함께 변경</strong></li><li>DB 저장에 실패해도 같은 결과로 다시 저장할 수 있도록, <strong>MySQL 저장이 끝날 때까지 Redis에 투표 결과 유지</strong>. 커밋 이후에만 Redis의 결과 삭제</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis에서 최초 제출·선택 변경·동일 선택 반복·마감 경합 등 6개 시나리오를 각각 20회 실행. 누적 경합 요청 <strong>14,400건에서 개인 선택과 후보별 집계의 불일치 0건</strong> 확인.</p><p>실제 MySQL에 SQL 오류를 주입해 부분 저장은 롤백되고 Redis 집계는 유지되는 동작 확인. 직접 재호출과 만료 세션 재처리 경로에서 <strong>후보 3개의 결과를 기존 집계와 동일하게 저장</strong>했으며 완료 후 추가 갱신은 0회.</p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>총표 수뿐 아니라 개인 선택과 후보별 집계도 비교해야 함. 재시도는 Redis 집계가 남아 있는 동안 가능하며 TTL 만료·데이터 유실은 별도 대응 필요. HTTP 전체 경로의 동시성 검증과 스케줄러 자동 실행은 이번 검증에서 제외.</p></section>
                 </div>
               </article>
             </div>

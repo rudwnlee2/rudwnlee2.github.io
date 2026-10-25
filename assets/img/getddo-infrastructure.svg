@@ -1,0 +1,189 @@
+<svg viewBox="0 0 1720 920" role="img" aria-label="GETDDO 운영 아키텍처 — CloudFront WAF · API 두 대 · RDS 동기 복제 · Redis 비동기 복제 (architecture diagram)" width="1720" height="920" xmlns="http://www.w3.org/2000/svg"><style>@font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: local('JetBrains Mono'), local('JetBrainsMono-Regular'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 500; src: local('JetBrains Mono'), local('JetBrainsMono-Regular'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 600; src: local('JetBrains Mono'), local('JetBrainsMono-Regular'); }
+@font-face { font-family: 'JetBrains Mono'; font-weight: 700; src: local('JetBrains Mono'), local('JetBrainsMono-Regular'); }
+svg { font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'DejaVu Sans Mono', 'Liberation Mono', 'Noto Sans Mono CJK SC', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', monospace; }
+:root, [data-theme="dark"] { --bg: #020617; --grid: #1e293b; --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
+[data-theme="light"] { --bg: #f8fafc; --grid: #e2e8f0; --text: #0f172a; --text-muted: #64748b; --text-dim: #94a3b8; --text-faint: #64748b; --panel: #ffffff; --panel-border: #e2e8f0; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
+svg { width: 100%; min-width: min(900px, 100%); display: block; }
+.c-grid { stroke: var(--grid); fill: none; }
+.c-mask { fill: var(--mask); stroke: none; }
+.c-frontend { fill: var(--frontend-fill); stroke: var(--frontend-stroke); }
+.c-backend { fill: var(--backend-fill); stroke: var(--backend-stroke); }
+.c-database { fill: var(--database-fill); stroke: var(--database-stroke); }
+.c-cloud { fill: var(--cloud-fill); stroke: var(--cloud-stroke); }
+.c-security { fill: var(--security-fill); stroke: var(--security-stroke); }
+.c-messagebus { fill: var(--messagebus-fill); stroke: var(--messagebus-stroke); }
+.c-external { fill: var(--external-fill); stroke: var(--external-stroke); }
+.t-primary { fill: var(--text); }
+.t-muted { fill: var(--text-muted); }
+.t-dim { fill: var(--text-dim); }
+.t-frontend { fill: var(--frontend-stroke); }
+.t-backend { fill: var(--backend-stroke); }
+.t-database { fill: var(--database-stroke); }
+.t-cloud { fill: var(--cloud-stroke); }
+.t-security { fill: var(--security-stroke); }
+.t-messagebus { fill: var(--messagebus-stroke); }
+.t-external { fill: var(--external-stroke); }
+.a-default { stroke: var(--arrow); fill: none; }
+.a-emphasis { stroke: var(--arrow-emphasis); fill: none; }
+.a-security { stroke: var(--security-stroke); fill: none; stroke-dasharray: 5, 5; }
+.a-dashed { stroke: var(--database-stroke); fill: none; stroke-dasharray: 4, 4; }
+.m-default { fill: var(--arrow); }
+.m-emphasis { fill: var(--arrow-emphasis); }
+.m-security { fill: var(--security-stroke); }
+.m-dashed { fill: var(--database-stroke); }
+.c-security-group { fill: transparent; stroke: var(--security-stroke); stroke-dasharray: 4, 4; }
+.c-region { fill: rgba(251, 191, 36, 0.05); stroke: var(--cloud-stroke); stroke-dasharray: 8, 4; }
+.c-lane { fill: var(--lane-fill); stroke: var(--lane-stroke); stroke-dasharray: 6, 6; }
+svg[data-animation="trace"] [data-animate="edge"] { stroke-dasharray: 10, 8; stroke-dashoffset: 54; animation-duration: 2.4s; animation-timing-function: linear; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: archify-edge-flow; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--step, 0) * 160ms); }
+svg[data-animation="trace"] [data-animate="node"] { transform-box: fill-box; transform-origin: center center; animation-duration: 3.6s; animation-timing-function: ease-in-out; animation-iteration-count: infinite; animation-direction: normal; animation-fill-mode: none; animation-play-state: running; animation-name: archify-node-pulse; animation-timeline: auto; animation-range: normal; animation-delay: calc(var(--step, 0) * 160ms); }
+:root, svg { --bg: #020617; --grid: #1e293b; --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
+@media (prefers-color-scheme: light) { :root, svg { --bg: #f8fafc; --grid: #e2e8f0; --text: #0f172a; --text-muted: #64748b; --text-dim: #94a3b8; --text-faint: #64748b; --panel: #ffffff; --panel-border: #e2e8f0; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; } }
+svg[data-theme="light"] { --bg: #f8fafc; --grid: #e2e8f0; --text: #0f172a; --text-muted: #64748b; --text-dim: #94a3b8; --text-faint: #64748b; --panel: #ffffff; --panel-border: #e2e8f0; --lane-fill: rgba(248, 250, 252, 0.65); --lane-stroke: #cbd5e1; --arrow: #94a3b8; --arrow-emphasis: #059669; --mask: #ffffff; --frontend-fill: rgba(34, 211, 238, 0.15); --frontend-stroke: #0891b2; --backend-fill: rgba(52, 211, 153, 0.18); --backend-stroke: #059669; --database-fill: rgba(167, 139, 250, 0.2); --database-stroke: #7c3aed; --cloud-fill: rgba(251, 191, 36, 0.18); --cloud-stroke: #d97706; --security-fill: rgba(251, 113, 133, 0.15); --security-stroke: #e11d48; --messagebus-fill: rgba(251, 146, 60, 0.15); --messagebus-stroke: #ea580c; --external-fill: rgba(148, 163, 184, 0.18); --external-stroke: #64748b; --toolbar-bg: rgba(255, 255, 255, 0.92); --toolbar-border: #cbd5e1; --toolbar-text: #334155; --toolbar-hover: #ffffff; --toolbar-menu-bg: #ffffff; }
+svg[data-theme="dark"] { --bg: #020617; --grid: #1e293b; --text: #ffffff; --text-muted: #94a3b8; --text-dim: #475569; --text-faint: #7d8da1; --panel: rgba(15, 23, 42, 0.5); --panel-border: #1e293b; --lane-fill: rgba(15, 23, 42, 0.22); --lane-stroke: #334155; --arrow: #64748b; --arrow-emphasis: #34d399; --mask: #0f172a; --frontend-fill: rgba(8, 51, 68, 0.4); --frontend-stroke: #22d3ee; --backend-fill: rgba(6, 78, 59, 0.4); --backend-stroke: #34d399; --database-fill: rgba(76, 29, 149, 0.4); --database-stroke: #a78bfa; --cloud-fill: rgba(120, 53, 15, 0.3); --cloud-stroke: #fbbf24; --security-fill: rgba(136, 19, 55, 0.4); --security-stroke: #fb7185; --messagebus-fill: rgba(251, 146, 60, 0.3); --messagebus-stroke: #fb923c; --external-fill: rgba(30, 41, 59, 0.5); --external-stroke: #94a3b8; --toolbar-bg: rgba(15, 23, 42, 0.8); --toolbar-border: #334155; --toolbar-text: #e2e8f0; --toolbar-hover: rgba(15, 23, 42, 0.95); --toolbar-menu-bg: #0f172a; }
+rect.c-bg-rect { fill: var(--bg); }
+</style><rect width="100%" height="100%" class="c-bg-rect"/>
+        <!-- Definitions -->
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-default"/>
+          </marker>
+          <marker id="arrowhead-emphasis" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-emphasis"/>
+          </marker>
+          <marker id="arrowhead-security" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-security"/>
+          </marker>
+          <marker id="arrowhead-dashed" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" class="m-dashed"/>
+          </marker>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" class="c-grid" stroke-width="0.5"/>
+          </pattern>
+        </defs>
+
+        <!-- Background Grid -->
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+
+        <!-- Boundaries (behind everything) -->
+        <rect x="520" y="130" width="1180" height="698" rx="12" class="c-region" stroke-width="1"/>
+        <text x="528" y="148" class="t-cloud" font-size="9" font-weight="600">서울 VPC · ap-northeast-2</text>
+
+        <!-- Connection paths (before components for correct z-order) -->
+        <path d="M 190 384 L 245 384" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 485 384 L 550 384" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 730 384 L 810 384" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 1010 384 L 1052 384 Q 1060 384 1060 376 L 1060 212 Q 1060 204 1068 204 L 1110 204" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 910 428 L 910 506 Q 910 514 918 514 L 1110 514" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 910 340 L 910 108" class="a-security" stroke-width="1.5" marker-end="url(#arrowhead-security)"/>
+        <path d="M 1340 204 L 1440 204" class="a-emphasis" stroke-width="1.8" marker-end="url(#arrowhead-emphasis)"/>
+        <path d="M 1340 514 L 1440 514" class="a-dashed" stroke-width="1.5" marker-end="url(#arrowhead-dashed)"/>
+        <path d="M 365 340 L 365 188" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <path d="M 640 428 L 640 756 Q 640 764 648 764 L 1110 764" class="a-default" stroke-width="1.5" marker-end="url(#arrowhead)"/>
+        <path d="M 365 428 L 365 720" class="a-dashed" stroke-width="1.5" marker-end="url(#arrowhead-dashed)"/>
+
+        <!-- Components -->
+        <rect x="40" y="340" width="150" height="88" rx="6" class="c-mask"/>
+        <rect x="40" y="340" width="150" height="88" rx="6" class="c-external" stroke-width="1.5"/>
+        <text x="115" y="382" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">사용자 / 프론트</text>
+        <text x="115" y="398" class="t-muted" font-size="9" text-anchor="middle">브라우저 · HTTPS</text>
+        <text x="115" y="420" class="t-external" font-size="7" text-anchor="middle">공개 진입</text>
+
+        <rect x="245" y="340" width="240" height="88" rx="6" class="c-mask"/>
+        <rect x="245" y="340" width="240" height="88" rx="6" class="c-cloud" stroke-width="1.5"/>
+        <text x="365" y="382" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">CloudFront + WAF</text>
+        <text x="365" y="398" class="t-muted" font-size="9" text-anchor="middle">API: IP별 600회 / 60초</text>
+        <text x="365" y="420" class="t-cloud" font-size="7" text-anchor="middle">초과 429 · OPTIONS 제외</text>
+
+        <rect x="550" y="340" width="180" height="88" rx="6" class="c-mask"/>
+        <rect x="550" y="340" width="180" height="88" rx="6" class="c-cloud" stroke-width="1.5"/>
+        <text x="640" y="382" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">내부 ALB</text>
+        <text x="640" y="398" class="t-muted" font-size="9" text-anchor="middle">사설 서브넷 · HTTP :80</text>
+        <text x="640" y="420" class="t-cloud" font-size="7" text-anchor="middle">정상 API로 요청 분산</text>
+
+        <rect x="810" y="340" width="200" height="88" rx="6" class="c-mask"/>
+        <rect x="810" y="340" width="200" height="88" rx="6" class="c-backend" stroke-width="1.5"/>
+        <text x="910" y="382" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">API A / C · EC2 두 대</text>
+        <text x="910" y="398" class="t-muted" font-size="9" text-anchor="middle">AZ 2a / 2c · Docker :8080</text>
+        <text x="910" y="420" class="t-backend" font-size="7" text-anchor="middle">두 서버가 DB·Redis 메인 공유</text>
+
+        <rect x="1110" y="160" width="230" height="88" rx="6" class="c-mask"/>
+        <rect x="1110" y="160" width="230" height="88" rx="6" class="c-database" stroke-width="1.5"/>
+        <text x="1225" y="202" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">RDS MySQL · 메인</text>
+        <text x="1225" y="218" class="t-muted" font-size="9" text-anchor="middle">업무 데이터 읽기·쓰기 :3306</text>
+        <text x="1225" y="240" class="t-database" font-size="7" text-anchor="middle">비공개 · Multi-AZ</text>
+
+        <rect x="1440" y="160" width="230" height="88" rx="6" class="c-mask"/>
+        <rect x="1440" y="160" width="230" height="88" rx="6" class="c-database" stroke-width="1.5"/>
+        <text x="1555" y="202" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">RDS · 대기 DB</text>
+        <text x="1555" y="218" class="t-muted" font-size="9" text-anchor="middle">다른 AZ · 장애 시 자동 승격</text>
+        <text x="1555" y="240" class="t-database" font-size="7" text-anchor="middle">평소 조회 요청 처리 안 함</text>
+
+        <rect x="1110" y="470" width="230" height="88" rx="6" class="c-mask"/>
+        <rect x="1110" y="470" width="230" height="88" rx="6" class="c-database" stroke-width="1.5"/>
+        <text x="1225" y="512" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Redis · 메인</text>
+        <text x="1225" y="528" class="t-muted" font-size="9" text-anchor="middle">공유 요청 제한 · TLS :6379</text>
+        <text x="1225" y="550" class="t-database" font-size="7" text-anchor="middle">비공개 · cluster mode disabled</text>
+
+        <rect x="1440" y="470" width="230" height="88" rx="6" class="c-mask"/>
+        <rect x="1440" y="470" width="230" height="88" rx="6" class="c-database" stroke-width="1.5"/>
+        <text x="1555" y="512" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Redis · 복제본</text>
+        <text x="1555" y="528" class="t-muted" font-size="9" text-anchor="middle">다른 AZ · 장애 시 자동 승격</text>
+        <text x="1555" y="550" class="t-database" font-size="7" text-anchor="middle">최근 제한 값 일부 유실 가능</text>
+
+        <rect x="245" y="100" width="240" height="88" rx="6" class="c-mask"/>
+        <rect x="245" y="100" width="240" height="88" rx="6" class="c-cloud" stroke-width="1.5"/>
+        <text x="365" y="142" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">S3 이미지 저장소</text>
+        <text x="365" y="158" class="t-muted" font-size="9" text-anchor="middle">/images/* · OAC 읽기</text>
+        <text x="365" y="180" class="t-cloud" font-size="7" text-anchor="middle">공개 접근 차단</text>
+
+        <rect x="810" y="20" width="200" height="88" rx="6" class="c-mask"/>
+        <rect x="810" y="20" width="200" height="88" rx="6" class="c-security" stroke-width="1.5"/>
+        <text x="910" y="62" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Parameter Store</text>
+        <text x="910" y="78" class="t-muted" font-size="9" text-anchor="middle">앱 설정 · SecureString</text>
+        <text x="910" y="100" class="t-security" font-size="7" text-anchor="middle">A/C 서버 역할로 조회</text>
+
+        <rect x="1110" y="720" width="230" height="88" rx="6" class="c-mask"/>
+        <rect x="1110" y="720" width="230" height="88" rx="6" class="c-backend" stroke-width="1.5"/>
+        <text x="1225" y="762" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">Prometheus + Grafana</text>
+        <text x="1225" y="778" class="t-muted" font-size="9" text-anchor="middle">상시 모니터링 EC2</text>
+        <text x="1225" y="800" class="t-backend" font-size="7" text-anchor="middle">/grafana/ · 로그인 필요</text>
+
+        <rect x="245" y="720" width="240" height="88" rx="6" class="c-mask"/>
+        <rect x="245" y="720" width="240" height="88" rx="6" class="c-cloud" stroke-width="1.5"/>
+        <text x="365" y="762" class="t-primary" font-size="11" font-weight="600" text-anchor="middle">CloudWatch</text>
+        <text x="365" y="778" class="t-muted" font-size="9" text-anchor="middle">서비스 지표 · 앱 로그</text>
+        <text x="365" y="800" class="t-cloud" font-size="7" text-anchor="middle">WAF 차단 로그: 7일 보관</text>
+
+        <!-- Connection labels -->
+
+
+
+
+
+
+        <rect x="1363.4" y="194" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+        <text x="1390" y="204" class="t-backend" font-size="8" text-anchor="middle">동기 복제</text>
+        <rect x="1358.6" y="504" width="62.8" height="14" rx="3" class="c-mask"/>
+        <text x="1390" y="514" class="t-messagebus" font-size="8" text-anchor="middle">비동기 복제</text>
+        <rect x="333.6" y="250" width="62.8" height="14" rx="3" class="c-mask"/>
+        <text x="365" y="260" class="t-muted" font-size="8" text-anchor="middle">이미지 조회</text>
+        <rect x="773.4" y="754" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+        <text x="800" y="764" class="t-muted" font-size="8" text-anchor="middle">/grafana/</text>
+        <rect x="338.4" y="600" width="53.199999999999996" height="14" rx="3" class="c-mask"/>
+        <text x="365" y="610" class="t-messagebus" font-size="8" text-anchor="middle">차단 로그</text>
+
+        <!-- Legend -->
+        <text x="40" y="891" class="t-primary" font-size="9" font-weight="600">Legend</text>
+        <rect x="40" y="896" width="14" height="9" rx="2" class="c-external" stroke-width="1"/>
+        <text x="60" y="904" class="t-muted" font-size="8">External</text>
+        <rect x="138" y="896" width="14" height="9" rx="2" class="c-cloud" stroke-width="1"/>
+        <text x="158" y="904" class="t-muted" font-size="8">Cloud</text>
+        <rect x="221" y="896" width="14" height="9" rx="2" class="c-backend" stroke-width="1"/>
+        <text x="241" y="904" class="t-muted" font-size="8">Backend</text>
+        <rect x="314" y="896" width="14" height="9" rx="2" class="c-database" stroke-width="1"/>
+        <text x="334" y="904" class="t-muted" font-size="8">Database</text>
+        <rect x="412" y="896" width="14" height="9" rx="2" class="c-security" stroke-width="1"/>
+        <text x="432" y="904" class="t-muted" font-size="8">Security</text>
+      </svg>
