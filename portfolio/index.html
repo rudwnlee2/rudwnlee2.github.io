@@ -114,6 +114,7 @@
     .section-layout { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 72px; align-items: start; }
     .section-heading { position: sticky; top: 92px; display: block; margin: 0; }
     .section-heading h2 { margin-bottom: 0; color: var(--heading); font-size: clamp(1.28rem, 2.2vw, 1.65rem); line-height: 1.28; letter-spacing: -.035em; }
+    #credentials .section-heading h2 { font-size: clamp(1.28rem, 2vw, 1.45rem); }
     .section-heading > p { margin: .85rem 0 0; color: var(--muted); font-size: .78rem; line-height: 1.6; }
     .section-heading .eyebrow { margin-bottom: .65rem; font-size: .68rem; }
     .card { border: 1px solid var(--line); border-radius: 1.15rem; background: var(--panel); padding: 1.5rem; }
@@ -167,6 +168,8 @@
     .project-responsibility-label { display: block; margin-bottom: .2rem; font-size: .85rem; font-weight: 700; }
     .project-role { white-space: nowrap; }
     .project-role { padding: .3rem .55rem; border-radius: 999px; background: var(--panel-soft); color: var(--heading); font-size: .8rem; font-weight: 800; }
+    .project-award { display: inline-flex; align-items: center; flex-wrap: wrap; gap: .4rem; max-width: 100%; }
+    .project-award-link { color: var(--accent); font-size: .78rem; font-weight: 700; white-space: nowrap; }
     .project-role.primary { background: var(--accent-soft); color: var(--accent); }
     .project-key-results { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 1rem; margin-top: 1.5rem; border-block: 1px solid var(--line); padding: 1rem 0; }
     .project-key-results h4 { margin: .05rem 0 0; color: var(--heading); font-size: .92rem; }
@@ -204,7 +207,7 @@
     .credential-group-number { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .7rem; font-weight: 900; }
     .credential-group h3 { margin: 0; color: var(--heading); font-size: 1rem; }
     .credential-list { display: grid; }
-    .credential-item { border-bottom: 1px solid var(--line); padding: 1rem 0; }
+    .credential-item { border-bottom: 1px solid var(--line); padding: .8rem 0; }
     .credential-item:last-child { border-bottom: 0; }
     .credential-topline { display: flex; align-items: center; justify-content: space-between; gap: .75rem; margin-bottom: .45rem; }
     .credential-kind { display: inline-flex; align-items: center; border-radius: 999px; background: var(--accent-soft); padding: .2rem .48rem; color: var(--accent); font-size: .66rem; font-weight: 850; }
@@ -213,6 +216,7 @@
     .credential-item h4 { margin: 0; color: var(--heading); font-size: .95rem; line-height: 1.45; }
     .credential-item p { margin: .22rem 0 0; color: var(--muted); font-size: .78rem; }
     .credential-title-row { display: flex; align-items: center; flex-wrap: wrap; gap: .45rem; }
+    .credential-award-link { color: var(--accent); font-size: .72rem; font-weight: 700; white-space: nowrap; }
     .credential-status { display: inline-flex; align-items: center; border-radius: 999px; background: var(--teal-soft); padding: .18rem .45rem; color: var(--teal); font-size: .64rem; font-weight: 850; }
 
     .hero-statement, .hero-copy, .section-heading > p, .project-case-heading h4, .case-section p, .credential-item h4, .credential-item p {
@@ -277,8 +281,8 @@
           <p class="hero-statement">개선을 제안하고 직접 구현하는 백엔드 개발자입니다.</p>
           <div class="hero-achievements">
             <p class="hero-copy">비동기 처리로 <strong>AI 추천 요청의 HTTP 응답 대기를 약 98% 단축</strong>했습니다.</p>
-            <p class="hero-copy">누적 발급 수 비교로 놓치던 <strong>쿠폰 재고 복원 누락을 탐지</strong>했습니다.</p>
-            <p class="hero-copy"><strong>공통 응답·오류 처리 코드와 AI 활용 기준</strong>을 마련하고 프로젝트에 적용했습니다.</p>
+            <p class="hero-copy"><strong>Redis 장애 시 취소 내역과 재고의 정합성을 판정</strong>하는 기능을 구현했습니다.</p>
+            <p class="hero-copy"><strong>아키텍처와 공통 코드를 설계해 팀의 개발 기준을 표준화</strong>했습니다.</p>
           </div>
           <div class="hero-links" aria-label="연락처 및 외부 링크"><a href="mailto:lgj0731@naver.com">이메일: lgj0731@naver.com</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
         </div>
@@ -329,8 +333,8 @@
     <section class="section" id="credentials">
       <div class="shell section-layout">
         <div class="section-heading">
-          <div><p class="eyebrow">Education &amp; Credentials</p><h2>교육 및 자격</h2></div>
-          <p>백엔드 개발과 관련된 교육·학력 및 자격</p>
+          <div><p class="eyebrow">Credentials</p><h2>교육·자격·수상</h2></div>
+          <p>백엔드 개발과 관련된 교육·학력, 자격 및 수상</p>
         </div>
         <div class="credentials-grid">
           <section class="credential-group" aria-labelledby="education-heading">
@@ -348,8 +352,13 @@
             </div>
           </section>
           <section class="credential-group" aria-labelledby="certification-heading">
-            <div class="credential-group-heading"><span class="credential-group-number">02</span><h3 id="certification-heading">자격증</h3></div>
+            <div class="credential-group-heading"><span class="credential-group-number">02</span><h3 id="certification-heading">자격증·수상</h3></div>
             <div class="credential-list">
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">팀 프로젝트 수상</span><time datetime="2026-10-28">2026.10.28</time></div>
+                <div class="credential-title-row"><h4>최종융합프로젝트 우수상</h4><a class="credential-award-link" href="../assets/docs/getddo-excellence-award.pdf" target="_blank" rel="noreferrer" aria-label="최종융합프로젝트 우수상 상장 PDF 보기, 새 창">상장 ↗</a></div>
+                <p>멀티캠퍼스 · LG U+ 유레카 GETDDO</p>
+              </article>
               <article class="credential-item">
                 <div class="credential-topline"><span class="credential-kind">국가기술자격</span><time datetime="2025-09-12">2025.09.12</time></div>
                 <h4>정보처리기사</h4>
@@ -418,43 +427,43 @@
                     <a class="project-repo" href="https://github.com/Uplus-GETDDO/getddo-infra" target="_blank" rel="noreferrer">인프라 GitHub ↗</a>
                   </div>
                 </div>
-                <div class="project-roles"><span class="project-role">2026.09.10 ~ 10.27</span><span class="project-role">5인 팀</span><span class="project-role primary">인프라·공통 기반·사용자 담당</span></div>
-                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>AWS 인프라·CI/CD와 IP별 요청 차단 구성, DB·Redis 이중화 및 장애 전환 검증. 공통 응답·오류 처리와 사용자 기능 구현, AI 개발·검토 기준 제안 및 적용</p>
+                <div class="project-roles"><span class="project-role">2026.09.10 ~ 10.27</span><span class="project-role">8인 팀</span><span class="project-role primary">인프라·공통 기반·사용자 담당</span><span class="project-award"><span class="project-role primary">최종융합프로젝트 우수상</span><a class="project-award-link" href="../assets/docs/getddo-excellence-award.pdf" target="_blank" rel="noreferrer" aria-label="GETDDO 최종융합프로젝트 우수상 상장 PDF 보기, 새 창">상장 ↗</a></span></div>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>아키텍처·공통 코드·테스트 환경 설계, 사용자 기능 구현. AWS 인프라·CI/CD 구성과 장애 전환 검증, AI 개발·검토 기준 제안 및 적용</p>
               </div>
             </div>
             <section class="project-key-results" aria-label="GETDDO 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span><strong>공통 코드와 AI 활용 기준</strong>을 실제 기능 개발·검토에 적용</span></li><li class="project-key-result"><span><strong>WAF의 IP별 요청 차단·자동 해제 검증</strong>, DB·Redis 장애 전환 후 <strong>앱 재시작 없이 기능 복구 확인</strong></span></li></ol>
+              <ol><li class="project-key-result"><span><strong>이벤트·알림 API에 공통 코드 적용</strong>, 기능별 통합 테스트에서 공통 DB 환경 사용</span></li><li class="project-key-result"><span>DB·Redis 장애 전환 후 <strong>앱 재시작 없이 기능 복구 확인</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="shared-development-foundation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>팀이 함께 사용할 공통 코드와 AI 작업 기준 마련</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>아키텍처·공통 코드 설계와 개발 기준 표준화</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>사용자 확인·응답·오류 처리를 기능마다 따로 구현하면 <strong>공통 코드가 중복되고, 같은 오류에도 API마다 다른 형식으로 응답할 수 있음</strong>. AI가 작성하는 코드에도 팀의 컨벤션과 모듈별 책임을 공통으로 적용할 기준이 필요했음.</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>사용자 정보 확인과 성공·실패 응답을 공통 코드로 구현</strong>. 각 API에서 같은 방식으로 사용자를 확인하고, 한 요청 안에서는 사용자 정보를 반복 조회하지 않도록 구성</li><li>시간을 기록하는 방식을 통일하고, 업무 처리 결과와 함께 누가 무엇을 바꿨는지 저장하는 공통 기능 구현</li><li><strong>AI가 코드 컨벤션과 모듈별 책임을 참고하도록 공통 문서 제공</strong>. 예를 들어 core는 도메인·Service·저장 인터페이스를 맡고, 저장 구현은 storage에 두는 의존 규칙 명시</li><li>작업 기록에 변경 이유·구현 내용·검증 결과를 남기는 양식과 담당자 검토 절차 적용. 같은 기준 문서를 연결한 CodeRabbit 리뷰 설정 구성</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>확인</h5><p>이벤트·알림 API에서 같은 사용자 확인 코드를 사용하도록 적용. 요청에 담긴 사용자 정보가 올바른지 검사하고, 한 요청에서 사용자 정보를 한 번 조회해 재사용하는지 테스트. AI 작업 기록에도 <strong>담당자가 실제 코드와 실행 결과를 대조한 뒤 공유</strong>하는 절차 적용.</p></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>공통 기준을 코드와 검토 절차에서 함께 사용하고, AI 초안과 담당자가 실제로 확인한 결과를 구분해야 함.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>설계 배경</h5><p>팀원이 기능을 나눠 개발할 때 <strong>모듈별 책임과 공통 처리 방식이 달라지지 않도록 개발 기준이 필요</strong>했음. 코드 구조뿐 아니라 테스트와 AI 작업에도 같은 기준을 적용하고자 했음.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>설계·적용</h5><ul><li><strong>멀티모듈 구조와 모듈 간 의존 방향 설계</strong>. 요청 처리·업무 규칙·DB 저장의 책임을 구분하고 개발 문서에 기준 정리</li><li><strong>요청 검증·공통 응답·예외 처리·BaseEntity 설계</strong>. 반복되는 처리는 공통화하고 개별 업무 규칙은 각 기능에서 관리하도록 구분</li><li><strong>Testcontainers 기반 DB 테스트 환경 마련</strong>. 여러 기능에서 재사용할 공통 설정을 두어 테스트 실행 환경 통일</li><li><strong>AI 구현 지침에 요구사항·기존 공통 코드·변경 범위를 명시</strong>하고, CodeRabbit 리뷰에도 같은 설계 문서를 연결. 작업 기록은 공통 양식으로 AI 초안을 작성하도록 구성</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>적용 결과</h5><p>이벤트·알림 API에 <strong>공통 요청 처리와 응답 형식을 적용</strong>하고, 기능별 통합 테스트에서 공통 DB 환경을 사용. 공통 지침과 참고 문서를 <strong>AI 구현·CodeRabbit 리뷰에 적용</strong>하고, 작업 기록은 AI 초안 작성 후 담당자 검토 방식으로 운영.</p></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>모듈별 책임을 문서와 코드 구조로 정했지만, 규칙 위반을 자동으로 검사하는 장치는 부족했음. <strong>ArchUnit 테스트를 CI에 추가해 잘못된 모듈 참조를 변경 단계에서 발견</strong>하도록 보완할 필요가 있음.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="aws-infrastructure">
-                <header class="project-case-heading"><span class="project-case-number">02</span><h4>IP별 과도한 요청 차단과 DB·Redis 장애 전환 검증</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">02</span><h4>AWS 인프라 구성 설계와 배포 경험</h4></header>
                 <figure class="project-architecture">
-                  <a href="../assets/img/getddo-infrastructure.svg" target="_blank" rel="noreferrer" aria-label="GETDDO AWS 인프라 구성도 크게 보기, 새 창">
-                    <img src="../assets/img/getddo-infrastructure.svg" alt="CloudFront와 WAF에서 내부 ALB를 거쳐 두 API 서버로 요청을 전달하고, RDS 주·대기 DB와 Redis 메인·복제본, S3, Prometheus·Grafana를 연결한 GETDDO 운영 인프라 구성도" width="1720" height="920" loading="lazy">
+                  <a href="../assets/img/getddo-infrastructure.png" target="_blank" rel="noreferrer" aria-label="GETDDO AWS 인프라 구성도 크게 보기, 새 창">
+                    <img src="../assets/img/getddo-infrastructure.png" alt="Vercel과 CloudFront·WAF, 내부 ALB와 두 AZ의 API 서버, RDS·Redis 이중화, ECR·SSM 배포 및 모니터링을 연결한 GETDDO 시스템 아키텍처" width="2060" height="835" loading="lazy">
                   </a>
                 </figure>
                 <div class="case-notion">
                   <section class="case-topic" aria-labelledby="getddo-rate-limit">
-                    <h5 class="case-topic-title" id="getddo-rate-limit">요청 제한 · IP별 과도한 요청을 앱 도달 전에 차단</h5>
+                    <h5 class="case-topic-title" id="getddo-rate-limit">접근 경로 설계 · 앱 도달 전 과도한 요청 제한</h5>
                     <section class="case-section" data-case-stage="problem"><h6>문제</h6><p>같은 IP에서 API를 과도하게 호출하면 <strong>반복 요청이 앱·DB 자원을 점유해 다른 사용자의 요청 처리에도 영향을 줄 수 있음</strong>. 앱에 도달하기 전에 과도한 요청을 제한할 필요가 있었음.</p></section>
-                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><ul><li><strong>CloudFront에 AWS WAF를 연결해 접속 IP별 API 요청량을 기준으로 429 응답</strong>. 최근 60초에 600회 기준으로 설정하고, 사용자가 바꿀 수 있는 전달 헤더 대신 접속 IP로 집계</li><li>OPTIONS와 이미지 조회는 제한 대상에서 제외. 차단 로그를 CloudWatch에 저장하고 쿼리 문자열·인증·사용자 헤더는 마스킹</li></ul></section>
-                    <section class="case-section" data-case-stage="evaluation"><h6>확인</h6><p>임시 ALB 응답 경로로 앱·DB에 부하를 주지 않고 <strong>같은 IP의 반복 요청 차단과 다른 IP의 정상 통과</strong> 확인. 요청 중단 후 규칙 변경 없이 자동 해제됐으며, OPTIONS·이미지 조회와 차단 로그 저장·민감 값 마스킹도 검증.</p></section>
+                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><ul><li><strong>CloudFront·WAF에서 과도한 요청을 제한한 뒤 내부 ALB를 거쳐 두 API 서버로 전달</strong>하도록 요청 경로 설계</li><li>IP별 요청 제한을 적용하고, OPTIONS·이미지 조회는 제외. 차단 내역은 CloudWatch 로그에서 확인하도록 구성</li></ul></section>
+                    <section class="case-section" data-case-stage="evaluation"><h6>검증 기록</h6><p>임시 ALB 응답 경로로 앱·DB에 부하를 주지 않고 <strong>같은 IP의 반복 요청 차단과 다른 IP의 정상 통과</strong> 확인. 요청 중단 후 규칙 변경 없이 자동 해제됐으며, OPTIONS·이미지 조회와 차단 로그 저장·민감 값 마스킹도 검증.</p></section>
                   </section>
                   <section class="case-topic" aria-labelledby="getddo-failover">
-                    <h5 class="case-topic-title" id="getddo-failover">장애 대응 · 다른 AZ로 전환한 뒤 앱 기능 복구</h5>
+                    <h5 class="case-topic-title" id="getddo-failover">장애 대응 설계 · DB·Redis 이중화</h5>
                     <section class="case-section" data-case-stage="problem"><h6>문제</h6><p>DB·Redis의 주 노드가 중단되면 <strong>DB 조회·저장이나 Redis를 사용하는 요청 처리가 실패할 수 있음</strong>. 대기 노드가 역할을 이어받은 뒤 앱이 다시 연결돼 기능을 복구하는지 확인할 필요가 있었음.</p></section>
-                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><p>Terraform으로 <strong>RDS Multi-AZ의 대기 DB와 다른 AZ의 Redis 복제본</strong>을 구성하고 자동 장애 전환 활성화. 기존 접속 주소를 유지하고, DB 연결 장애는 공통 503 응답으로 구분하며 연결·DNS 설정 조정.</p></section>
-                    <section class="case-section" data-case-stage="evaluation"><h6>확인</h6><div class="case-evaluation-body"><p>실제 RDS 전환 중 조회 요청의 503과 자동 재연결 확인. Redis 복제본 승격 후에는 양쪽 API의 재연결과 실제 Redis 명령 처리를 관찰해 <strong>앱 재시작 없이 기존 기능이 복구</strong>된 것을 확인.</p><p>RDS 복구 후 기존 미션·응모 기능의 정상 처리 요청을 같은 키로 재전송해 <strong>추가 지급·응모·차감이 없음을 검증</strong>. 두 API의 조회도 재시작 없이 복구.</p></div></section>
+                    <section class="case-section" data-case-stage="solution"><h6>해결</h6><p><strong>RDS Multi-AZ의 대기 DB와 다른 AZ의 Redis 복제본</strong>을 두어, 주 노드 장애 시 대기 노드가 역할을 이어받도록 설계. 두 API 서버가 같은 주 DB와 Redis를 사용하도록 구성.</p></section>
+                    <section class="case-section" data-case-stage="evaluation"><h6>검증 기록</h6><div class="case-evaluation-body"><p>실제 RDS 전환 중 조회 요청의 503과 자동 재연결 확인. Redis 복제본 승격 후에는 양쪽 API의 재연결과 실제 Redis 명령 처리를 관찰해 <strong>앱 재시작 없이 기존 기능이 복구</strong>된 것을 확인.</p><p>RDS 복구 후 기존 미션·응모 기능의 정상 처리 요청을 같은 키로 재전송해 <strong>추가 지급·응모·차감이 없음을 검증</strong>. 두 API의 조회도 재시작 없이 복구.</p></div></section>
                   </section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>대기 DB와 Redis 복제본은 읽기 분산에 사용하지 않음. Redis는 비동기 복제라 전환 시 최근 변경분이 유실될 수 있음. 기능 복구 확인을 전체 요청의 무중단·무유실 보장으로 확대하지 않음.</p></section>
                 </div>
@@ -476,16 +485,16 @@
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>누적 발급 수가 같아도 <strong>재고 복원 누락 1건 탐지</strong></span></li><li class="project-key-result"><span>재요청·동시 경합에서도 <strong>신규 성공 이벤트 1건만 생성</strong></span></li></ol>
+              <ol><li class="project-key-result"><span>Redis 장애로 재고 복원만 실패한 상태를 구성해 <strong>누적 건수가 같아도 재고 차이 탐지</strong></span></li><li class="project-key-result"><span>재요청·동시 경합에서도 <strong>신규 성공 이벤트 1건만 생성</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="consistency-gaps">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>누적 발급 수 비교로 놓치는 재고 불일치 탐지</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Redis 장애 시 취소 내역과 재고의 정합성 판정</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>취소·만료로 현재 재고와 활성 쿠폰 수가 바뀌어도 누적 발급 기록은 유지됨. Redis 재고가 복원되지 않아도 양쪽 누적값은 같을 수 있어, <strong>누적 발급 수만으로는 재고 복원 누락을 발견하기 어려움.</strong></p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>총재고 − Redis 잔여 재고를 DB 활성 발급 수와 비교</strong>하고, 누적 발급 기록은 별도로 대조</li><li>Redis의 발급 수·회원 기록과 DB의 실제 쿠폰 수·집계 카운터도 대조</li><li>처리 중(LIVE)에는 저장소 반영 시차를 고려하고, <strong>처리 종료 후(FINAL)에는 적용되는 비교값에 1건이라도 차이가 남으면 실패로 판정</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL에 취소 후 재고가 복원되지 않은 상황을 구성. <strong>양쪽 누적 발급 수가 각각 4건으로 같아도 재고 1건 차이를 탐지</strong>하고, 처리 종료 후 정합성 실패로 판정.</p><p>정상 2종·수량 불일치 4종에서 예상 결과가 일치했으며, 필수 값 누락·조회 실패 3종은 정상으로 판정하지 않도록 확인.</p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>수량이 일치해도 개별 회원·쿠폰 기록의 정확성까지 보장하지는 않으므로, 초과 발급·1인 1매 검증과 구분해야 함.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>DB에 취소가 확정된 뒤 <strong>Redis 장애로 재고 복원 호출만 실패하면,</strong> <strong>취소는 반영됐지만 재고는 복원되지 않은 상태</strong>가 남을 수 있음. 취소해도 누적 발급 이력은 남으므로, <strong>양쪽 누적 건수가 같다는 것만으로 현재 재고를 정상으로 판단할 수 없음.</strong></p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>총재고 − Redis 잔여 재고를 DB 활성 발급 수와 비교</strong>하고, 누적 발급 기록은 저장소별 누적값끼리 별도로 대조</li><li><strong>Redis·DB에서 값을 읽지 못하면 검증 불가로 처리</strong>. 조회 실패를 수량 0으로 넣어 정상으로 판정하지 않도록 구분</li><li><strong>최종 검증에서 비교한 수량이 1건이라도 다르면 정합성 실패로 처리</strong></li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL에서 <strong>DB에는 취소를 반영하고 Redis 재고는 복원하지 않은 상태를 직접 구성</strong>. 누적 발급 수가 각각 4건으로 같아도 현재 수량 차이 1건을 탐지하고, FINAL 정합성 실패로 판정.</p><p>정상 상태와 수량 불일치를 구분하고, 필수 값 누락·조회 실패도 정상으로 판정하지 않는 동작을 확인. <strong>누적값의 일치만으로 부분 실패 상태를 정상이라고 판단하지 않도록 검증.</strong></p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>검증한 범위는 <strong>불일치의 탐지·판정</strong>이며 재고 정상화·자동 복구까지 구현한 성과는 아님. 수량 일치만으로 개별 회원·쿠폰 기록의 정확성까지 보장하지 않으므로, 초과 발급·1인 1매 검증과도 구분해야 함.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="idempotent-replay-observation">
@@ -519,7 +528,7 @@
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 응답 지연 3초 · 초당 2건 · 방식별 300건 비교 · Consumer 8개</p></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 AI 지연 3초를 재현한 비교 · 초당 2건 · 방식별 300건 · Consumer 8개</p></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 API가 점수 계산과 외부 AI 호출을 모두 끝낸 뒤 응답하면, <strong>사용자는 추천이 완료될 때까지 요청 접수 응답도 받지 못함</strong>.</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>권한·세션 상태·후보 수를 확인하고, 후보가 없는 진행 상태에서도 재요청할 수 있도록 조건 설정</li><li>추천 진행 상태를 저장하고 DB 커밋 후 <strong>RabbitMQ로 추천 작업을 비동기 처리</strong>. API는 작업 완료를 기다리지 않고 접수 응답 반환</li></ul></section>
