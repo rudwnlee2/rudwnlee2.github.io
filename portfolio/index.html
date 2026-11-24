@@ -281,7 +281,7 @@
           <p class="hero-statement">개선을 제안하고 직접 구현하는 백엔드 개발자입니다.</p>
           <div class="hero-achievements">
             <p class="hero-copy">비동기 처리로 <strong>AI 추천 요청의 HTTP 응답 대기를 약 98% 단축</strong>했습니다.</p>
-            <p class="hero-copy"><strong>Redis 장애 시 취소 내역과 재고의 정합성을 판정</strong>하는 기능을 구현했습니다.</p>
+            <p class="hero-copy">Redis 장애로 <strong>취소 후 재고가 돌아오지 않은 회차</strong>를 찾아 관리자 조치 목록에 표시했습니다.</p>
             <p class="hero-copy"><strong>아키텍처와 공통 코드를 설계해 팀의 개발 기준을 표준화</strong>했습니다.</p>
           </div>
           <div class="hero-links" aria-label="연락처 및 외부 링크"><a href="mailto:lgj0731@naver.com">이메일: lgj0731@naver.com</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
@@ -437,11 +437,11 @@
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="shared-development-foundation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>아키텍처·공통 코드 설계와 개발 기준 표준화</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>멀티 모듈 설계와 공통 DB 테스트 환경</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>설계 배경</h5><p>팀원이 기능을 나눠 개발할 때 <strong>모듈별 책임과 공통 처리 방식이 달라지지 않도록 개발 기준이 필요</strong>했음. 코드 구조뿐 아니라 테스트와 AI 작업에도 같은 기준을 적용하고자 했음.</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>설계·적용</h5><ul><li><strong>멀티모듈 구조와 모듈 간 의존 방향 설계</strong>. 요청 처리·업무 규칙·DB 저장의 책임을 구분하고 개발 문서에 기준 정리</li><li><strong>요청 검증·공통 응답·예외 처리·BaseEntity 설계</strong>. 반복되는 처리는 공통화하고 개별 업무 규칙은 각 기능에서 관리하도록 구분</li><li><strong>Testcontainers 기반 DB 테스트 환경 마련</strong>. 여러 기능에서 재사용할 공통 설정을 두어 테스트 실행 환경 통일</li><li><strong>AI 구현 지침에 요구사항·기존 공통 코드·변경 범위를 명시</strong>하고, CodeRabbit 리뷰에도 같은 설계 문서를 연결. 작업 기록은 공통 양식으로 AI 초안을 작성하도록 구성</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>적용 결과</h5><p>이벤트·알림 API에 <strong>공통 요청 처리와 응답 형식을 적용</strong>하고, 기능별 통합 테스트에서 공통 DB 환경을 사용. 공통 지침과 참고 문서를 <strong>AI 구현·CodeRabbit 리뷰에 적용</strong>하고, 작업 기록은 AI 초안 작성 후 담당자 검토 방식으로 운영.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>설계 배경</h5><p>팀원들이 기능을 나눠 개발하면서도 <strong>업무 규칙을 수정할 위치와 공통 코드 사용법</strong>을 바로 찾고, 같은 DB 환경에서 각자 맡은 기능을 검증할 수 있도록 기준 마련.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>설계·적용</h5><ul><li><strong>멀티 모듈 구조와 모듈 간 의존 방향 설계</strong>. API·업무 로직·데이터 접근의 책임을 나누고 개발 문서에 정리</li><li><strong>요청 검증·공통 응답·예외 처리·BaseEntity 설계</strong>. 응답과 오류 처리 예시를 만들어 팀원이 맡은 기능에 바로 적용할 수 있도록 공유</li><li><strong>Testcontainers 기반 공통 DB 테스트 환경</strong>을 구성하고 PR에서 통합 테스트를 자동 실행하도록 연결</li><li>AI에 구현을 맡길 때 <strong>수정 범위와 유지할 동작을 지정</strong>. 팀의 공통 문서를 구현과 CodeRabbit 리뷰에 연결하고, 같은 조건으로 테스트 결과를 확인</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>적용 결과</h5><p>팀원들이 예시를 참고해 <strong>이벤트·알림 API에 같은 응답과 오류 처리 방식</strong>을 적용. 공통 DB 환경에서 각자 맡은 기능을 검증하고, PR에서도 같은 테스트 실행.</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>모듈별 책임을 문서와 코드 구조로 정했지만, 규칙 위반을 자동으로 검사하는 장치는 부족했음. <strong>ArchUnit 테스트를 CI에 추가해 잘못된 모듈 참조를 변경 단계에서 발견</strong>하도록 보완할 필요가 있음.</p></section>
                 </div>
               </article>
@@ -463,7 +463,7 @@
                     <h5 class="case-topic-title" id="getddo-failover">장애 대응 설계 · DB·Redis 이중화</h5>
                     <section class="case-section" data-case-stage="problem"><h6>문제</h6><p>DB·Redis의 주 노드가 중단되면 <strong>DB 조회·저장이나 Redis를 사용하는 요청 처리가 실패할 수 있음</strong>. 대기 노드가 역할을 이어받은 뒤 앱이 다시 연결돼 기능을 복구하는지 확인할 필요가 있었음.</p></section>
                     <section class="case-section" data-case-stage="solution"><h6>해결</h6><p><strong>RDS Multi-AZ의 대기 DB와 다른 AZ의 Redis 복제본</strong>을 두어, 주 노드 장애 시 대기 노드가 역할을 이어받도록 설계. 두 API 서버가 같은 주 DB와 Redis를 사용하도록 구성.</p></section>
-                    <section class="case-section" data-case-stage="evaluation"><h6>검증 기록</h6><div class="case-evaluation-body"><p>실제 RDS 전환 중 조회 요청의 503과 자동 재연결 확인. Redis 복제본 승격 후에는 양쪽 API의 재연결과 실제 Redis 명령 처리를 관찰해 <strong>앱 재시작 없이 기존 기능이 복구</strong>된 것을 확인.</p><p>RDS 복구 후 기존 미션·응모 기능의 정상 처리 요청을 같은 키로 재전송해 <strong>추가 지급·응모·차감이 없음을 검증</strong>. 두 API의 조회도 재시작 없이 복구.</p></div></section>
+                    <section class="case-section" data-case-stage="evaluation"><h6>검증 기록</h6><div class="case-evaluation-body"><p><strong>앱 재시작 0회</strong>. RDS 복구 후 미션 완료·응모 요청을 같은 키로 다시 보내 지급 내역과 응모권 잔액을 대조해 <strong>추가 지급·응모·차감 0건</strong> 확인.</p><p>RDS 전환 중에는 조회 요청의 일시적인 503과 이후 자동 재연결 확인. Redis 복제본 승격 뒤에는 두 API 서버의 재연결과 실제 Redis 명령 처리 확인.</p></div></section>
                   </section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>대기 DB와 Redis 복제본은 읽기 분산에 사용하지 않음. Redis는 비동기 복제라 전환 시 최근 변경분이 유실될 수 있음. 기능 복구 확인을 전체 요청의 무중단·무유실 보장으로 확대하지 않음.</p></section>
                 </div>
@@ -485,16 +485,20 @@
             </div>
             <section class="project-key-results" aria-label="쿠폰 야호 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>Redis 장애로 재고 복원만 실패한 상태를 구성해 <strong>누적 건수가 같아도 재고 차이 탐지</strong></span></li><li class="project-key-result"><span>실패 알림 재발송의 <strong>중복 접수와 상태·작업 기록의 부분 저장 방지</strong></span></li></ol>
+              <ol>
+                <li class="project-key-result"><span>초기 발급 방식 부하 테스트 <strong>동시 사용자 2만 명 · 총 55,104건 요청</strong></span></li>
+                <li class="project-key-result"><span><strong>취소 후 Redis 재고 복원 누락 탐지</strong> 및 불일치 회차를 관리자 조치 목록에 표시</span></li>
+                <li class="project-key-result"><span>실패 알림 재발송의 <strong>중복 접수와 상태·작업 기록의 부분 저장 방지</strong></span></li>
+              </ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="consistency-gaps">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>Redis 장애 시 취소 내역과 재고의 정합성 판정</h4></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>5만 건 요청이 몰린 서비스의 재고 정합성</h4></header>
                 <div class="case-notion">
-                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>DB에 취소가 확정된 뒤 <strong>Redis 장애로 재고 복원 호출만 실패하면,</strong> <strong>취소는 반영됐지만 재고는 복원되지 않은 상태</strong>가 남을 수 있음. 취소해도 누적 발급 이력은 남으므로, <strong>양쪽 누적 건수가 같다는 것만으로 현재 재고를 정상으로 판단할 수 없음.</strong></p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>총재고 − Redis 잔여 재고를 DB 활성 발급 수와 비교</strong>하고, 누적 발급 기록은 저장소별 누적값끼리 별도로 대조</li><li><strong>Redis·DB에서 값을 읽지 못하면 검증 불가로 처리</strong>. 조회 실패를 수량 0으로 넣어 정상으로 판정하지 않도록 구분</li><li><strong>최종 검증에서 비교한 수량이 1건이라도 다르면 정합성 실패로 처리</strong></li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL에서 <strong>DB에는 취소를 반영하고 Redis 재고는 복원하지 않은 상태를 직접 구성</strong>. 누적 발급 수가 각각 4건으로 같아도 현재 수량 차이 1건을 탐지하고, FINAL 정합성 실패로 판정.</p><p>정상 상태와 수량 불일치를 구분하고, 필수 값 누락·조회 실패도 정상으로 판정하지 않는 동작을 확인. <strong>누적값의 일치만으로 부분 실패 상태를 정상이라고 판단하지 않도록 검증.</strong></p></div></section>
-                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>검증한 범위는 <strong>불일치의 탐지·판정</strong>이며 재고 정상화·자동 복구까지 구현한 성과는 아님. 수량 일치만으로 개별 회원·쿠폰 기록의 정확성까지 보장하지 않으므로, 초과 발급·1인 1매 검증과도 구분해야 함.</p></section>
+                  <section class="case-section" data-case-stage="problem"><h5>문제</h5><p><strong>Redis 장애 중에 쿠폰을 취소하면 DB에는 취소가 반영돼도 Redis 재고는 그대로 남을 수 있음.</strong> 취소 건도 누적 발급 이력에는 남아 두 저장소의 누적 건수가 같은 경우에도 재고 차이가 생김.</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li><strong>총재고 − Redis 잔여 재고를 DB에서 발급·사용 상태인 쿠폰 수와 비교</strong>. 누적 발급 건수는 별도로 대조</li><li><strong>처리가 끝난 뒤에도 수량이 다르면 정합성 실패로 판정</strong>하고, 해당 쿠폰 회차를 관리자 조치 목록에 표시</li><li>Redis·DB에서 값을 읽지 못하면 <strong>조회 불가 상태로 표시</strong>해 잔여 재고 0장과 구분</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><div class="case-evaluation-body"><p>실제 Redis·MySQL을 사용한 별도 검증에서 DB에는 취소만 반영하고 Redis 재고는 그대로 유지. 양쪽 누적 발급은 4건으로 같았지만 <strong>돌아오지 않은 재고 한 장을 찾아 정합성 실패로 판정</strong>.</p><p>회차별 최종 판정 결과를 관리자 화면에 연결해 <strong>운영자가 조치 목록에서 확인할 회차를 바로 찾을 수 있도록 구현</strong>.</p></div></section>
+                  <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>이 검증은 <strong>저장소 간 수량 차이를 찾아 운영자에게 알리는 과정</strong>을 다룸. 초과 발급과 회원별 중복 발급은 별도 기준으로 검증.</p></section>
                 </div>
               </article>
               <article class="project-case" data-project-case="notification-resend-consistency">
@@ -519,20 +523,20 @@
                   <a class="project-repo" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
                 <div class="project-roles"><span class="project-role">2026.07.09 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·투표 기능 담당</span></div>
-                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청에 비동기 처리를 적용해 추천 완료를 기다리지 않고 응답하도록 변경. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청의 접수와 실행을 분리해 접수 응답을 먼저 반환하도록 구현. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
               </div>
             </div>
             <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
               <h4>핵심 구현 및 검증</h4>
-              <ol><li class="project-key-result"><span>동기 방식 대비 <strong>추천 HTTP 응답 p95 약 98% 단축</strong></span></li><li class="project-key-result"><span>동시 투표 경합 요청 누적 <strong>14,400건에서 개인 선택·집계 불일치 0건</strong></span></li><li class="project-key-result"><span>DB 저장 실패 후 같은 결과로 재시도, <strong>완료 후 추가 갱신 0회</strong></span></li></ol>
+              <ol><li class="project-key-result"><span>추천 요청 접수 응답 p95 <strong>3,168ms → 64ms, 약 98% 단축</strong></span></li><li class="project-key-result"><span>동시 투표 경합 요청 누적 <strong>14,400건에서 개인 선택·집계 불일치 0건</strong></span></li><li class="project-key-result"><span>DB 저장 실패 후 같은 결과로 재시도, <strong>완료 후 추가 갱신 0회</strong></span></li></ol>
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 비동기 처리로 HTTP 응답 p95 약 98% 단축</h4><p class="case-context">외부 AI 지연 3초를 재현한 비교 · 초당 2건 · 방식별 300건 · Consumer 8개</p></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 요청을 비동기로 바꿔 응답 대기 98% 단축</h4><p class="case-context">외부 AI 지연 3초를 재현한 비교 · 초당 2건 · 방식별 300건 · Consumer 8개</p></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 API가 점수 계산과 외부 AI 호출을 모두 끝낸 뒤 응답하면, <strong>사용자는 추천이 완료될 때까지 요청 접수 응답도 받지 못함</strong>.</p></section>
-                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>권한·세션 상태·후보 수를 확인하고, 후보가 없는 진행 상태에서도 재요청할 수 있도록 조건 설정</li><li>추천 진행 상태를 저장하고 DB 커밋 후 <strong>RabbitMQ로 추천 작업을 비동기 처리</strong>. API는 작업 완료를 기다리지 않고 접수 응답 반환</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p>동기 방식과 비교해 <strong>추천 HTTP 응답 p95를 3,168ms에서 64ms로 약 98% 단축</strong>. 동일한 추천 작업을 응답 전에 끝내는 동기 비교용 구현을 사용하고, 방식별 100건씩 3회 측정. 총 600건의 결과 저장과 Redis 상태 정합성 확인, HTTP 실패·미완료·결과 불일치 0건</p></section>
+                  <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>요청 권한과 세션 상태로 <strong>추천을 시작할 수 있는지 확인한 뒤 진행 상태를 저장하고 접수 응답 반환</strong>. 후보가 없는 진행 상태에서도 다시 요청할 수 있도록 조건 설정</li><li>투표를 시작할 때 필요한 후보는 <strong>DB 커밋 후 RabbitMQ로 넘긴 추천 작업</strong>에서 AI를 호출해 저장</li></ul></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>추천 요청 접수 응답 p95 3,168ms → 64ms, 약 98% 단축</strong>. 같은 추천 작업을 응답 전에 끝내는 동기 비교용 구현과 방식별 100건씩 3회 측정. 총 600건에서 후보 저장과 투표 가능 상태를 확인했으며 HTTP 실패·미완료·결과 불일치 0건.</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 줄인 것은 HTTP 응답 대기 시간. DB 커밋 후 메시지 발행 전의 요청 누락 가능성은 Outbox로 보완할 필요가 있음.</p></section>
                 </div>
               </article>
