@@ -532,11 +532,11 @@
             </section>
             <div class="project-cases">
               <article class="project-case" data-project-case="async-recommendation">
-                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 요청을 비동기로 바꿔 응답 대기 98% 단축</h4><p class="case-context">외부 AI 지연 3초를 재현한 비교 · 초당 2건 · 방식별 300건 · Consumer 8개</p></header>
+                <header class="project-case-heading"><span class="project-case-number">01</span><h4>추천 요청을 비동기로 바꿔 응답 대기 98% 단축</h4><p class="case-context">측정 조건 · 외부 AI 응답 지연 3초 · 초당 2건 · 동기·비동기 각 300건 · Consumer 8개</p></header>
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>문제</h5><p>추천 API가 점수 계산과 외부 AI 호출을 모두 끝낸 뒤 응답하면, <strong>사용자는 추천이 완료될 때까지 요청 접수 응답도 받지 못함</strong>.</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>해결</h5><ul><li>요청 권한과 세션 상태로 <strong>추천을 시작할 수 있는지 확인한 뒤 진행 상태를 저장하고 접수 응답 반환</strong>. 후보가 없는 진행 상태에서도 다시 요청할 수 있도록 조건 설정</li><li>투표를 시작할 때 필요한 후보는 <strong>DB 커밋 후 RabbitMQ로 넘긴 추천 작업</strong>에서 AI를 호출해 저장</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>추천 요청 접수 응답 p95 3,168ms → 64ms, 약 98% 단축</strong>. 같은 추천 작업을 응답 전에 끝내는 동기 비교용 구현과 방식별 100건씩 3회 측정. 총 600건에서 후보 저장과 투표 가능 상태를 확인했으며 HTTP 실패·미완료·결과 불일치 0건.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>평가</h5><p><strong>추천 요청 접수 응답 p95 3,168ms → 64ms, 약 98% 단축</strong>. 총 600건에서 메뉴 후보가 저장되고 세션이 투표 가능 상태로 바뀌는 것을 확인. HTTP 실패·미완료·결과 불일치 0건.</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>추천 완료 p95는 양쪽 모두 약 3.17초로 유사하며, 줄인 것은 HTTP 응답 대기 시간. DB 커밋 후 메시지 발행 전의 요청 누락 가능성은 Outbox로 보완할 필요가 있음.</p></section>
                 </div>
               </article>
