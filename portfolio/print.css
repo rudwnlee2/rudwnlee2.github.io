@@ -1,0 +1,69 @@
+@page { size: A4; margin: 13mm 13mm 14mm; }
+
+html { font-size: 14px; scroll-behavior: auto; }
+body { min-width: 0; font-size: 10.5pt; line-height: 1.55; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.shell { width: 100%; }
+.skip-link, .portfolio-print-button, .project-overview, .project-award-link, .credential-award-link, footer { display: none !important; }
+.hero { padding: 0 0 18px; }
+.hero-grid { grid-template-columns: 112px minmax(0, 1fr); gap: 28px; }
+.profile-photo-slot { width: 112px; box-shadow: none; }
+h1 { font-size: 29pt; margin-bottom: 10px; }
+.hero-statement { font-size: 13pt; }
+.hero-achievements { gap: 5px; margin-top: 12px; }
+.hero-copy { font-size: 10pt; }
+.hero-links { margin-top: 12px; gap: 18px; }
+.hero-links a { font-size: 9pt; }
+.section { padding: 15px 0; }
+.section.alt { background: white; }
+.section-layout { display: block; }
+.section-heading { position: static; margin-bottom: 12px; }
+.section-heading > p, .section-heading .eyebrow { display: none; }
+.section-heading h2, #credentials .section-heading h2 { font-size: 15pt; }
+.skill-category { grid-template-columns: 90px minmax(0, 1fr); padding: 5px 0; }
+.tech-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tech-item { min-height: 32px; grid-template-columns: 25px minmax(0, 1fr); padding: 1px; }
+.tech-icon { width: 25px; height: 25px; padding: 4px; }
+.tech-label strong { font-size: 8.5pt; }
+.credentials-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+.credential-item { padding: 9px 0; }
+.credential-group h3 { font-size: 10pt; }
+.credential-item h4 { font-size: 10pt; }
+.credential-item p { font-size: 9pt; }
+.credential-item time { font-size: 8pt; }
+#projects { break-before: page; padding: 0; }
+#projects > .shell > .section-heading { display: none; }
+.projects, .project-cases, .case-notion, .case-topic { display: block; }
+.project-document { padding-top: 12px; break-before: page; }
+.project-document:first-of-type { break-before: auto; }
+.project-header { gap: 12px; }
+.project-logo-slot { flex: 0 0 46px; width: 46px; height: 46px; }
+.project-title-row { flex-direction: row; gap: 10px; }
+.project-title-row h3 { font-size: 19pt; }
+.project-summary { font-size: 11pt; line-height: 1.5; }
+.project-repo { padding: 4px 6px; font-size: 8pt; }
+.project-repos { gap: 4px; }
+.project-role { padding: 3px 6px; font-size: 8pt; }
+.project-responsibility { margin-top: 8px; font-size: 10pt; line-height: 1.55; }
+.project-responsibility-label { font-size: 9pt; }
+.project-key-results { grid-template-columns: 90px minmax(0, 1fr); gap: 12px; margin-top: 14px; padding: 11px 0; }
+.project-key-results h4 { font-size: 9pt; }
+.project-key-result { font-size: 10.5pt; line-height: 1.5; }
+.project-case { padding: 10px 0; }
+.project-case-heading { grid-template-columns: 22px minmax(0, 1fr); gap: 6px; break-after: avoid; }
+.project-case-heading h4 { font-size: 13pt; line-height: 1.4; }
+.project-case-heading .case-context { font-size: 8.5pt; }
+.case-notion { margin: 10px 0 0; }
+.case-section { grid-template-columns: 48px minmax(0, 1fr); gap: 10px; margin-top: 7px; break-inside: avoid; }
+.case-section h5, .case-section h6 { font-size: 9.5pt; }
+.case-section p, .case-section ul { font-size: 9.5pt; line-height: 1.45; }
+.case-section li + li { margin-top: 5px; }
+.case-topic + .case-topic { margin-top: 18px; }
+.case-topic-title { margin-top: 14px; font-size: 10.5pt; break-after: avoid; }
+.case-evaluation-body p + p { margin-top: 7px; }
+.project-architecture { margin: 14px 0; break-inside: avoid; }
+.project-architecture img { max-height: 60mm; object-fit: contain; }
+[data-project-case="aws-infrastructure"] { break-before: page; border-top: 0; padding-top: 0; }
+.project-footer { padding-top: 10px; break-inside: avoid; }
+.project-tech .tag { padding: 3px 6px; font-size: 8pt; }
+.project-header, .project-key-results, .credential-item, .skill-category { break-inside: avoid; }
+a[href]::after { content: none !important; }

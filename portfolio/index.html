@@ -96,9 +96,11 @@
       color: var(--heading);
       font-weight: 850;
     }
-    .hero-links { display: flex; flex-wrap: wrap; gap: 1.25rem; margin-top: 1.25rem; }
+    .hero-links { display: flex; flex-wrap: wrap; align-items: center; gap: .65rem 1.25rem; margin-top: 1.25rem; }
     .hero-links a { border-bottom: 1px solid var(--line-strong); color: var(--heading); font-size: .82rem; font-weight: 800; }
     .hero-links a:hover { border-color: var(--accent); color: var(--accent); }
+    .portfolio-print-button { padding: .3rem .65rem; border: 1px solid var(--accent-line); border-radius: .35rem; background: var(--accent-soft); color: var(--accent-strong); font-size: .82rem; font-weight: 800; cursor: pointer; }
+    .portfolio-print-button:hover { border-color: var(--accent); }
     .profile-photo-slot {
       aspect-ratio: 3 / 4;
       overflow: hidden;
@@ -268,6 +270,7 @@
       *, *::before, *::after { transition-duration: .01ms !important; }
     }
   </style>
+  <link rel="stylesheet" href="print.css" media="print">
 </head>
 <body class="editorial-portfolio">
   <a class="skip-link" href="#main">본문으로 이동</a>
@@ -281,10 +284,14 @@
           <p class="hero-statement">개선을 제안하고 직접 구현하는 백엔드 개발자입니다.</p>
           <div class="hero-achievements">
             <p class="hero-copy">비동기 처리로 <strong>AI 추천 요청의 HTTP 응답 대기를 약 98% 단축</strong>했습니다.</p>
-            <p class="hero-copy">Redis 장애로 <strong>취소 후 재고가 돌아오지 않은 회차</strong>를 찾아 관리자 조치 목록에 표시했습니다.</p>
+            <p class="hero-copy">Redis 장애로 <strong>쿠폰을 취소했는데도 재고가 돌아오지 않은 경우</strong>를 찾아 관리자 화면에 표시했습니다.</p>
             <p class="hero-copy"><strong>아키텍처와 공통 코드를 설계해 팀의 개발 기준을 표준화</strong>했습니다.</p>
           </div>
-          <div class="hero-links" aria-label="연락처 및 외부 링크"><a href="mailto:lgj0731@naver.com">이메일: lgj0731@naver.com</a><a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a></div>
+          <div class="hero-links" role="group" aria-label="연락처 및 포트폴리오 저장">
+            <a href="mailto:lgj0731@naver.com">이메일: lgj0731@naver.com</a>
+            <a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a>
+            <button type="button" class="portfolio-print-button" onclick="window.print()">PDF로 저장</button>
+          </div>
         </div>
       </div>
     </section>
