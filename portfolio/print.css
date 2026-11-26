@@ -1,9 +1,21 @@
-@page { size: A4; margin: 13mm 13mm 14mm; }
+@page {
+  size: A4;
+  margin: 13mm 13mm 14mm;
+
+  @top-left { content: ""; }
+  @top-center {
+    content: "이경주 | Backend Developer";
+    color: #656d79;
+    font: 8pt sans-serif;
+    text-align: center;
+  }
+  @top-right { content: ""; }
+}
 
 html { font-size: 14px; scroll-behavior: auto; }
 body { min-width: 0; font-size: 10.5pt; line-height: 1.55; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 .shell { width: 100%; }
-.skip-link, .portfolio-print-button, .project-overview, .project-award-link, .credential-award-link, footer { display: none !important; }
+.skip-link, .portfolio-header, .portfolio-print-button, .project-overview, .project-award-link, .credential-award-link, footer { display: none !important; }
 .hero { padding: 0 0 18px; }
 .hero-grid { grid-template-columns: 112px minmax(0, 1fr); gap: 28px; }
 .profile-photo-slot { width: 112px; box-shadow: none; }

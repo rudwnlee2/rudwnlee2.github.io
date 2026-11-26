@@ -62,6 +62,13 @@
     .skip-link:focus { transform: translateY(0); }
     .shell { width: min(1080px, calc(100% - 40px)); margin-inline: auto; }
 
+    .portfolio-header { border-bottom: 1px solid var(--line); }
+    .portfolio-header-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; padding-block: .75rem; }
+    .portfolio-brand { color: var(--heading); font-weight: 850; white-space: nowrap; }
+    .portfolio-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; font-size: .82rem; }
+    .portfolio-nav a { color: var(--muted); font-weight: 700; white-space: nowrap; }
+    .portfolio-nav a:hover { color: var(--accent); }
+
     .hero { padding: 72px 0 66px; }
     .hero-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: start; gap: 88px; }
     .hero-intro { min-width: 0; }
@@ -275,6 +282,17 @@
 </head>
 <body class="editorial-portfolio">
   <a class="skip-link" href="#main">본문으로 이동</a>
+
+  <header class="portfolio-header">
+    <div class="shell portfolio-header-inner">
+      <a class="portfolio-brand" href="#top">이경주</a>
+      <nav class="portfolio-nav" aria-label="포트폴리오 연락처 및 저장">
+        <a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a>
+        <a href="mailto:lgj0731@naver.com">이메일</a>
+        <button type="button" class="portfolio-print-button" onclick="window.print()">PDF로 저장</button>
+      </nav>
+    </div>
+  </header>
 
   <main id="main">
     <section class="hero hero-compact" id="top">
