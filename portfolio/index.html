@@ -333,21 +333,27 @@
     <section class="section" id="credentials">
       <div class="shell section-layout">
         <div class="section-heading">
-          <div><p class="eyebrow">Credentials</p><h2>교육·자격·수상</h2></div>
-          <p>백엔드 개발과 관련된 교육·학력, 자격 및 수상</p>
+          <div><p class="eyebrow">Credentials</p><h2>이력·자격·수상</h2></div>
         </div>
         <div class="credentials-grid">
           <section class="credential-group" aria-labelledby="education-heading">
-            <div class="credential-group-heading"><span class="credential-group-number">01</span><h3 id="education-heading">교육·학력</h3></div>
+            <div class="credential-group-heading"><span class="credential-group-number">01</span><h3 id="education-heading">학력·교육·활동</h3></div>
             <div class="credential-list">
               <article class="credential-item">
-                <div class="credential-topline"><span class="credential-kind">학력</span><span class="credential-period"><time datetime="2020-02">2020.02</time><span>~</span><time datetime="2026-08">2026.08</time></span></div>
+                <div class="credential-topline"><span class="credential-kind">학력</span><span class="credential-period"><time datetime="2020-03">2020.03</time><span>~</span><time datetime="2026-08">2026.08</time></span></div>
                 <h4>한신대학교</h4>
                 <p>컴퓨터공학부 · 졸업</p>
               </article>
               <article class="credential-item">
                 <div class="credential-topline"><span class="credential-kind">교육</span><span class="credential-period"><time datetime="2026-04">2026.04</time><span>~</span><time datetime="2026-10">2026.10</time></span></div>
                 <h4>LG U+ 유레카 백엔드 과정</h4>
+                <p>수료 · 1,080시간</p>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">인턴십</span><span class="credential-period"><time datetime="2022-09">2022.09</time><span>~</span><time datetime="2022-11">2022.11</time></span></div>
+                <h4>공공데이터 기업 매칭 청년인턴십</h4>
+                <p>한국지능정보사회진흥원(NIA) · 더원테크</p>
+                <p>현장 데이터 수집 및 데이터 전처리</p>
               </article>
             </div>
           </section>
@@ -358,6 +364,12 @@
                 <div class="credential-topline"><span class="credential-kind">팀 프로젝트 수상</span><time datetime="2026-10-28">2026.10.28</time></div>
                 <div class="credential-title-row"><h4>최종융합프로젝트 우수상</h4><a class="credential-award-link" href="../assets/docs/getddo-excellence-award.pdf" target="_blank" rel="noreferrer" aria-label="최종융합프로젝트 우수상 상장 PDF 보기, 새 창">상장 ↗</a></div>
                 <p>멀티캠퍼스 · LG U+ 유레카 GETDDO</p>
+              </article>
+              <article class="credential-item">
+                <div class="credential-topline"><span class="credential-kind">논문 수상</span><time datetime="2025-07-05">2025.07.05</time></div>
+                <div class="credential-title-row"><h4>대학생 논문경진대회 동상</h4><a class="credential-award-link" href="../assets/docs/dcs-2025-student-paper-bronze-award.pdf" target="_blank" rel="noreferrer" aria-label="대학생 논문경진대회 동상 상장 PDF 보기, 새 창">상장 ↗</a></div>
+                <p>한국디지털콘텐츠학회</p>
+                <p>청소년 진로 추천 시스템 연구 · 공동저자</p>
               </article>
               <article class="credential-item">
                 <div class="credential-topline"><span class="credential-kind">국가기술자격</span><time datetime="2025-09-12">2025.09.12</time></div>
@@ -403,7 +415,7 @@
               <img class="project-overview-logo" src="../assets/img/gallae-mallae-logo.png" alt="" width="88" height="88" loading="lazy">
               <strong class="project-overview-name">갈래말래</strong>
               <span class="project-overview-description">메뉴 추천·투표 서비스</span>
-              <span class="project-overview-role">팀장·투표 기능 담당</span>
+              <span class="project-overview-role">팀장·백엔드·React 개발</span>
               <span class="project-overview-period">2026.07.09 ~ 07.27</span>
               <span class="project-overview-jump">프로젝트로 이동 ↓</span>
             </a>
@@ -441,7 +453,7 @@
                 <div class="case-notion">
                   <section class="case-section" data-case-stage="problem"><h5>설계 배경</h5><p>팀원들이 기능을 나눠 개발하면서도 <strong>업무 규칙을 수정할 위치와 공통 코드 사용법</strong>을 바로 찾고, 같은 DB 환경에서 각자 맡은 기능을 검증할 수 있도록 기준 마련.</p></section>
                   <section class="case-section" data-case-stage="solution"><h5>설계·적용</h5><ul><li><strong>멀티 모듈 구조와 모듈 간 의존 방향 설계</strong>. API·업무 로직·데이터 접근의 책임을 나누고 개발 문서에 정리</li><li><strong>요청 검증·공통 응답·예외 처리·BaseEntity 설계</strong>. 응답과 오류 처리 예시를 만들어 팀원이 맡은 기능에 바로 적용할 수 있도록 공유</li><li><strong>Testcontainers 기반 공통 DB 테스트 환경</strong>을 구성하고 PR에서 통합 테스트를 자동 실행하도록 연결</li><li>AI에 구현을 맡길 때 <strong>수정 범위와 유지할 동작을 지정</strong>. 팀의 공통 문서를 구현과 CodeRabbit 리뷰에 연결하고, 같은 조건으로 테스트 결과를 확인</li></ul></section>
-                  <section class="case-section" data-case-stage="evaluation"><h5>적용 결과</h5><p>팀원들이 예시를 참고해 <strong>이벤트·알림 API에 같은 응답과 오류 처리 방식</strong>을 적용. 공통 DB 환경에서 각자 맡은 기능을 검증하고, PR에서도 같은 테스트 실행.</p></section>
+                  <section class="case-section" data-case-stage="evaluation"><h5>적용 결과</h5><p>팀원들이 예시 코드를 각자 맡은 API에 적용했습니다. <strong>프론트엔드에서는 API의 성공 결과와 오류 정보를 일관된 형식으로 받아 처리할 수 있게 됐습니다.</strong> 팀원은 같은 DB 환경에서 기능을 테스트했고, PR에서도 같은 테스트가 자동으로 실행됐습니다.</p></section>
                   <section class="case-section" data-case-stage="reflection"><h5>고찰</h5><p>모듈별 책임을 문서와 코드 구조로 정했지만, 규칙 위반을 자동으로 검사하는 장치는 부족했음. <strong>ArchUnit 테스트를 CI에 추가해 잘못된 모듈 참조를 변경 단계에서 발견</strong>하도록 보완할 필요가 있음.</p></section>
                 </div>
               </article>
@@ -522,8 +534,8 @@
                   <div><h3>갈래말래</h3><p class="project-summary">그룹원의 조건에 맞는 메뉴 후보를 추천하고, 투표 결과로 최종 메뉴를 정하는 서비스</p></div>
                   <a class="project-repo" href="https://github.com/rudwnlee2/gallae-mallae-backend" target="_blank" rel="noreferrer">GitHub ↗</a>
                 </div>
-                <div class="project-roles"><span class="project-role">2026.07.09 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·투표 기능 담당</span></div>
-                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청의 접수와 실행을 분리해 접수 응답을 먼저 반환하도록 구현. 투표 변경·집계와 마감 결과 저장 및 실패 후 재시도 기능 구현</p>
+                <div class="project-roles"><span class="project-role">2026.07.09 ~ 07.27</span><span class="project-role">5인 팀</span><span class="project-role primary">팀장·백엔드·React 개발</span></div>
+                <p class="project-responsibility"><span class="project-responsibility-label">담당 업무</span>추천 요청의 접수와 실행을 분리하고, 투표 변경·집계와 결과 저장 재시도를 구현했습니다. React로 그룹 참여 현황과 투표 진행·완료 인원을 표시하는 화면을 개발했습니다.</p>
               </div>
             </div>
             <section class="project-key-results" aria-label="갈래말래 핵심 구현 및 검증">
@@ -550,7 +562,7 @@
                 </div>
               </article>
             </div>
-            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">MySQL</span></div></div>
+            <div class="project-footer"><div class="tags project-tech" aria-label="사용 기술"><span class="tag">Java 21</span><span class="tag">Spring Boot</span><span class="tag">Redis</span><span class="tag">RabbitMQ</span><span class="tag">MySQL</span><span class="tag">React</span></div></div>
           </article>
         </div>
       </div>
