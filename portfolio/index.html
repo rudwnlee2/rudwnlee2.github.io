@@ -63,11 +63,7 @@
     .shell { width: min(1080px, calc(100% - 40px)); margin-inline: auto; }
 
     .portfolio-header { border-bottom: 1px solid var(--line); }
-    .portfolio-header-inner { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .5rem 1rem; padding-block: .75rem; }
-    .portfolio-brand { color: var(--heading); font-weight: 850; white-space: nowrap; }
-    .portfolio-nav { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem .9rem; font-size: .82rem; }
-    .portfolio-nav a { color: var(--muted); font-weight: 700; white-space: nowrap; }
-    .portfolio-nav a:hover { color: var(--accent); }
+    .portfolio-header-inner { display: flex; justify-content: flex-end; padding-block: .75rem; }
 
     .hero { padding: 72px 0 66px; }
     .hero-grid { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: start; gap: 88px; }
@@ -86,8 +82,7 @@
     .eyebrow::before { content: ""; width: 24px; height: 2px; background: currentColor; }
     h1, h2, h3, p { margin-top: 0; }
     .hero-identity { padding-top: .35rem; }
-    .hero-topline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .4rem .75rem; margin-bottom: .55rem; }
-    .hero-role { margin: 0; color: var(--accent); font-size: .74rem; font-weight: 850; letter-spacing: .12em; }
+    .hero-role { margin-bottom: .55rem; color: var(--accent); font-size: .74rem; font-weight: 850; letter-spacing: .12em; }
     h1 {
       max-width: 650px;
       margin-bottom: 1.4rem;
@@ -285,12 +280,7 @@
 
   <header class="portfolio-header">
     <div class="shell portfolio-header-inner">
-      <a class="portfolio-brand" href="#top">이경주</a>
-      <nav class="portfolio-nav" aria-label="포트폴리오 연락처 및 저장">
-        <a href="https://github.com/rudwnlee2" target="_blank" rel="noreferrer">GitHub ↗</a>
-        <a href="mailto:lgj0731@naver.com">이메일</a>
-        <button type="button" class="portfolio-print-button" onclick="window.print()">PDF로 저장</button>
-      </nav>
+      <button type="button" class="portfolio-print-button" onclick="window.print()">PDF로 저장</button>
     </div>
   </header>
 
@@ -300,10 +290,7 @@
         <div class="profile-photo-slot"><img src="../assets/img/profile/lee-gyeongju.jpg" alt="이경주 프로필 사진" width="591" height="787"></div>
         <div class="hero-intro">
           <div class="hero-identity">
-            <div class="hero-topline">
-              <p class="hero-role">BACKEND DEVELOPER</p>
-              <button type="button" class="portfolio-print-button" onclick="window.print()">PDF로 저장</button>
-            </div>
+            <p class="hero-role">BACKEND DEVELOPER</p>
             <h1>이경주</h1>
           </div>
           <p class="hero-statement">개선을 제안하고 직접 구현하는 백엔드 개발자입니다.</p>
